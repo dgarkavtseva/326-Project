@@ -8,7 +8,10 @@ Add an overview of your application here.
 
 # Team Members
 
-Add the team member names who are working on this application.
+Matt Pearce
+Brett Kreindler
+Daria Garkavtseva
+Kyle Stevens
 
 # Application Initialization
 
