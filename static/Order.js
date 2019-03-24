@@ -11,14 +11,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var contentNode = document.getElementById('contents');
 
 var issues = [{
-  id: 1, status: 'Open', owner: 'Ravan',
-  created: new Date('2016-08-15'), effort: 5, completionDate: undefined,
-  title: 'Error in console when clicking Add'
+  order: 1, food: 'Chicken Tenders', diningHall: 'Worcester'
 }, {
-  id: 2, status: 'Assigned', owner: 'Eddie',
-  created: new Date('2016-08-16'), effort: 14,
-  completionDate: new Date('2016-08-30'),
-  title: 'Missing bottom border on panel'
+  order: 2, food: 'Mac and Cheese', diningHall: 'Berk'
+}, {
+  order: 3, food: 'Orange Chicken', diningHall: 'Frank'
+}, {
+  order: 4, food: 'Sushi', diningHall: 'Worcester'
 }];
 
 var Menu = function (_React$Component) {
@@ -56,9 +55,9 @@ var IssueTable = function (_React$Component2) {
   _createClass(IssueTable, [{
     key: 'render',
     value: function render() {
-      var issueRows = this.props.issues.map(function (issue) {
-        return React.createElement(IssueRow, {
-          key: issue.id, issue: issue });
+      var itemRows = this.props.issues.map(function (issue) {
+        return React.createElement(ItemRow, {
+          key: issue.order, issue: issue });
       });
 
       return React.createElement(
@@ -73,44 +72,24 @@ var IssueTable = function (_React$Component2) {
             React.createElement(
               'th',
               null,
-              'Id'
+              'Option Number'
             ),
             React.createElement(
               'th',
               null,
-              'Status'
+              'Food'
             ),
             React.createElement(
               'th',
               null,
-              'Owner'
-            ),
-            React.createElement(
-              'th',
-              null,
-              'Created'
-            ),
-            React.createElement(
-              'th',
-              null,
-              'Effort'
-            ),
-            React.createElement(
-              'th',
-              null,
-              'Completion Date'
-            ),
-            React.createElement(
-              'th',
-              null,
-              'Title'
+              'Dining Hall'
             )
           )
         ),
         React.createElement(
           'tbody',
           null,
-          issueRows
+          itemRows
         )
       );
     }
@@ -149,16 +128,16 @@ var ItemsList = function (_React$Component3) {
   return ItemsList;
 }(React.Component);
 
-var IssueRow = function (_React$Component4) {
-  _inherits(IssueRow, _React$Component4);
+var ItemRow = function (_React$Component4) {
+  _inherits(ItemRow, _React$Component4);
 
-  function IssueRow() {
-    _classCallCheck(this, IssueRow);
+  function ItemRow() {
+    _classCallCheck(this, ItemRow);
 
-    return _possibleConstructorReturn(this, (IssueRow.__proto__ || Object.getPrototypeOf(IssueRow)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (ItemRow.__proto__ || Object.getPrototypeOf(ItemRow)).apply(this, arguments));
   }
 
-  _createClass(IssueRow, [{
+  _createClass(ItemRow, [{
     key: 'render',
     value: function render() {
       var issue = this.props.issue;
@@ -168,43 +147,23 @@ var IssueRow = function (_React$Component4) {
         React.createElement(
           'td',
           null,
-          issue.id
+          issue.order
         ),
         React.createElement(
           'td',
           null,
-          issue.status
+          issue.food
         ),
         React.createElement(
           'td',
           null,
-          issue.owner
-        ),
-        React.createElement(
-          'td',
-          null,
-          issue.created.toDateString()
-        ),
-        React.createElement(
-          'td',
-          null,
-          issue.effort
-        ),
-        React.createElement(
-          'td',
-          null,
-          issue.completionDate ? issue.completionDate.toDateString() : ''
-        ),
-        React.createElement(
-          'td',
-          null,
-          issue.title
+          issue.diningHall
         )
       );
     }
   }]);
 
-  return IssueRow;
+  return ItemRow;
 }(React.Component);
 
 ReactDOM.render(React.createElement(ItemsList, null), contentNode);

@@ -2,17 +2,18 @@ const contentNode = document.getElementById('contents');
 
 const issues = [
   {
-  id: 1, status: 'Open', owner: 'Ravan',
-  created: new Date('2016-08-15'), effort: 5, completionDate: undefined,
-  title: 'Error in console when clicking Add',
+    order: 1, food: 'Chicken Tenders', diningHall: 'Worcester',
   },
   {
-  id: 2, status: 'Assigned', owner: 'Eddie',
-  created: new Date('2016-08-16'), effort: 14,
-  completionDate: new Date('2016-08-30'),
-  title: 'Missing bottom border on panel',
+    order: 2, food: 'Mac and Cheese', diningHall: 'Berk',
   },
-  ];
+  {
+    order: 3, food: 'Orange Chicken', diningHall: 'Frank',
+  },
+  {
+    order: 4, food: 'Sushi', diningHall: 'Worcester',    
+  },
+];
 
 class Menu extends React.Component {
   render() {
@@ -24,27 +25,23 @@ class Menu extends React.Component {
 
 class IssueTable extends React.Component {
   render() {
-  const issueRows = this.props.issues.map(issue => <IssueRow
-  key={issue.id} issue={issue} />)
-  
-  return (
-  <table className="bordered-table">
-  <thead>
-  <tr>
-  <th>Id</th>
-  <th>Status</th>
-  <th>Owner</th>
-  <th>Created</th>
-  <th>Effort</th>
-  <th>Completion Date</th>
-  <th>Title</th>
-  </tr>
-  </thead>
-  <tbody>{issueRows}</tbody>
-  </table>
-  )
+    const itemRows = this.props.issues.map(issue => <ItemRow
+    key={issue.order} issue={issue} />)
+    
+    return (
+      <table className="bordered-table">
+        <thead>
+          <tr>
+            <th>Option Number</th>
+            <th>Food</th>
+            <th>Dining Hall</th>
+          </tr>
+        </thead>
+        <tbody>{itemRows}</tbody>
+      </table>
+    )
   }
-  }
+}
 
 
 class ItemsList extends React.Component {
@@ -64,21 +61,17 @@ class ItemsList extends React.Component {
 
 
 
-class IssueRow extends React.Component {
-render() {
-const issue = this.props.issue;
-return (
-<tr>
-<td>{issue.id}</td>
-<td>{issue.status}</td>
-<td>{issue.owner}</td>
-<td>{issue.created.toDateString()}</td>
-<td>{issue.effort}</td>
-<td>{issue.completionDate ? issue.completionDate.toDateString() : ''}</td>
-<td>{issue.title}</td>
-</tr>
-)
-}
+class ItemRow extends React.Component {
+  render() {
+    const issue = this.props.issue;
+    return (
+      <tr>
+        <td>{issue.order}</td>
+        <td>{issue.food}</td>
+        <td>{issue.diningHall}</td>
+      </tr>
+    )
+  }
 }
 
 ReactDOM.render(<ItemsList />, contentNode);
