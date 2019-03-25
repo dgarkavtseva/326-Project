@@ -23,7 +23,7 @@ var contentNode = document.getElementById("contents");
 
 class IssueFilter extends React.Component {
   render() {
-    return <div>This is a placeholder for the ReviewFilter.</div>;
+    return <div>We will add a search bar here to searh for specific items.</div>;
   }
 }
 
