@@ -28,27 +28,27 @@ var issues = [{
 
 var contentNode = document.getElementById("contents");
 
-var IssueFilter = function (_React$Component) {
-  _inherits(IssueFilter, _React$Component);
+var SearchBar = function (_React$Component) {
+  _inherits(SearchBar, _React$Component);
 
-  function IssueFilter() {
-    _classCallCheck(this, IssueFilter);
+  function SearchBar() {
+    _classCallCheck(this, SearchBar);
 
-    return _possibleConstructorReturn(this, (IssueFilter.__proto__ || Object.getPrototypeOf(IssueFilter)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).apply(this, arguments));
   }
 
-  _createClass(IssueFilter, [{
+  _createClass(SearchBar, [{
     key: "render",
     value: function render() {
       return React.createElement(
         "div",
         null,
-        "This is a placeholder for the ReviewFilter."
+        "We will add a search bar here to searh for specific items."
       );
     }
   }]);
 
-  return IssueFilter;
+  return SearchBar;
 }(React.Component);
 
 var IssueRow = function IssueRow(props) {
@@ -93,7 +93,7 @@ var IssueRow = function IssueRow(props) {
   );
 };
 
-function IssueTable(props) {
+function ReviewTable(props) {
   var issueRows = props.issues.map(function (issue) {
     return React.createElement(IssueRow, { key: issue.id, issue: issue });
   });
@@ -151,19 +151,19 @@ function IssueTable(props) {
   );
 }
 
-var IssueAdd = function (_React$Component2) {
-  _inherits(IssueAdd, _React$Component2);
+var ReviewAdd = function (_React$Component2) {
+  _inherits(ReviewAdd, _React$Component2);
 
-  function IssueAdd() {
-    _classCallCheck(this, IssueAdd);
+  function ReviewAdd() {
+    _classCallCheck(this, ReviewAdd);
 
-    var _this2 = _possibleConstructorReturn(this, (IssueAdd.__proto__ || Object.getPrototypeOf(IssueAdd)).call(this));
+    var _this2 = _possibleConstructorReturn(this, (ReviewAdd.__proto__ || Object.getPrototypeOf(ReviewAdd)).call(this));
 
     _this2.handleSubmit = _this2.handleSubmit.bind(_this2);
     return _this2;
   }
 
-  _createClass(IssueAdd, [{
+  _createClass(ReviewAdd, [{
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
@@ -210,16 +210,16 @@ var IssueAdd = function (_React$Component2) {
     }
   }]);
 
-  return IssueAdd;
+  return ReviewAdd;
 }(React.Component);
 
-var IssueList = function (_React$Component3) {
-  _inherits(IssueList, _React$Component3);
+var ReviewList = function (_React$Component3) {
+  _inherits(ReviewList, _React$Component3);
 
-  function IssueList() {
-    _classCallCheck(this, IssueList);
+  function ReviewList() {
+    _classCallCheck(this, ReviewList);
 
-    var _this3 = _possibleConstructorReturn(this, (IssueList.__proto__ || Object.getPrototypeOf(IssueList)).call(this));
+    var _this3 = _possibleConstructorReturn(this, (ReviewList.__proto__ || Object.getPrototypeOf(ReviewList)).call(this));
 
     _this3.state = { issues: [] };
 
@@ -227,7 +227,7 @@ var IssueList = function (_React$Component3) {
     return _this3;
   }
 
-  _createClass(IssueList, [{
+  _createClass(ReviewList, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       this.loadData();
@@ -262,19 +262,19 @@ var IssueList = function (_React$Component3) {
           null,
           "Reviews"
         ),
-        React.createElement(IssueFilter, null),
+        React.createElement(SearchBar, null),
         React.createElement("hr", null),
-        React.createElement(IssueTable, { issues: this.state.issues }),
+        React.createElement(ReviewTable, { issues: this.state.issues }),
         React.createElement("hr", null),
-        React.createElement(IssueAdd, { createIssue: this.createIssue })
+        React.createElement(ReviewAdd, { createIssue: this.createIssue })
       );
     }
   }]);
 
-  return IssueList;
+  return ReviewList;
 }(React.Component);
 
 // This renders the JSX component inside the content node:
 
 
-ReactDOM.render(React.createElement(IssueList, null), contentNode);
+ReactDOM.render(React.createElement(ReviewList, null), contentNode);

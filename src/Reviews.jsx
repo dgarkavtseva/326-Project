@@ -21,7 +21,7 @@ const issues = [
 
 var contentNode = document.getElementById("contents");
 
-class IssueFilter extends React.Component {
+class SearchBar extends React.Component {
   render() {
     return <div>We will add a search bar here to searh for specific items.</div>;
   }
@@ -39,7 +39,7 @@ const IssueRow = (props) => (
   </tr>
 );
 
-function IssueTable(props) {
+function ReviewTable(props) {
   const issueRows = props.issues.map(issue => (
     <IssueRow key={issue.id} issue={issue} />
   ));
@@ -61,7 +61,7 @@ function IssueTable(props) {
   );
 }
 
-class IssueAdd extends React.Component {
+class ReviewAdd extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -105,7 +105,7 @@ class IssueAdd extends React.Component {
   }
 }
 
-class IssueList extends React.Component {
+class ReviewList extends React.Component {
   constructor() {
     super();
     this.state = { issues: [] };
@@ -136,15 +136,15 @@ class IssueList extends React.Component {
     return (
       <div>
         <h1>Reviews</h1>
-        <IssueFilter />
+        <SearchBar />
         <hr />
-        <IssueTable issues={this.state.issues} />
+        <ReviewTable issues={this.state.issues} />
         <hr />
-        <IssueAdd createIssue={this.createIssue} />
+        <ReviewAdd createIssue={this.createIssue} />
       </div>
     );
   }
 }
 
 // This renders the JSX component inside the content node:
-ReactDOM.render(<IssueList />, contentNode);
+ReactDOM.render(<ReviewList />, contentNode);
