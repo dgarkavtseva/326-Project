@@ -20,7 +20,9 @@ var foods = [{
   order: 4, food: 'Sushi', diningHall: 'Worcester'
 }];
 
-var orders = [];
+var orders = [{
+  order: undefined, status: undefined, deliveryAddress: undefined
+}];
 
 var IssueRow = function (_React$Component) {
   _inherits(IssueRow, _React$Component);
@@ -60,8 +62,46 @@ var IssueRow = function (_React$Component) {
   return IssueRow;
 }(React.Component);
 
-var ItemTable = function (_React$Component2) {
-  _inherits(ItemTable, _React$Component2);
+var OrderRow = function (_React$Component2) {
+  _inherits(OrderRow, _React$Component2);
+
+  function OrderRow() {
+    _classCallCheck(this, OrderRow);
+
+    return _possibleConstructorReturn(this, (OrderRow.__proto__ || Object.getPrototypeOf(OrderRow)).apply(this, arguments));
+  }
+
+  _createClass(OrderRow, [{
+    key: 'render',
+    value: function render() {
+      var order = this.props.order;
+      return React.createElement(
+        'tr',
+        null,
+        React.createElement(
+          'td',
+          null,
+          order.order
+        ),
+        React.createElement(
+          'td',
+          null,
+          order.status
+        ),
+        React.createElement(
+          'td',
+          null,
+          order.deliveryAddress
+        )
+      );
+    }
+  }]);
+
+  return OrderRow;
+}(React.Component);
+
+var ItemTable = function (_React$Component3) {
+  _inherits(ItemTable, _React$Component3);
 
   function ItemTable() {
     _classCallCheck(this, ItemTable);
@@ -73,7 +113,7 @@ var ItemTable = function (_React$Component2) {
     key: 'render',
     value: function render() {
       var issueRows = this.props.foods.map(function (issue) {
-        return React.createElement(IssueRow, { key: issue.id, issue: issue });
+        return React.createElement(IssueRow, { key: issue.order, issue: issue });
       });
       return React.createElement(
         'table',
@@ -113,8 +153,61 @@ var ItemTable = function (_React$Component2) {
   return ItemTable;
 }(React.Component);
 
-var Order = function (_React$Component3) {
-  _inherits(Order, _React$Component3);
+var OrderTable = function (_React$Component4) {
+  _inherits(OrderTable, _React$Component4);
+
+  function OrderTable() {
+    _classCallCheck(this, OrderTable);
+
+    return _possibleConstructorReturn(this, (OrderTable.__proto__ || Object.getPrototypeOf(OrderTable)).apply(this, arguments));
+  }
+
+  _createClass(OrderTable, [{
+    key: 'render',
+    value: function render() {
+      var OrderRows = this.props.orders.map(function (order) {
+        return React.createElement(OrderRow, { key: order.order, order: order });
+      });
+      return React.createElement(
+        'table',
+        { className: 'bordered-table' },
+        React.createElement(
+          'thead',
+          null,
+          React.createElement(
+            'tr',
+            null,
+            React.createElement(
+              'th',
+              null,
+              'Order Number'
+            ),
+            React.createElement(
+              'th',
+              null,
+              'Status'
+            ),
+            React.createElement(
+              'th',
+              null,
+              'Delivery Address'
+            )
+          )
+        ),
+        React.createElement(
+          'tbody',
+          null,
+          OrderRows
+        )
+      );
+    }
+  }]);
+
+  return OrderTable;
+}(React.Component);
+
+var Order = function (_React$Component5) {
+  _inherits(Order, _React$Component5);
 
   function Order() {
     _classCallCheck(this, Order);
@@ -145,17 +238,68 @@ var Order = function (_React$Component3) {
   return Order;
 }(React.Component);
 
-var IssueList = function (_React$Component4) {
-  _inherits(IssueList, _React$Component4);
+var OrderAdd = function (_React$Component6) {
+  _inherits(OrderAdd, _React$Component6);
+
+  function OrderAdd() {
+    _classCallCheck(this, OrderAdd);
+
+    var _this6 = _possibleConstructorReturn(this, (OrderAdd.__proto__ || Object.getPrototypeOf(OrderAdd)).call(this));
+
+    _this6.handleSubmit = _this6.handleSubmit.bind(_this6);
+    return _this6;
+  }
+
+  _createClass(OrderAdd, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var form = document.forms.orderAdd;
+      this.props.createOrder({
+        orderNumber: form.orderNumber.value,
+        deliveryAdress: form.deliveryAdress.value,
+        status: 'Pending'
+      });
+      // Clear the form for the next input.
+      form.orderNumber.value = '';
+      form.deliveryAdress.value = '';
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        null,
+        React.createElement(
+          'form',
+          { name: 'orderAdd', onSubmit: this.handleSubmit },
+          React.createElement('input', { type: 'text', name: 'orderNumber', placeholder: 'Order Number' }),
+          React.createElement('input', { type: 'text', name: 'deliveryAdress', placeholder: 'Your Address' }),
+          React.createElement(
+            'button',
+            null,
+            'Add'
+          )
+        )
+      );
+    }
+  }]);
+
+  return OrderAdd;
+}(React.Component);
+
+var IssueList = function (_React$Component7) {
+  _inherits(IssueList, _React$Component7);
 
   function IssueList() {
     _classCallCheck(this, IssueList);
 
-    var _this4 = _possibleConstructorReturn(this, (IssueList.__proto__ || Object.getPrototypeOf(IssueList)).call(this));
+    var _this7 = _possibleConstructorReturn(this, (IssueList.__proto__ || Object.getPrototypeOf(IssueList)).call(this));
 
-    _this4.state = { foods: foods, orders: orders };
-    setTimeout(_this4.createItem.bind(_this4), 2000);
-    return _this4;
+    _this7.state = { foods: foods, orders: [] };
+    setTimeout(_this7.createItem.bind(_this7), 2000);
+    _this7.createOrder = _this7.createOrder.bind(_this7);
+    return _this7;
   }
 
   _createClass(IssueList, [{
@@ -165,6 +309,14 @@ var IssueList = function (_React$Component4) {
       newIssue.order = this.state.foods.length + 1;
       newIssues.push(newIssue);
       this.setState({ foods: newIssues });
+    }
+  }, {
+    key: 'createOrder',
+    value: function createOrder(newIssue) {
+      var newIssues = this.state.orders.slice();
+      newIssue.order = this.state.orders.length + 1;
+      newIssues.push(newIssue);
+      this.setState({ orders: newIssues });
     }
   }, {
     key: 'createItem',
@@ -195,7 +347,14 @@ var IssueList = function (_React$Component4) {
         React.createElement('hr', null),
         React.createElement(Order, null),
         React.createElement('hr', null),
-        React.createElement(ItemTable, { foods: this.state.foods })
+        React.createElement(OrderAdd, { createOrder: this.createOrder }),
+        React.createElement('hr', null),
+        React.createElement(
+          'h3',
+          null,
+          'Here are your current orders:'
+        ),
+        React.createElement(OrderTable, { orders: this.state.orders })
       );
     }
   }]);
