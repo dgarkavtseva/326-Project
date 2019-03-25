@@ -81,7 +81,7 @@ var OrderRow = function (_React$Component2) {
         React.createElement(
           'td',
           null,
-          order.order
+          order.orderNumber
         ),
         React.createElement(
           'td',
@@ -91,7 +91,7 @@ var OrderRow = function (_React$Component2) {
         React.createElement(
           'td',
           null,
-          order.deliveryAddress
+          order.deliveryAdress
         )
       );
     }
@@ -257,6 +257,7 @@ var OrderAdd = function (_React$Component6) {
       var form = document.forms.orderAdd;
       this.props.createOrder({
         orderNumber: form.orderNumber.value,
+
         deliveryAdress: form.deliveryAdress.value,
         status: 'Pending'
       });

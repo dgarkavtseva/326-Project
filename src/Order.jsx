@@ -40,9 +40,9 @@ class OrderRow extends React.Component {
     const order = this.props.order;
     return (
       <tr>
-        <td>{order.order}</td>
+        <td>{order.orderNumber}</td>
         <td>{order.status}</td>
-        <td>{order.deliveryAddress}</td>
+        <td>{order.deliveryAdress}</td>
       </tr>
     );
   }
@@ -111,6 +111,7 @@ class OrderAdd extends React.Component {
     let form = document.forms.orderAdd;
     this.props.createOrder({
       orderNumber: form.orderNumber.value,
+      
       deliveryAdress: form.deliveryAdress.value,
       status: 'Pending'
     });
