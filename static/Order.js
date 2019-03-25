@@ -24,42 +24,42 @@ var orders = [{
   order: undefined, status: undefined, deliveryAddress: undefined
 }];
 
-var IssueRow = function (_React$Component) {
-  _inherits(IssueRow, _React$Component);
+var FoodRow = function (_React$Component) {
+  _inherits(FoodRow, _React$Component);
 
-  function IssueRow() {
-    _classCallCheck(this, IssueRow);
+  function FoodRow() {
+    _classCallCheck(this, FoodRow);
 
-    return _possibleConstructorReturn(this, (IssueRow.__proto__ || Object.getPrototypeOf(IssueRow)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (FoodRow.__proto__ || Object.getPrototypeOf(FoodRow)).apply(this, arguments));
   }
 
-  _createClass(IssueRow, [{
+  _createClass(FoodRow, [{
     key: 'render',
     value: function render() {
-      var issue = this.props.issue;
+      var food = this.props.food;
       return React.createElement(
         'tr',
         null,
         React.createElement(
           'td',
           null,
-          issue.order
+          food.order
         ),
         React.createElement(
           'td',
           null,
-          issue.food
+          food.food
         ),
         React.createElement(
           'td',
           null,
-          issue.diningHall
+          food.diningHall
         )
       );
     }
   }]);
 
-  return IssueRow;
+  return FoodRow;
 }(React.Component);
 
 var OrderRow = function (_React$Component2) {
@@ -100,20 +100,20 @@ var OrderRow = function (_React$Component2) {
   return OrderRow;
 }(React.Component);
 
-var ItemTable = function (_React$Component3) {
-  _inherits(ItemTable, _React$Component3);
+var FoodTable = function (_React$Component3) {
+  _inherits(FoodTable, _React$Component3);
 
-  function ItemTable() {
-    _classCallCheck(this, ItemTable);
+  function FoodTable() {
+    _classCallCheck(this, FoodTable);
 
-    return _possibleConstructorReturn(this, (ItemTable.__proto__ || Object.getPrototypeOf(ItemTable)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (FoodTable.__proto__ || Object.getPrototypeOf(FoodTable)).apply(this, arguments));
   }
 
-  _createClass(ItemTable, [{
+  _createClass(FoodTable, [{
     key: 'render',
     value: function render() {
-      var issueRows = this.props.foods.map(function (issue) {
-        return React.createElement(IssueRow, { key: issue.order, issue: issue });
+      var foodRows = this.props.foods.map(function (food) {
+        return React.createElement(FoodRow, { key: food.order, food: food });
       });
       return React.createElement(
         'table',
@@ -144,13 +144,13 @@ var ItemTable = function (_React$Component3) {
         React.createElement(
           'tbody',
           null,
-          issueRows
+          foodRows
         )
       );
     }
   }]);
 
-  return ItemTable;
+  return FoodTable;
 }(React.Component);
 
 var OrderTable = function (_React$Component4) {
@@ -257,11 +257,9 @@ var OrderAdd = function (_React$Component6) {
       var form = document.forms.orderAdd;
       this.props.createOrder({
         orderNumber: form.orderNumber.value,
-
         deliveryAdress: form.deliveryAdress.value,
         status: 'Pending'
       });
-      // Clear the form for the next input.
       form.orderNumber.value = '';
       form.deliveryAdress.value = '';
     }
@@ -289,40 +287,40 @@ var OrderAdd = function (_React$Component6) {
   return OrderAdd;
 }(React.Component);
 
-var IssueList = function (_React$Component7) {
-  _inherits(IssueList, _React$Component7);
+var OrderPage = function (_React$Component7) {
+  _inherits(OrderPage, _React$Component7);
 
-  function IssueList() {
-    _classCallCheck(this, IssueList);
+  function OrderPage() {
+    _classCallCheck(this, OrderPage);
 
-    var _this7 = _possibleConstructorReturn(this, (IssueList.__proto__ || Object.getPrototypeOf(IssueList)).call(this));
+    var _this7 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
 
     _this7.state = { foods: foods, orders: [] };
-    setTimeout(_this7.createItem.bind(_this7), 2000);
+    setTimeout(_this7.createFoods.bind(_this7), 2000);
     _this7.createOrder = _this7.createOrder.bind(_this7);
     return _this7;
   }
 
-  _createClass(IssueList, [{
-    key: 'createNew',
-    value: function createNew(newIssue) {
-      var newIssues = this.state.foods.slice();
-      newIssue.order = this.state.foods.length + 1;
-      newIssues.push(newIssue);
-      this.setState({ foods: newIssues });
+  _createClass(OrderPage, [{
+    key: 'createItem',
+    value: function createItem(newFood) {
+      var newFoods = this.state.foods.slice();
+      newFood.order = this.state.foods.length + 1;
+      newFoods.push(newFood);
+      this.setState({ foods: newFoods });
     }
   }, {
     key: 'createOrder',
-    value: function createOrder(newIssue) {
-      var newIssues = this.state.orders.slice();
-      newIssue.order = this.state.orders.length + 1;
-      newIssues.push(newIssue);
-      this.setState({ orders: newIssues });
+    value: function createOrder(newOrder) {
+      var newOrders = this.state.orders.slice();
+      newOrder.order = this.state.orders.length + 1;
+      newOrders.push(newOrder);
+      this.setState({ orders: newOrders });
     }
   }, {
-    key: 'createItem',
-    value: function createItem() {
-      this.createNew({
+    key: 'createFoods',
+    value: function createFoods() {
+      this.createItem({
         order: 5,
         food: 'Pasta',
         diningHall: 'Hamp'
@@ -344,7 +342,7 @@ var IssueList = function (_React$Component7) {
           null,
           'These are the available options for grab and go today!'
         ),
-        React.createElement(ItemTable, { foods: this.state.foods }),
+        React.createElement(FoodTable, { foods: this.state.foods }),
         React.createElement('hr', null),
         React.createElement(Order, null),
         React.createElement('hr', null),
@@ -360,7 +358,7 @@ var IssueList = function (_React$Component7) {
     }
   }]);
 
-  return IssueList;
+  return OrderPage;
 }(React.Component);
 
-ReactDOM.render(React.createElement(IssueList, null), contentNode);
+ReactDOM.render(React.createElement(OrderPage, null), contentNode);

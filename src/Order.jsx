@@ -22,14 +22,14 @@ const orders = [
   }
 ];
  
-class IssueRow extends React.Component {
+class FoodRow extends React.Component {
   render() {
-    const issue = this.props.issue;
+    const food = this.props.food;
     return (
       <tr>
-        <td>{issue.order}</td>
-        <td>{issue.food}</td>
-        <td>{issue.diningHall}</td>
+        <td>{food.order}</td>
+        <td>{food.food}</td>
+        <td>{food.diningHall}</td>
       </tr>
     );
   }
@@ -48,10 +48,10 @@ class OrderRow extends React.Component {
   }
 }
 
-class ItemTable extends React.Component {
+class FoodTable extends React.Component {
   render() {
-    const issueRows = this.props.foods.map(issue => (
-      <IssueRow key={issue.order} issue={issue} />
+    const foodRows = this.props.foods.map(food => (
+      <FoodRow key={food.order} food={food} />
     ));
     return (
       <table className="bordered-table">
@@ -62,7 +62,7 @@ class ItemTable extends React.Component {
             <th>Dining Hall</th>
           </tr>
         </thead>
-        <tbody>{issueRows}</tbody>
+        <tbody>{foodRows}</tbody>
       </table>
     );
   }
@@ -110,12 +110,10 @@ class OrderAdd extends React.Component {
     e.preventDefault();
     let form = document.forms.orderAdd;
     this.props.createOrder({
-      orderNumber: form.orderNumber.value,
-      
+      orderNumber: form.orderNumber.value, 
       deliveryAdress: form.deliveryAdress.value,
       status: 'Pending'
     });
-    // Clear the form for the next input.
     form.orderNumber.value = '';
     form.deliveryAdress.value = '';
   }
@@ -132,28 +130,28 @@ class OrderAdd extends React.Component {
     );
   }
 }
-class IssueList extends React.Component {
+class OrderPage extends React.Component {
   constructor() {
     super();
     this.state = { foods: foods, orders: [] };
-    setTimeout(this.createItem.bind(this), 2000);
+    setTimeout(this.createFoods.bind(this), 2000);
     this.createOrder = this.createOrder.bind(this);
   }
 
-  createNew(newIssue) {
-    const newIssues = this.state.foods.slice();
-    newIssue.order = this.state.foods.length + 1;
-    newIssues.push(newIssue);
-    this.setState({ foods: newIssues });
+  createItem(newFood) {
+    const newFoods = this.state.foods.slice();
+    newFood.order = this.state.foods.length + 1;
+    newFoods.push(newFood);
+    this.setState({ foods: newFoods });
   }
-  createOrder(newIssue) {
-    const newIssues = this.state.orders.slice();
-    newIssue.order = this.state.orders.length + 1;
-    newIssues.push(newIssue);
-    this.setState({ orders: newIssues });
+  createOrder(newOrder) {
+    const newOrders = this.state.orders.slice();
+    newOrder.order = this.state.orders.length + 1;
+    newOrders.push(newOrder);
+    this.setState({ orders: newOrders });
   }
-  createItem() {
-    this.createNew({
+  createFoods() {
+    this.createItem({
       order: 5,
       food: 'Pasta',
       diningHall: 'Hamp'
@@ -165,7 +163,7 @@ class IssueList extends React.Component {
       <div>
         <h1>Menu</h1>
         <h2>These are the available options for grab and go today!</h2>
-        <ItemTable foods={this.state.foods} />
+        <FoodTable foods={this.state.foods} />
         <hr />
         <Order />
         <hr />
@@ -180,4 +178,4 @@ class IssueList extends React.Component {
   }
 }
 
-ReactDOM.render(<IssueList />, contentNode);
+ReactDOM.render(<OrderPage />, contentNode);
