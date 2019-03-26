@@ -1,12 +1,40 @@
 
 const contentNode = document.getElementById("contents");
 
+const foods = [
+  {
+    order: 1, food: 'Chicken Tenders', diningHall: 'Worcester',
+  },
+  {
+    order: 2, food: 'Mac and Cheese', diningHall: 'Berk',
+  },
+  {
+    order: 3, food: 'Orange Chicken', diningHall: 'Frank',
+  },
+  {
+    order: 4, food: 'Sushi', diningHall: 'Worcester',   
+  }
+ ];
+
 const orders = [
   {
-    order: "1", status: "pending", deliveryAddress: "elm",
+    order: undefined, status: undefined, deliveryAddress: undefined,
   }
 ];
  
+class FoodRow extends React.Component {
+  render() {
+    const food = this.props.food;
+    return (
+      <tr>
+        <td>{food.order}</td>
+        <td>{food.food}</td>
+        <td>{food.diningHall}</td>
+      </tr>
+    );
+  }
+}
+
 class OrderRow extends React.Component {
   render() {
     const order = this.props.order;
@@ -16,6 +44,26 @@ class OrderRow extends React.Component {
         <td>{order.status}</td>
         <td>{order.deliveryAdress}</td>
       </tr>
+    );
+  }
+}
+
+class FoodTable extends React.Component {
+  render() {
+    const foodRows = this.props.foods.map(food => (
+      <FoodRow key={food.order} food={food} />
+    ));
+    return (
+      <table className="bordered-table">
+        <thead>
+          <tr>
+            <th>Order Number</th>
+            <th>Food</th>
+            <th>Dining Hall</th>
+          </tr>
+        </thead>
+        <tbody>{foodRows}</tbody>
+      </table>
     );
   }
 }
@@ -39,27 +87,13 @@ class OrderTable extends React.Component {
     );
   }
 }
-
-class Order extends React.Component {
-  
-  render() {
-    return (
-      <div>
-        <h1>Place an Order!</h1>
-        <h2>Fill out the form below</h2>
-        
-        
-      </div>
-    );  }
-}
 class OrderAdd extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit(event) {
+    event.preventDefault();
     let form = document.forms.orderAdd;
     this.props.createOrder({
       orderNumber: form.orderNumber.value, 
@@ -85,25 +119,42 @@ class OrderAdd extends React.Component {
 class OrderPage extends React.Component {
   constructor() {
     super();
-    this.state = {orders: []}; 
+    this.state = { foods: foods, orders: [] };
+    setTimeout(this.createFoods.bind(this), 2000);
     this.createOrder = this.createOrder.bind(this);
   }
 
-
+  createItem(newFood) {
+    const newFoods = this.state.foods.slice();
+    newFood.order = this.state.foods.length + 1;
+    newFoods.push(newFood);
+    this.setState({ foods: newFoods });
+  }
   createOrder(newOrder) {
-    const newOrders = this.state.orders.slice();
-    newOrder.order = this.state.orders.length + 1;
-    newOrders.push(newOrder);
-    this.setState({ orders: newOrders });
-    console.log(newOrders);
+    if(newOrder.orderNumber != "" && newOrder.deliveryAdress != ""){
+      const newOrders = this.state.orders.slice();
+      newOrder.order = this.state.orders.length + 1;
+      newOrders.push(newOrder);
+      this.setState({ orders: newOrders });
+    }
+  }
+  createFoods() {
+    this.createItem({
+      order: 5,
+      food: 'Pasta',
+      diningHall: 'Hamp'
+    });
   }
 
   render() {
     return (
       <div>
-        <Order />
+        <h1>Menu</h1>
+        <h2>These are the available options for grab and go today!</h2>
+        <FoodTable foods={this.state.foods} />
         <hr />
-        
+        <h1>Place an Order!</h1>
+        <h2>Fill out the form below</h2>        
         <OrderAdd createOrder={this.createOrder} />
         <hr />
         <h3>Here are your current orders:</h3>

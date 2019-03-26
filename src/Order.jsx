@@ -131,10 +131,12 @@ class OrderPage extends React.Component {
     this.setState({ foods: newFoods });
   }
   createOrder(newOrder) {
-    const newOrders = this.state.orders.slice();
-    newOrder.order = this.state.orders.length + 1;
-    newOrders.push(newOrder);
-    this.setState({ orders: newOrders });
+    if(newOrder.orderNumber != "" && newOrder.deliveryAdress != ""){
+      const newOrders = this.state.orders.slice();
+      newOrder.order = this.state.orders.length + 1;
+      newOrders.push(newOrder);
+      this.setState({ orders: newOrders });
+    }
   }
   createFoods() {
     this.createItem({

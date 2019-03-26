@@ -280,10 +280,12 @@ var OrderPage = function (_React$Component6) {
   }, {
     key: 'createOrder',
     value: function createOrder(newOrder) {
-      var newOrders = this.state.orders.slice();
-      newOrder.order = this.state.orders.length + 1;
-      newOrders.push(newOrder);
-      this.setState({ orders: newOrders });
+      if (newOrder.orderNumber != "" && newOrder.deliveryAdress != "") {
+        var newOrders = this.state.orders.slice();
+        newOrder.order = this.state.orders.length + 1;
+        newOrders.push(newOrder);
+        this.setState({ orders: newOrders });
+      }
     }
   }, {
     key: 'createFoods',
