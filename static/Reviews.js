@@ -8,7 +8,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var issues = [{
+var reviews = [{
   name: "Joe Shmoe",
   created: new Date("2019-03-24"),
   time: "4:00pm",
@@ -51,51 +51,51 @@ var SearchBar = function (_React$Component) {
   return SearchBar;
 }(React.Component);
 
-var IssueRow = function IssueRow(props) {
+var ReviewRow = function ReviewRow(props) {
   return React.createElement(
     "tr",
     null,
     React.createElement(
       "td",
       null,
-      props.issue.name
+      props.review.name
     ),
     React.createElement(
       "td",
       null,
-      props.issue.created.toDateString()
+      props.review.created.toDateString()
     ),
     React.createElement(
       "td",
       null,
-      props.issue.time
+      props.review.time
     ),
     React.createElement(
       "td",
       null,
-      props.issue.orderFrom
+      props.review.orderFrom
     ),
     React.createElement(
       "td",
       null,
-      props.issue.orderItem
+      props.review.orderItem
     ),
     React.createElement(
       "td",
       null,
-      props.issue.driver
+      props.review.driver
     ),
     React.createElement(
       "td",
       null,
-      props.issue.review
+      props.review.review
     )
   );
 };
 
 function ReviewTable(props) {
-  var issueRows = props.issues.map(function (issue) {
-    return React.createElement(IssueRow, { key: issue.id, issue: issue });
+  var reviewRows = props.reviews.map(function (review) {
+    return React.createElement(ReviewRow, { key: review.id, review: review });
   });
   return React.createElement(
     "table",
@@ -146,7 +146,7 @@ function ReviewTable(props) {
     React.createElement(
       "tbody",
       null,
-      issueRows
+      reviewRows
     )
   );
 }
@@ -167,8 +167,8 @@ var ReviewAdd = function (_React$Component2) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      var form = document.forms.issueAdd;
-      this.props.createIssue({
+      var form = document.forms.reviewAdd;
+      this.props.createReview({
         name: form.name.value,
         time: form.time.value,
         orderFrom: form.orderFrom.value,
@@ -193,7 +193,7 @@ var ReviewAdd = function (_React$Component2) {
         null,
         React.createElement(
           "form",
-          { name: "issueAdd", onSubmit: this.handleSubmit },
+          { name: "reviewAdd", onSubmit: this.handleSubmit },
           React.createElement("input", { type: "text", name: "name", placeholder: "Name" }),
           React.createElement("input", { type: "text", name: "time", placeholder: "Time" }),
           React.createElement("input", { type: "text", name: "orderFrom", placeholder: "Ordered From" }),
@@ -221,9 +221,9 @@ var ReviewList = function (_React$Component3) {
 
     var _this3 = _possibleConstructorReturn(this, (ReviewList.__proto__ || Object.getPrototypeOf(ReviewList)).call(this));
 
-    _this3.state = { issues: [] };
+    _this3.state = { reviews: [] };
 
-    _this3.createIssue = _this3.createIssue.bind(_this3);
+    _this3.createReview = _this3.createReview.bind(_this3);
     return _this3;
   }
 
@@ -239,17 +239,17 @@ var ReviewList = function (_React$Component3) {
 
       setTimeout(function () {
         _this4.setState({
-          issues: issues
+          reviews: reviews
         });
       }, 500);
     }
   }, {
-    key: "createIssue",
-    value: function createIssue(newIssue) {
-      var newIssues = this.state.issues.slice();
-      newIssue.id = this.state.issues.length + 1;
-      newIssues.push(newIssue);
-      this.setState({ issues: newIssues });
+    key: "createReview",
+    value: function createReview(newReview) {
+      var newReviews = this.state.reviews.slice();
+      newReview.id = this.state.reviews.length + 1;
+      newReviews.push(newReview);
+      this.setState({ reviews: newReviews });
     }
   }, {
     key: "render",
@@ -264,9 +264,9 @@ var ReviewList = function (_React$Component3) {
         ),
         React.createElement(SearchBar, null),
         React.createElement("hr", null),
-        React.createElement(ReviewTable, { issues: this.state.issues }),
+        React.createElement(ReviewTable, { reviews: this.state.reviews }),
         React.createElement("hr", null),
-        React.createElement(ReviewAdd, { createIssue: this.createIssue })
+        React.createElement(ReviewAdd, { createReview: this.createReview })
       );
     }
   }]);
