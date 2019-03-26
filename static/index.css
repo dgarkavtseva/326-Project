@@ -1,0 +1,12 @@
+﻿#titleAndDesc {
+    align-content: center;
+    margin: 5% 25%;
+}
+
+body {
+    text-align: center;
+}
+
+form {
+    display: inline-block;
+}
