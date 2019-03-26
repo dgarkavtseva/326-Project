@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -27,42 +27,44 @@ var MyComponent = function (_React$Component) {
     }
 
     _createClass(MyComponent, [{
-        key: "submitForm",
+        key: 'submitForm',
         value: function submitForm(event) {
             event.preventDefault();
-            console.log("PEBIS");
             this.setState({ submitted: true });
+            emailForm.firstName.value = '';
+            emailForm.lastName.value = '';
+            emailForm.email.value = '';
         }
     }, {
-        key: "render",
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "form",
-                _defineProperty({ name: "temp", onSubmit: this.handleSubmit, id: "emailForm" }, "id", "emailForm"),
+                'form',
+                _defineProperty({ name: 'temp', onSubmit: this.handleSubmit, id: 'emailForm' }, 'id', 'emailForm'),
                 React.createElement(
-                    "div",
-                    { className: "forms" },
+                    'div',
+                    { className: 'forms' },
                     React.createElement(
-                        "h3",
+                        'h4',
                         null,
-                        "Sign up now!"
+                        'Sign up now!'
                     ),
-                    React.createElement("input", { type: "text", name: "firstName", placeholder: "First Name", value: this.state.text }),
-                    React.createElement("br", null),
-                    React.createElement("input", { type: "text", name: "lastName", placeholder: "Last Name", value: this.state.text }),
-                    React.createElement("br", null),
-                    React.createElement("input", { type: "text", name: "email", placeholder: "Email", value: this.state.text }),
-                    React.createElement("br", null),
+                    React.createElement('input', { type: 'text', name: 'firstName', placeholder: 'First Name', value: this.state.text }),
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', name: 'lastName', placeholder: 'Last Name', value: this.state.text }),
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', name: 'email', placeholder: 'Email', value: this.state.text }),
+                    React.createElement('br', null),
                     React.createElement(
-                        "button",
+                        'button',
                         null,
-                        "Submit"
+                        'Submit'
                     ),
                     this.state.submitted ? React.createElement(
-                        "p",
+                        'p',
                         null,
-                        "Thanks!"
-                    ) : React.createElement("div", null)
+                        'Thanks!'
+                    ) : React.createElement('div', null)
                 )
             );
         }

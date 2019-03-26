@@ -206,54 +206,22 @@ var OrderTable = function (_React$Component4) {
   return OrderTable;
 }(React.Component);
 
-var Order = function (_React$Component5) {
-  _inherits(Order, _React$Component5);
-
-  function Order() {
-    _classCallCheck(this, Order);
-
-    return _possibleConstructorReturn(this, (Order.__proto__ || Object.getPrototypeOf(Order)).apply(this, arguments));
-  }
-
-  _createClass(Order, [{
-    key: 'render',
-    value: function render() {
-      return React.createElement(
-        'div',
-        null,
-        React.createElement(
-          'h1',
-          null,
-          'Place an Order!'
-        ),
-        React.createElement(
-          'h2',
-          null,
-          'Fill out the form below'
-        )
-      );
-    }
-  }]);
-
-  return Order;
-}(React.Component);
-
-var OrderAdd = function (_React$Component6) {
-  _inherits(OrderAdd, _React$Component6);
+var OrderAdd = function (_React$Component5) {
+  _inherits(OrderAdd, _React$Component5);
 
   function OrderAdd() {
     _classCallCheck(this, OrderAdd);
 
-    var _this6 = _possibleConstructorReturn(this, (OrderAdd.__proto__ || Object.getPrototypeOf(OrderAdd)).call(this));
+    var _this5 = _possibleConstructorReturn(this, (OrderAdd.__proto__ || Object.getPrototypeOf(OrderAdd)).call(this));
 
-    _this6.handleSubmit = _this6.handleSubmit.bind(_this6);
-    return _this6;
+    _this5.handleSubmit = _this5.handleSubmit.bind(_this5);
+    return _this5;
   }
 
   _createClass(OrderAdd, [{
     key: 'handleSubmit',
-    value: function handleSubmit(e) {
-      e.preventDefault();
+    value: function handleSubmit(event) {
+      event.preventDefault();
       var form = document.forms.orderAdd;
       this.props.createOrder({
         orderNumber: form.orderNumber.value,
@@ -287,18 +255,18 @@ var OrderAdd = function (_React$Component6) {
   return OrderAdd;
 }(React.Component);
 
-var OrderPage = function (_React$Component7) {
-  _inherits(OrderPage, _React$Component7);
+var OrderPage = function (_React$Component6) {
+  _inherits(OrderPage, _React$Component6);
 
   function OrderPage() {
     _classCallCheck(this, OrderPage);
 
-    var _this7 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
+    var _this6 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
 
-    _this7.state = { foods: foods, orders: [] };
-    setTimeout(_this7.createFoods.bind(_this7), 2000);
-    _this7.createOrder = _this7.createOrder.bind(_this7);
-    return _this7;
+    _this6.state = { foods: foods, orders: [] };
+    setTimeout(_this6.createFoods.bind(_this6), 2000);
+    _this6.createOrder = _this6.createOrder.bind(_this6);
+    return _this6;
   }
 
   _createClass(OrderPage, [{
@@ -344,8 +312,16 @@ var OrderPage = function (_React$Component7) {
         ),
         React.createElement(FoodTable, { foods: this.state.foods }),
         React.createElement('hr', null),
-        React.createElement(Order, null),
-        React.createElement('hr', null),
+        React.createElement(
+          'h1',
+          null,
+          'Place an Order!'
+        ),
+        React.createElement(
+          'h2',
+          null,
+          'Fill out the form below'
+        ),
         React.createElement(OrderAdd, { createOrder: this.createOrder }),
         React.createElement('hr', null),
         React.createElement(

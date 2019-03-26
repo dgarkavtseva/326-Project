@@ -87,27 +87,13 @@ class OrderTable extends React.Component {
     );
   }
 }
-
-class Order extends React.Component {
-  
-  render() {
-    return (
-      <div>
-        <h1>Place an Order!</h1>
-        <h2>Fill out the form below</h2>
-        
-        
-      </div>
-    );  }
-}
 class OrderAdd extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit(event) {
+    event.preventDefault();
     let form = document.forms.orderAdd;
     this.props.createOrder({
       orderNumber: form.orderNumber.value, 
@@ -165,9 +151,8 @@ class OrderPage extends React.Component {
         <h2>These are the available options for grab and go today!</h2>
         <FoodTable foods={this.state.foods} />
         <hr />
-        <Order />
-        <hr />
-        
+        <h1>Place an Order!</h1>
+        <h2>Fill out the form below</h2>        
         <OrderAdd createOrder={this.createOrder} />
         <hr />
         <h3>Here are your current orders:</h3>

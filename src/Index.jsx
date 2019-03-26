@@ -13,8 +13,10 @@ class MyComponent extends React.Component {
 
     submitForm(event) {
         event.preventDefault();
-        console.log("PEBIS");
         this.setState({submitted: true});
+        emailForm.firstName.value = '';
+        emailForm.lastName.value = '';
+        emailForm.email.value = '';
     }
 
     render() {
