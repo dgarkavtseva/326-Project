@@ -1,4 +1,4 @@
-const issues = [
+const reviews = [
   {
     name: "Joe Shmoe",
     created: new Date("2019-03-24"),
@@ -27,21 +27,21 @@ class SearchBar extends React.Component {
   }
 }
 
-const IssueRow = (props) => (
+const ReviewRow = (props) => (
   <tr>
-    <td>{props.issue.name}</td>
-    <td>{props.issue.created.toDateString()}</td>
-    <td>{props.issue.time}</td>
-    <td>{props.issue.orderFrom}</td>
-    <td>{props.issue.orderItem}</td>
-    <td>{props.issue.driver}</td>
-    <td>{props.issue.review}</td>
+    <td>{props.review.name}</td>
+    <td>{props.review.created.toDateString()}</td>
+    <td>{props.review.time}</td>
+    <td>{props.review.orderFrom}</td>
+    <td>{props.review.orderItem}</td>
+    <td>{props.review.driver}</td>
+    <td>{props.review.review}</td>
   </tr>
 );
 
 function ReviewTable(props) {
-  const issueRows = props.issues.map(issue => (
-    <IssueRow key={issue.id} issue={issue} />
+  const reviewRows = props.reviews.map(review => (
+    <ReviewRow key={review.id} review={review} />
   ));
   return (
     <table className="bordered-table">
@@ -56,7 +56,7 @@ function ReviewTable(props) {
           <th>Review</th>
         </tr>
       </thead>
-      <tbody>{issueRows}</tbody>
+      <tbody>{reviewRows}</tbody>
     </table>
   );
 }
@@ -69,8 +69,8 @@ class ReviewAdd extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let form = document.forms.issueAdd;
-    this.props.createIssue({
+    let form = document.forms.reviewAdd;
+    this.props.createReview({
       name: form.name.value,
       time: form.time.value,
       orderFrom: form.orderFrom.value,
@@ -91,7 +91,7 @@ class ReviewAdd extends React.Component {
   render() {
     return (
       <div>
-        <form name="issueAdd" onSubmit={this.handleSubmit}>
+        <form name="reviewAdd" onSubmit={this.handleSubmit}>
           <input type="text" name="name" placeholder="Name" />
           <input type="text" name="time" placeholder="Time" />
           <input type="text" name="orderFrom" placeholder="Ordered From" />
@@ -108,9 +108,9 @@ class ReviewAdd extends React.Component {
 class ReviewList extends React.Component {
   constructor() {
     super();
-    this.state = { issues: [] };
+    this.state = { reviews: [] };
 
-    this.createIssue = this.createIssue.bind(this);
+    this.createReview = this.createReview.bind(this);
   }
 
   componentDidMount() {
@@ -120,16 +120,16 @@ class ReviewList extends React.Component {
   loadData() {
     setTimeout(() => {
       this.setState({
-        issues: issues
+        reviews: reviews
       });
     }, 500);
   }
 
-  createIssue(newIssue) {
-    const newIssues = this.state.issues.slice();
-    newIssue.id = this.state.issues.length + 1;
-    newIssues.push(newIssue);
-    this.setState({ issues: newIssues });
+  createReview(newReview) {
+    const newReviews = this.state.reviews.slice();
+    newReview.id = this.state.reviews.length + 1;
+    newReviews.push(newReview);
+    this.setState({ reviews: newReviews });
   }
 
   render() {
@@ -138,9 +138,9 @@ class ReviewList extends React.Component {
         <h1>Reviews</h1>
         <SearchBar />
         <hr />
-        <ReviewTable issues={this.state.issues} />
+        <ReviewTable reviews={this.state.reviews} />
         <hr />
-        <ReviewAdd createIssue={this.createIssue} />
+        <ReviewAdd createReview={this.createReview} />
       </div>
     );
   }
