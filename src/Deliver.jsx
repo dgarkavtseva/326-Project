@@ -1,21 +1,5 @@
 
 const contentNode = document.getElementById("contents");
-
-const foods = [
-  {
-    order: 1, food: 'Chicken Tenders', diningHall: 'Worcester',
-  },
-  {
-    order: 2, food: 'Mac and Cheese', diningHall: 'Berk',
-  },
-  {
-    order: 3, food: 'Orange Chicken', diningHall: 'Frank',
-  },
-  {
-    order: 4, food: 'Sushi', diningHall: 'Worcester',   
-  }
- ];
-
 const orders = [
   {
     orderNumber: "2", status: 'pending', deliveryAdress: "Elm", orderID: 50, Deliverer: "NA", 
@@ -24,19 +8,6 @@ const orders = [
   }
 ];
  
-class FoodRow extends React.Component {
-  render() {
-    const food = this.props.food;
-    return (
-      <tr>
-        <td>{food.order}</td>
-        <td>{food.food}</td>
-        <td>{food.diningHall}</td>
-      </tr>
-    );
-  }
-}
-
 class OrderRow extends React.Component {
   render() {
     const order = this.props.order;
@@ -52,25 +23,6 @@ class OrderRow extends React.Component {
   }
 }
 
-class FoodTable extends React.Component {
-  render() {
-    const foodRows = this.props.foods.map(food => (
-      <FoodRow key={food.order} food={food} />
-    ));
-    return (
-      <table className="bordered-table">
-        <thead>
-          <tr>
-            <th>Order Number</th>
-            <th>Food</th>
-            <th>Dining Hall</th>
-          </tr>
-        </thead>
-        <tbody>{foodRows}</tbody>
-      </table>
-    );
-  }
-}
 
 class OrderTable extends React.Component {
   render() {
@@ -125,20 +77,14 @@ class OrderAdd extends React.Component {
 class OrderPage extends React.Component {
   constructor() {
     super();
-    this.state = { foods: foods, orders: orders };
-    setTimeout(this.createFoods.bind(this), 2000);
+    this.state = {orders: orders };
     setTimeout(this.createOrderInit.bind(this), 2000);
     this.createOrder = this.createOrder.bind(this);
   }
 
-  createItem(newFood) {
-    const newFoods = this.state.foods.slice();
-    newFood.order = this.state.foods.length + 1;
-    newFoods.push(newFood);
-    this.setState({ foods: newFoods });
-  }
+ 
   createOrder(newOrder) {
-    if(newOrder.orderNumber != "" && newOrder.deliveryAdress != ""){
+    if(newOrder.orderID != "" && newOrder.deliveryAdress != ""){
       const newOrders = this.state.orders.slice();
       let exists = false;
       newOrders.forEach(function match(element){
@@ -157,13 +103,7 @@ class OrderPage extends React.Component {
       this.setState({ orders: newOrders });
     }
   }
-  createFoods() {
-    this.createItem({
-      order: 5,
-      food: 'Pasta',
-      diningHall: 'Hamp'
-    });
-  }
+
   createOrderInit() {
     this.createOrder({
       orderNumber: 1,
