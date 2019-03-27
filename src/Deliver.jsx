@@ -18,7 +18,9 @@ const foods = [
 
 const orders = [
   {
-    order: undefined, status: undefined, deliveryAddress: undefined,
+    orderNumber: "2", status: 'pending', deliveryAdress: "Elm", orderID: 50, Deliverer: "NA", 
+  }, {
+    orderNumber: "5", status: 'pending', deliveryAdress: "Van Meter", orderID: 51, Deliverer: "NA",
   }
 ];
  
@@ -43,6 +45,8 @@ class OrderRow extends React.Component {
         <td>{order.orderNumber}</td>
         <td>{order.status}</td>
         <td>{order.deliveryAdress}</td>
+        <td>{order.orderID}</td>
+        <td>{order.Deliverer}</td>
       </tr>
     );
   }
@@ -77,9 +81,11 @@ class OrderTable extends React.Component {
       <table className="bordered-table">
         <thead>
           <tr>
-            <th>Order Number</th>
+            <th>Menu Item</th>
             <th>Status</th>
             <th>Delivery Address</th>
+            <th>Order ID</th>
+            <th>Deliverer</th>
           </tr>
         </thead>
         <tbody>{OrderRows}</tbody>
@@ -96,8 +102,8 @@ class OrderAdd extends React.Component {
     event.preventDefault();
     let form = document.forms.orderAdd;
     this.props.createOrder({
-      orderNumber: form.orderNumber.value, 
-      deliveryAdress: form.deliveryAdress.value,
+      Deliverer: form.deliveryAdress.value, 
+      orderID: form.orderNumber.value,
       status: 'Pending'
     });
     form.orderNumber.value = '';
@@ -108,8 +114,8 @@ class OrderAdd extends React.Component {
     return (
       <div>
         <form name="orderAdd" onSubmit={this.handleSubmit}>
-          <input type="text" name="orderNumber" placeholder="Order Number" />
-          <input type="text" name="deliveryAdress" placeholder="Your Address" />
+          <input type="text" name="deliveryAdress" placeholder="Name" />
+          <input type="text" name="orderNumber" placeholder="Order ID" />
           <button>Add</button>
         </form>
       </div>
@@ -119,8 +125,9 @@ class OrderAdd extends React.Component {
 class OrderPage extends React.Component {
   constructor() {
     super();
-    this.state = { foods: foods, orders: [] };
+    this.state = { foods: foods, orders: orders };
     setTimeout(this.createFoods.bind(this), 2000);
+    setTimeout(this.createOrderInit.bind(this), 2000);
     this.createOrder = this.createOrder.bind(this);
   }
 
@@ -133,8 +140,20 @@ class OrderPage extends React.Component {
   createOrder(newOrder) {
     if(newOrder.orderNumber != "" && newOrder.deliveryAdress != ""){
       const newOrders = this.state.orders.slice();
-      newOrder.order = this.state.orders.length + 1;
-      newOrders.push(newOrder);
+      let exists = false;
+      newOrders.forEach(function match(element){
+
+        if(element.orderID * 2 / 2 === newOrder.orderID * 2 / 2){
+          element.status = "accepted";
+          element.Deliverer = newOrder.Deliverer;
+          exists = true;
+        }
+      });
+      if(!exists){
+        newOrder.order = this.state.orders.length + 1;
+        newOrders.push(newOrder);
+        
+      }
       this.setState({ orders: newOrders });
     }
   }
@@ -145,21 +164,26 @@ class OrderPage extends React.Component {
       diningHall: 'Hamp'
     });
   }
+  createOrderInit() {
+    this.createOrder({
+      orderNumber: 1,
+      status: "pending",
+      deliveryAdress: "Maple", 
+      orderID: 52, Deliverer: "NA"
+    });
+  }
+  
 
   render() {
     return (
       <div>
-        <h1>Menu</h1>
-        <h2>These are the available options for grab and go today!</h2>
-        <FoodTable foods={this.state.foods} />
-        <hr />
-        <h1>Place an Order!</h1>
-        <h2>Fill out the form below</h2>        
-        <OrderAdd createOrder={this.createOrder} />
-        <hr />
-        <h3>Here are your current orders:</h3>
-        <OrderTable orders={this.state.orders} />
         
+        <h2>Select an order to fulfill</h2>        
+        
+        <hr />
+        <h3>Current orders:</h3>
+        <OrderTable orders={this.state.orders} />
+        <OrderAdd createOrder={this.createOrder} />
       </div>
     );
   }

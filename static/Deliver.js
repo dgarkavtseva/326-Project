@@ -21,7 +21,9 @@ var foods = [{
 }];
 
 var orders = [{
-  order: undefined, status: undefined, deliveryAddress: undefined
+  orderNumber: "2", status: 'pending', deliveryAdress: "Elm", orderID: 50, Deliverer: "NA"
+}, {
+  orderNumber: "5", status: 'pending', deliveryAdress: "Van Meter", orderID: 51, Deliverer: "NA"
 }];
 
 var FoodRow = function (_React$Component) {
@@ -92,6 +94,16 @@ var OrderRow = function (_React$Component2) {
           'td',
           null,
           order.deliveryAdress
+        ),
+        React.createElement(
+          'td',
+          null,
+          order.orderID
+        ),
+        React.createElement(
+          'td',
+          null,
+          order.Deliverer
         )
       );
     }
@@ -180,7 +192,7 @@ var OrderTable = function (_React$Component4) {
             React.createElement(
               'th',
               null,
-              'Order Number'
+              'Menu Item'
             ),
             React.createElement(
               'th',
@@ -191,6 +203,16 @@ var OrderTable = function (_React$Component4) {
               'th',
               null,
               'Delivery Address'
+            ),
+            React.createElement(
+              'th',
+              null,
+              'Order ID'
+            ),
+            React.createElement(
+              'th',
+              null,
+              'Deliverer'
             )
           )
         ),
@@ -224,8 +246,8 @@ var OrderAdd = function (_React$Component5) {
       event.preventDefault();
       var form = document.forms.orderAdd;
       this.props.createOrder({
-        orderNumber: form.orderNumber.value,
-        deliveryAdress: form.deliveryAdress.value,
+        Deliverer: form.deliveryAdress.value,
+        orderID: form.orderNumber.value,
         status: 'Pending'
       });
       form.orderNumber.value = '';
@@ -240,8 +262,8 @@ var OrderAdd = function (_React$Component5) {
         React.createElement(
           'form',
           { name: 'orderAdd', onSubmit: this.handleSubmit },
-          React.createElement('input', { type: 'text', name: 'orderNumber', placeholder: 'Order Number' }),
-          React.createElement('input', { type: 'text', name: 'deliveryAdress', placeholder: 'Your Address' }),
+          React.createElement('input', { type: 'text', name: 'deliveryAdress', placeholder: 'Name' }),
+          React.createElement('input', { type: 'text', name: 'orderNumber', placeholder: 'Order ID' }),
           React.createElement(
             'button',
             null,
@@ -263,8 +285,9 @@ var OrderPage = function (_React$Component6) {
 
     var _this6 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
 
-    _this6.state = { foods: foods, orders: [] };
+    _this6.state = { foods: foods, orders: orders };
     setTimeout(_this6.createFoods.bind(_this6), 2000);
+    setTimeout(_this6.createOrderInit.bind(_this6), 2000);
     _this6.createOrder = _this6.createOrder.bind(_this6);
     return _this6;
   }
@@ -282,8 +305,19 @@ var OrderPage = function (_React$Component6) {
     value: function createOrder(newOrder) {
       if (newOrder.orderNumber != "" && newOrder.deliveryAdress != "") {
         var newOrders = this.state.orders.slice();
-        newOrder.order = this.state.orders.length + 1;
-        newOrders.push(newOrder);
+        var exists = false;
+        newOrders.forEach(function match(element) {
+
+          if (element.orderID * 2 / 2 === newOrder.orderID * 2 / 2) {
+            element.status = "accepted";
+            element.Deliverer = newOrder.Deliverer;
+            exists = true;
+          }
+        });
+        if (!exists) {
+          newOrder.order = this.state.orders.length + 1;
+          newOrders.push(newOrder);
+        }
         this.setState({ orders: newOrders });
       }
     }
@@ -297,41 +331,34 @@ var OrderPage = function (_React$Component6) {
       });
     }
   }, {
+    key: 'createOrderInit',
+    value: function createOrderInit() {
+      this.createOrder({
+        orderNumber: 1,
+        status: "pending",
+        deliveryAdress: "Maple",
+        orderID: 52, Deliverer: "NA"
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
         'div',
         null,
         React.createElement(
-          'h1',
-          null,
-          'Menu'
-        ),
-        React.createElement(
           'h2',
           null,
-          'These are the available options for grab and go today!'
+          'Select an order to fulfill'
         ),
-        React.createElement(FoodTable, { foods: this.state.foods }),
-        React.createElement('hr', null),
-        React.createElement(
-          'h1',
-          null,
-          'Place an Order!'
-        ),
-        React.createElement(
-          'h2',
-          null,
-          'Fill out the form below'
-        ),
-        React.createElement(OrderAdd, { createOrder: this.createOrder }),
         React.createElement('hr', null),
         React.createElement(
           'h3',
           null,
-          'Here are your current orders:'
+          'Current orders:'
         ),
-        React.createElement(OrderTable, { orders: this.state.orders })
+        React.createElement(OrderTable, { orders: this.state.orders }),
+        React.createElement(OrderAdd, { createOrder: this.createOrder })
       );
     }
   }]);
