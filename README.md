@@ -1,4 +1,4 @@
-# Application Name
+# Dine Online
 
 Rename the above with the name of your application.
 
