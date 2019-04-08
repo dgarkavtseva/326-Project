@@ -1,0 +1,2 @@
+Calling a post method: curl -X POST -H 'Content-Type:application/json' http://localhost:3000/order/orderDB  -d '{"username":"mario", "password":"secret"}'
+calling a get method: curl http://localhost:3000/order/orderDB

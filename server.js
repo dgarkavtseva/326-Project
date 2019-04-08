@@ -7,17 +7,37 @@ app.use(express.static('static'));
 app.use(bodyParser.json());
 
 const MongoClient = require('mongodb').MongoClient;
-app.get('/order/orderDB', (req, res) => {
-  console.log("order request 3");
-//    res.json = {test:"hello"};
-   const metadata = { total_count: 5 };
-   res.json({ _metadata: metadata, records: "yah" });
- });
-
 
 let orderDB;
 let reviewDB;
 let userSignUpDB;
+
+app.get('/order/orderDB', (req, res) => {
+  console.log("Order get v7");
+  orderDB.collection('orders').find().toArray().then(orders => {
+    res.json(orders);
+  }).catch(error => {
+    console.log(error);
+    res.status(500).json({ message: `Internal Server Error: ${error}` });
+  });
+ });
+ 
+ 
+ app.post('/order/orderDB', (req, res) => {
+  const newOrder = req.body;
+  console.log(newOrder);
+  orderDB.collection('orders').insertOne(newOrder).then(result =>
+    orderDB.collection('orders').find({ _id: result.insertedId }).limit(1).next()
+  ).then(newOrder => {
+    res.json(newOrder);
+  }).catch(error => {
+    //this isnt acttually doing anything rn since we arent validating and non-complete entries can be added to the database
+    console.log(error);
+    res.status(500).json({ message: `Internal Server Error: ${error}` });
+  });
+ });
+
+
 
 MongoClient.connect('mongodb://localhost', { useNewUrlParser: true }).then(connection => {
     orderDB = connection.db('CS326-DataBase-Orders');
