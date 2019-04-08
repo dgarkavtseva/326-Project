@@ -8,6 +8,13 @@ app.use(bodyParser.json());
 
 const MongoClient = require('mongodb').MongoClient;
 
+app.listen(3000, function () {
+    console.log('App started on port 3000');
+});
+//////////
+
+
+
 let orderDB;
 let reviewDB;
 let userSignUpDB;
