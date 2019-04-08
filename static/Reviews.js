@@ -314,7 +314,10 @@ var ReviewList = function (_React$Component3) {
   return ReviewList;
 }(_react2.default.Component);
 
+IssueList.propTypes = {
+  location: _react2.default.PropTypes.object.isRequired,
+  router: _react2.default.PropTypes.object
+};
+
 // This renders the JSX component inside the content node:
-
-
-ReactDOM.render(_react2.default.createElement(ReviewList, null), contentNode);
+//ReactDOM.render(<ReviewList />, contentNode);

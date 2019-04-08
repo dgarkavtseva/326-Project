@@ -172,5 +172,10 @@ class ReviewList extends React.Component {
   }
 }
 
+IssueList.propTypes = {
+  location: React.PropTypes.object.isRequired,
+  router: React.PropTypes.object,
+};
+
 // This renders the JSX component inside the content node:
-ReactDOM.render(<ReviewList />, contentNode);
+//ReactDOM.render(<ReviewList />, contentNode);
