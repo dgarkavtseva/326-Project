@@ -7,7 +7,12 @@ app.use(express.static('static'));
 app.use(bodyParser.json());
 
 const MongoClient = require('mongodb').MongoClient;
-
+app.get('/order/orderDB', (req, res) => {
+  console.log("order request 3");
+//    res.json = {test:"hello"};
+   const metadata = { total_count: 5 };
+   res.json({ _metadata: metadata, records: "yah" });
+ });
 
 
 let orderDB;
