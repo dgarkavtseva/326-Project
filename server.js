@@ -25,7 +25,6 @@ app.get('/order/orderDB', (req, res) => {
  
  app.post('/order/orderDB', (req, res) => {
   const newOrder = req.body;
-  console.log(newOrder);
   orderDB.collection('orders').insertOne(newOrder).then(result =>
     orderDB.collection('orders').find({ _id: result.insertedId }).limit(1).next()
   ).then(newOrder => {
