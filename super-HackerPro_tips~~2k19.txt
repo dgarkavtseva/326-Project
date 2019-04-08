@@ -1,2 +1,6 @@
 Calling a post method: curl -X POST -H 'Content-Type:application/json' http://localhost:3000/order/orderDB  -d '{"username":"mario", "password":"secret"}'
 calling a get method: curl http://localhost:3000/order/orderDB
+
+
+review
+curl -X POST -H 'Content-Type:application/json' http://localhost:3000/review/reviewDB  -d '{"name":"matt", "created" :"yes", "time":"2pm", "orderFrom":"baby berk", "orderItem": "big food", "driver": "a guy", "review":"good"}'

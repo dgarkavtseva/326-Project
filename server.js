@@ -39,7 +39,7 @@ app.get('/order/orderDB', (req, res) => {
  app.get('/review/reviewDB', (req, res) => {
   console.log("Review get v1");
   reviewDB.collection('reviews').find().toArray().then(reviews => {
-    res.json(reveiws);
+    res.json(reviews);
   }).catch(error => {
     console.log(error);
     res.status(500).json({ message: `Internal Server Error: ${error}` });
