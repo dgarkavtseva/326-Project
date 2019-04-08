@@ -1,25 +1,8 @@
-const reviews = [
-  {
-    name: "Joe Shmoe",
-    created: new Date("2019-03-24"),
-    time: "4:00pm",
-    orderFrom: "Baby Berk 1",
-    orderItem: "Hampshire Burger",
-    driver: "Bob Bobert",
-    review: "Food arrived warm, but in a open container, so the burger was tossed around and had fallen apart before it arrived"
-  },
-  {
-    name: "Bob Bobert",
-    created: new Date("2019-03-25"),
-    time: "1:00pm",
-    orderFrom: "Frank Grab & Go",
-    orderItem: "Orange Chicken",
-    driver: "Joe Shmoe",
-    review: "Food arrived warm, and within 15 minutes of placing my order"
-  }
-];
-
 var contentNode = document.getElementById("contents");
+
+import React from 'react';
+import 'isomorphic-fetch';
+import { Link } from 'react-router';
 
 class SearchBar extends React.Component {
   render() {
@@ -29,6 +12,7 @@ class SearchBar extends React.Component {
 
 const ReviewRow = (props) => (
   <tr>
+    <td><Link to={`/reviews/${props.review._id}`}>{props.review._id.substr(-4)}</Link></td>
     <td>{props.review.name}</td>
     <td>{props.review.created.toDateString()}</td>
     <td>{props.review.time}</td>
@@ -117,19 +101,61 @@ class ReviewList extends React.Component {
     this.loadData();
   }
 
+  componentDidUpdate(prevProps) {
+    const oldQuery = prevProps.location.query;
+    const newQuery = this.props.location.query;
+    if (oldQuery.status === newQuery.status) {
+      return;
+    }
+    this.loadData();
+  }
+
   loadData() {
-    setTimeout(() => {
-      this.setState({
-        reviews: reviews
-      });
-    }, 500);
+    fetch(`/api/reviews${this.props.location.search}`).then(response => {
+      if (response.ok) {
+        response.json().then(data => {
+          console.log("Total count of records:", data._metadata.total_count);
+          data.records.forEach(review => {
+            review.created = new Date(review.created);
+            if (review.completionDate)
+              review.completionDate = new Date(review.completionDate);
+          });
+          this.setState({ reviews: data.records });
+        });
+      } else {
+        response.json().then(error => {
+          alert("Failed to fetch reviews:" + error.message)
+        });
+      }
+    }).catch(err => {
+      alert("Error in fetching data from server:", err);
+    });
   }
 
   createReview(newReview) {
-    const newReviews = this.state.reviews.slice();
-    newReview.id = this.state.reviews.length + 1;
-    newReviews.push(newReview);
-    this.setState({ reviews: newReviews });
+    fetch('/api/reviews', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newReview),
+    })
+      .then(res => {
+        if (res.ok) {
+          res.json()
+            .then(updatedReview => {
+              updatedReview.created = new Date(updatedReview.created);
+              if (updatedReview.completionDate)
+                updatedReview.completionDate = new Date(updatedReview.completionDate);
+              const newReview = this.state.reviews.concat(updatedReview);
+              this.setState({ reviews: newReviews });
+            });
+        }
+        else {
+          res.json()
+            .then(error => {
+              alert('Failed to add review: ' + error.message);
+            });
+        }
+      });
   }
 
   render() {
