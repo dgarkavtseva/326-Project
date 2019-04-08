@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -10,15 +10,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var contentNode = document.getElementById("contents");
 
-var foods = [{
-  order: 1, food: 'Chicken Tenders', diningHall: 'Worcester'
-}, {
-  order: 2, food: 'Mac and Cheese', diningHall: 'Berk'
-}, {
-  order: 3, food: 'Orange Chicken', diningHall: 'Frank'
-}, {
-  order: 4, food: 'Sushi', diningHall: 'Worcester'
-}];
+/*const foods = [
+  {
+    order: 1, food: 'Chicken Tenders', diningHall: 'Worcester',
+  },
+  {
+    order: 2, food: 'Mac and Cheese', diningHall: 'Berk',
+  },
+  {
+    order: 3, food: 'Orange Chicken', diningHall: 'Frank',
+  },
+  {
+    order: 4, food: 'Sushi', diningHall: 'Worcester',   
+  }
+ ];*/
 
 var orders = [{
   order: undefined, status: undefined, deliveryAddress: undefined
@@ -34,24 +39,24 @@ var FoodRow = function (_React$Component) {
   }
 
   _createClass(FoodRow, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       var food = this.props.food;
       return React.createElement(
-        'tr',
+        "tr",
         null,
         React.createElement(
-          'td',
+          "td",
           null,
           food.order
         ),
         React.createElement(
-          'td',
+          "td",
           null,
           food.food
         ),
         React.createElement(
-          'td',
+          "td",
           null,
           food.diningHall
         )
@@ -72,24 +77,24 @@ var OrderRow = function (_React$Component2) {
   }
 
   _createClass(OrderRow, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       var order = this.props.order;
       return React.createElement(
-        'tr',
+        "tr",
         null,
         React.createElement(
-          'td',
+          "td",
           null,
           order.orderNumber
         ),
         React.createElement(
-          'td',
+          "td",
           null,
           order.status
         ),
         React.createElement(
-          'td',
+          "td",
           null,
           order.deliveryAdress
         )
@@ -110,39 +115,39 @@ var FoodTable = function (_React$Component3) {
   }
 
   _createClass(FoodTable, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       var foodRows = this.props.foods.map(function (food) {
         return React.createElement(FoodRow, { key: food.order, food: food });
       });
       return React.createElement(
-        'table',
-        { className: 'bordered-table' },
+        "table",
+        { className: "bordered-table" },
         React.createElement(
-          'thead',
+          "thead",
           null,
           React.createElement(
-            'tr',
+            "tr",
             null,
             React.createElement(
-              'th',
+              "th",
               null,
-              'Order Number'
+              "Order Number"
             ),
             React.createElement(
-              'th',
+              "th",
               null,
-              'Food'
+              "Food"
             ),
             React.createElement(
-              'th',
+              "th",
               null,
-              'Dining Hall'
+              "Dining Hall"
             )
           )
         ),
         React.createElement(
-          'tbody',
+          "tbody",
           null,
           foodRows
         )
@@ -163,39 +168,39 @@ var OrderTable = function (_React$Component4) {
   }
 
   _createClass(OrderTable, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       var OrderRows = this.props.orders.map(function (order) {
         return React.createElement(OrderRow, { key: order.order, order: order });
       });
       return React.createElement(
-        'table',
-        { className: 'bordered-table' },
+        "table",
+        { className: "bordered-table" },
         React.createElement(
-          'thead',
+          "thead",
           null,
           React.createElement(
-            'tr',
+            "tr",
             null,
             React.createElement(
-              'th',
+              "th",
               null,
-              'Order Number'
+              "Order Number"
             ),
             React.createElement(
-              'th',
+              "th",
               null,
-              'Status'
+              "Status"
             ),
             React.createElement(
-              'th',
+              "th",
               null,
-              'Delivery Address'
+              "Delivery Address"
             )
           )
         ),
         React.createElement(
-          'tbody',
+          "tbody",
           null,
           OrderRows
         )
@@ -219,7 +224,52 @@ var OrderAdd = function (_React$Component5) {
   }
 
   _createClass(OrderAdd, [{
-    key: 'handleSubmit',
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var oldQuery = prevProps.location.query;
+      var newQuery = this.props.location.query;
+      if (oldQuery.status === newQuery.status) {
+        return;
+      }
+      this.loadData();
+    }
+  }, {
+    key: "loadData",
+    value: function loadData() {
+      var _this6 = this;
+
+      // Note: React Router automatically adds a "location" property to a react
+      //       object's "props". The object that the "location" property refers
+      //       to also has a "search" property which is the query string of the
+      //       URL, including the '?' character  -  which is why we do not need
+      //       to add it to the string in the `fetch()` call.
+      fetch("/order/orderDB" + this.props.location.search).then(function (response) {
+        if (response.ok) {
+          response.json().then(function (data) {
+            //console.log("Total count of records:", data._metadata.total_count);
+            // data.records.forEach(order => {
+            //   order.created = new Date(issue.created);
+            //   if (issue.completionDate)
+            //     issue.completionDate = new Date(issue.completionDate);
+            // });
+            _this6.setState({ orders: data.records });
+          });
+        } else {
+          response.json().then(function (error) {
+            alert("Failed to fetch issues:" + error.message);
+          });
+        }
+      }).catch(function (err) {
+        alert("Error in fetching data from server:", err);
+      });
+    }
+  }, {
+    key: "handleSubmit",
     value: function handleSubmit(event) {
       event.preventDefault();
       var form = document.forms.orderAdd;
@@ -232,20 +282,45 @@ var OrderAdd = function (_React$Component5) {
       form.deliveryAdress.value = '';
     }
   }, {
-    key: 'render',
+    key: "createOrder",
+    value: function createOrder(newIssue) {
+      var _this7 = this;
+
+      fetch('/order/orderDB', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newIssue)
+      }).then(function (res) {
+        if (res.ok) {
+          res.json().then(function (updatedIssue) {
+            // updatedIssue.created = new Date(updatedIssue.created);
+            // if (updatedIssue.completionDate)
+            //   updatedIssue.completionDate = new Date(updatedIssue.completionDate);
+            // const newIssues = this.state.issues.concat(updatedIssue);
+            _this7.setState({ orders: newIssues });
+          });
+        } else {
+          res.json().then(function (error) {
+            alert('Failed to add issue: ' + error.message);
+          });
+        }
+      });
+    }
+  }, {
+    key: "render",
     value: function render() {
       return React.createElement(
-        'div',
+        "div",
         null,
         React.createElement(
-          'form',
-          { name: 'orderAdd', onSubmit: this.handleSubmit },
-          React.createElement('input', { type: 'text', name: 'orderNumber', placeholder: 'Order Number' }),
-          React.createElement('input', { type: 'text', name: 'deliveryAdress', placeholder: 'Your Address' }),
+          "form",
+          { name: "orderAdd", onSubmit: this.handleSubmit },
+          React.createElement("input", { type: "text", name: "orderNumber", placeholder: "Order Number" }),
+          React.createElement("input", { type: "text", name: "deliveryAdress", placeholder: "Your Address" }),
           React.createElement(
-            'button',
+            "button",
             null,
-            'Add'
+            "Add"
           )
         )
       );
@@ -261,15 +336,15 @@ var OrderPage = function (_React$Component6) {
   function OrderPage() {
     _classCallCheck(this, OrderPage);
 
-    var _this6 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
+    var _this8 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
 
-    _this6.state = { foods: foods, orders: [] };
-    _this6.createOrder = _this6.createOrder.bind(_this6);
-    return _this6;
+    _this8.state = { foods: foods, orders: [] };
+    _this8.createOrder = _this8.createOrder.bind(_this8);
+    return _this8;
   }
 
   _createClass(OrderPage, [{
-    key: 'createItem',
+    key: "createItem",
     value: function createItem(newFood) {
       var newFoods = this.state.foods.slice();
       newFood.order = this.state.foods.length + 1;
@@ -277,7 +352,7 @@ var OrderPage = function (_React$Component6) {
       this.setState({ foods: newFoods });
     }
   }, {
-    key: 'createOrder',
+    key: "createOrder",
     value: function createOrder(newOrder) {
       if (newOrder.orderNumber != "" && newOrder.deliveryAdress != "") {
         var newOrders = this.state.orders.slice();
@@ -287,46 +362,43 @@ var OrderPage = function (_React$Component6) {
       }
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       return React.createElement(
-        'div',
+        "div",
         null,
         React.createElement(
-          'h1',
+          "h1",
           null,
-          'Menu'
+          "Menu"
         ),
         React.createElement(
-          'h2',
+          "h2",
           null,
-          'These are the available options for grab and go today!'
+          "These are the available options for grab and go today!"
         ),
         React.createElement(FoodTable, { foods: this.state.foods }),
-        React.createElement('hr', null),
+        React.createElement("hr", null),
         React.createElement(
-          'h1',
+          "h1",
           null,
-          'Place an Order!'
+          "Place an Order!"
         ),
         React.createElement(
-          'h2',
+          "h2",
           null,
-          'Fill out the form below'
-        ),
-        React.createElement(OrderAdd, { createOrder: this.createOrder }),
-        React.createElement('hr', null),
-        React.createElement(
-          'h3',
-          null,
-          'Here are your current orders:'
-        ),
-        React.createElement(OrderTable, { orders: this.state.orders })
+          "Fill out the form below"
+        )
       );
     }
   }]);
 
   return OrderPage;
 }(React.Component);
+// OrderList.propTypes = {
+//   location: React.PropTypes.object.isRequired,
+//   router: React.PropTypes.object,
+// };
+
 
 ReactDOM.render(React.createElement(OrderPage, null), contentNode);
