@@ -10,10 +10,9 @@ const MongoClient = require('mongodb').MongoClient;
 
 let orderDB;
 let reviewDB;
-let userSignUpDB;
+let userDB;
 
 app.get('/order/orderDB', (req, res) => {
-  console.log("Order get v7");
   orderDB.collection('orders').find().toArray().then(orders => {
     res.json(orders);
   }).catch(error => {
@@ -37,7 +36,6 @@ app.get('/order/orderDB', (req, res) => {
  });
 
  app.get('/review/reviewDB', (req, res) => {
-  console.log("Review get v1");
   reviewDB.collection('reviews').find().toArray().then(reviews => {
     res.json(reviews);
   }).catch(error => {
@@ -59,10 +57,33 @@ app.get('/order/orderDB', (req, res) => {
   });
  });
 
+ app.get('/users/usersDB', (req, res) => {
+  userDB.collection('users').find().toArray().then(users => {
+    console.log(users);
+    res.json(users);
+  }).catch(error => {
+    console.log(error);
+    res.status(500).json({ message: `Internal Server Error: ${error}` });
+  });
+ });
+
+ app.post('/users/usersDB', (req, res) => {
+  const newUser = req.body;
+  userDB.collection('users').insertOne(newUser).then(result =>
+    userDB.collection('users').find({ _id: result.insertedId }).limit(1).next()
+  ).then(newUser => {
+    res.json(newUser);
+  }).catch(error => {
+    //this isnt acttually doing anything rn since we arent validating and non-complete entries can be added to the database
+    console.log(error);
+    res.status(500).json({ message: `Internal Server Error: ${error}` });
+  });
+ });
+
 MongoClient.connect('mongodb://localhost', { useNewUrlParser: true }).then(connection => {
     orderDB = connection.db('CS326-DataBase-Orders');
     reviewDB = connection.db('CS326-DataBase-Reviews');
-    userSignUpDB = connection.db('CS326-Users');
+    userDB = connection.db('CS326-DataBase-Users');
 
   app.listen(3000, () => {
     console.log('App started on port 3000');

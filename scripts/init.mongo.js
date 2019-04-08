@@ -10,7 +10,7 @@ UsersDB = new Mongo().getDB('CS326-DataBase-Users')
 // database starts from a known state.
 OrdersDB.orders.remove({});
 ReviewsDB.reviews.remove({});
-USersDB.users.remove({});
+UsersDB.users.remove({});
 
 // Now, we insert some mock data that mirrors the data that we have in the
 // in-memory version of the `order.jsx` code.

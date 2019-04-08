@@ -1,6 +1,17 @@
+Orders
+____________
+
 Calling a post method: curl -X POST -H 'Content-Type:application/json' http://localhost:3000/order/orderDB  -d '{"username":"mario", "password":"secret"}'
 calling a get method: curl http://localhost:3000/order/orderDB
 
 
 review
+______________
 curl -X POST -H 'Content-Type:application/json' http://localhost:3000/review/reviewDB  -d '{"name":"matt", "created" :"yes", "time":"2pm", "orderFrom":"baby berk", "orderItem": "big food", "driver": "a guy", "review":"good"}'
+curl http://localhost:3000/review/reviewDB
+
+
+Users
+________________
+curl http://localhost:3000/users/usersDB
+curl -X POST -H 'Content-Type:application/json' http://localhost:3000/review/reviewDB  -d '{"fname":"matt", "lname":"pearce","email":"mpearce"}'
