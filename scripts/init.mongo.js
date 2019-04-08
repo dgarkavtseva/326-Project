@@ -4,13 +4,13 @@
 // does not exist, it will create it with this call.
 OrdersDB = new Mongo().getDB('CS326-DataBase-Orders');
 ReviewsDB = new Mongo().getDB('CS326-DataBase-Reviews');
-UsersDB = new Mongo().getDB('CS326-DataBase-Users')
+UsersDB = new Mongo().getDB('CS326-DataBase-Users');
 
 // Next, we remove everything inside it. This is helpful to ensure that the
 // database starts from a known state.
 OrdersDB.orders.remove({});
 ReviewsDB.reviews.remove({});
-USersDB.users.remove({});
+UsersDB.users.remove({});
 
 // Now, we insert some mock data that mirrors the data that we have in the
 // in-memory version of the `order.jsx` code.
