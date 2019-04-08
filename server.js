@@ -36,7 +36,28 @@ app.get('/order/orderDB', (req, res) => {
   });
  });
 
+ app.get('/review/reviewDB', (req, res) => {
+  console.log("Review get v1");
+  reviewDB.collection('reviews').find().toArray().then(reviews => {
+    res.json(reveiws);
+  }).catch(error => {
+    console.log(error);
+    res.status(500).json({ message: `Internal Server Error: ${error}` });
+  });
+ });
 
+ app.post('/review/reviewDB', (req, res) => {
+  const newReview = req.body;
+  reviewDB.collection('reviews').insertOne(newReview).then(result =>
+    reviewDB.collection('reviews').find({ _id: result.insertedId }).limit(1).next()
+  ).then(newReview => {
+    res.json(newReview);
+  }).catch(error => {
+    //this isnt acttually doing anything rn since we arent validating and non-complete entries can be added to the database
+    console.log(error);
+    res.status(500).json({ message: `Internal Server Error: ${error}` });
+  });
+ });
 
 MongoClient.connect('mongodb://localhost', { useNewUrlParser: true }).then(connection => {
     orderDB = connection.db('CS326-DataBase-Orders');
