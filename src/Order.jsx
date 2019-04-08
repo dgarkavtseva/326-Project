@@ -1,4 +1,3 @@
-
 const contentNode = document.getElementById("contents");
 
 const foods = [
@@ -120,7 +119,6 @@ class OrderPage extends React.Component {
   constructor() {
     super();
     this.state = { foods: foods, orders: [] };
-    setTimeout(this.createFoods.bind(this), 2000);
     this.createOrder = this.createOrder.bind(this);
   }
 
@@ -138,14 +136,7 @@ class OrderPage extends React.Component {
       this.setState({ orders: newOrders });
     }
   }
-  createFoods() {
-    this.createItem({
-      order: 5,
-      food: 'Pasta',
-      diningHall: 'Hamp'
-    });
-  }
-
+  
   render() {
     return (
       <div>
@@ -158,8 +149,7 @@ class OrderPage extends React.Component {
         <OrderAdd createOrder={this.createOrder} />
         <hr />
         <h3>Here are your current orders:</h3>
-        <OrderTable orders={this.state.orders} />
-        
+        <OrderTable orders={this.state.orders} /> 
       </div>
     );
   }

@@ -264,7 +264,6 @@ var OrderPage = function (_React$Component6) {
     var _this6 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
 
     _this6.state = { foods: foods, orders: [] };
-    setTimeout(_this6.createFoods.bind(_this6), 2000);
     _this6.createOrder = _this6.createOrder.bind(_this6);
     return _this6;
   }
@@ -286,15 +285,6 @@ var OrderPage = function (_React$Component6) {
         newOrders.push(newOrder);
         this.setState({ orders: newOrders });
       }
-    }
-  }, {
-    key: 'createFoods',
-    value: function createFoods() {
-      this.createItem({
-        order: 5,
-        food: 'Pasta',
-        diningHall: 'Hamp'
-      });
     }
   }, {
     key: 'render',
