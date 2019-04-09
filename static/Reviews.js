@@ -257,7 +257,7 @@ var ReviewList = function (_React$Component3) {
             updatedReview.created = new Date(updatedReview.created);
             if (updatedReview.completionDate) updatedReview.completionDate = new Date(updatedReview.completionDate);
             var newReview = _this5.state.reviews.concat(updatedReview);
-            _this5.setState({ reviews: newReviews });
+            _this5.setState({ reviews: newReview });
           });
         } else {
           res.json().then(function (error) {
