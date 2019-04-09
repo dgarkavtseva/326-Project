@@ -37,7 +37,8 @@ app.get('/order/orderDB', (req, res) => {
 
  app.get('/review/reviewDB', (req, res) => {
   reviewDB.collection('reviews').find().toArray().then(reviews => {
-    res.json(reviews);
+    const metadata = {total_count: reviews.length };
+    res.json({_metadata: metadata, records: reviews});
   }).catch(error => {
     console.log(error);
     res.status(500).json({ message: `Internal Server Error: ${error}` });

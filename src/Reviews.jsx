@@ -100,17 +100,8 @@ class ReviewList extends React.Component {
     this.loadData();
   }
 
-  // componentDidUpdate(prevProps) {
-  //   const oldQuery = prevProps.location.query;
-  //   const newQuery = this.props.location.query;
-  //   if (oldQuery.status === newQuery.status) {
-  //     return;
-  //   }
-  //   this.loadData();
-  // }
-
   loadData() {
-    fetch('/api/reviews').then(response => {
+    fetch('/review/reviewDB').then(response => {
       if (response.ok) {
         response.json().then(data => {
           console.log("Total count of records:", data._metadata.total_count);
@@ -132,7 +123,7 @@ class ReviewList extends React.Component {
   }
 
   createReview(newReview) {
-    fetch('/api/reviews', {
+    fetch('/review/reviewDB', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newReview),
