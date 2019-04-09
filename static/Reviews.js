@@ -1,16 +1,6 @@
-'use strict';
+"use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-require('isomorphic-fetch');
-
-var _reactRouter = require('react-router');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -19,6 +9,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var contentNode = document.getElementById("contents");
+
+// import React from 'react';
+// import 'isomorphic-fetch';
+// import { Link } from 'react-router';
 
 var SearchBar = function (_React$Component) {
   _inherits(SearchBar, _React$Component);
@@ -30,64 +24,55 @@ var SearchBar = function (_React$Component) {
   }
 
   _createClass(SearchBar, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      return _react2.default.createElement(
-        'div',
+      return React.createElement(
+        "div",
         null,
-        'We will add a search bar here to searh for specific items.'
+        "We will add a search bar here to searh for specific items."
       );
     }
   }]);
 
   return SearchBar;
-}(_react2.default.Component);
+}(React.Component);
 
 var ReviewRow = function ReviewRow(props) {
-  return _react2.default.createElement(
-    'tr',
+  return React.createElement(
+    "tr",
     null,
-    _react2.default.createElement(
-      'td',
-      null,
-      _react2.default.createElement(
-        _reactRouter.Link,
-        { to: '/reviews/' + props.review._id },
-        props.review._id.substr(-4)
-      )
-    ),
-    _react2.default.createElement(
-      'td',
+    React.createElement(
+      "td",
       null,
       props.review.name
     ),
-    _react2.default.createElement(
-      'td',
+    React.createElement(
+      "td",
       null,
       props.review.created.toDateString()
     ),
-    _react2.default.createElement(
-      'td',
+    React.createElement(
+      "td",
       null,
       props.review.time
     ),
-    _react2.default.createElement(
-      'td',
+    React.createElement(
+      "td",
       null,
       props.review.orderFrom
     ),
-    _react2.default.createElement(
-      'td',
+    React.createElement(
+      "td",
       null,
       props.review.orderItem
     ),
-    _react2.default.createElement(
-      'td',
+    React.createElement(
+      "td",
       null,
       props.review.driver
     ),
-    _react2.default.createElement(
-      'td',
+    React.createElement(
+      "td",
       null,
       props.review.review
     )
@@ -96,56 +81,56 @@ var ReviewRow = function ReviewRow(props) {
 
 function ReviewTable(props) {
   var reviewRows = props.reviews.map(function (review) {
-    return _react2.default.createElement(ReviewRow, { key: review.id, review: review });
+    return React.createElement(ReviewRow, { key: review._id, review: review });
   });
-  return _react2.default.createElement(
-    'table',
-    { className: 'bordered-table' },
-    _react2.default.createElement(
-      'thead',
+  return React.createElement(
+    "table",
+    { className: "bordered-table" },
+    React.createElement(
+      "thead",
       null,
-      _react2.default.createElement(
-        'tr',
+      React.createElement(
+        "tr",
         null,
-        _react2.default.createElement(
-          'th',
+        React.createElement(
+          "th",
           null,
-          'Name'
+          "Name"
         ),
-        _react2.default.createElement(
-          'th',
+        React.createElement(
+          "th",
           null,
-          'Date'
+          "Date"
         ),
-        _react2.default.createElement(
-          'th',
+        React.createElement(
+          "th",
           null,
-          'Time'
+          "Time"
         ),
-        _react2.default.createElement(
-          'th',
+        React.createElement(
+          "th",
           null,
-          'Ordered From'
+          "Ordered From"
         ),
-        _react2.default.createElement(
-          'th',
+        React.createElement(
+          "th",
           null,
-          'Order'
+          "Order"
         ),
-        _react2.default.createElement(
-          'th',
+        React.createElement(
+          "th",
           null,
-          'Driver'
+          "Driver"
         ),
-        _react2.default.createElement(
-          'th',
+        React.createElement(
+          "th",
           null,
-          'Review'
+          "Review"
         )
       )
     ),
-    _react2.default.createElement(
-      'tbody',
+    React.createElement(
+      "tbody",
       null,
       reviewRows
     )
@@ -165,7 +150,7 @@ var ReviewAdd = function (_React$Component2) {
   }
 
   _createClass(ReviewAdd, [{
-    key: 'handleSubmit',
+    key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
       var form = document.forms.reviewAdd;
@@ -187,24 +172,24 @@ var ReviewAdd = function (_React$Component2) {
       form.review.value = '';
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
-      return _react2.default.createElement(
-        'div',
+      return React.createElement(
+        "div",
         null,
-        _react2.default.createElement(
-          'form',
-          { name: 'reviewAdd', onSubmit: this.handleSubmit },
-          _react2.default.createElement('input', { type: 'text', name: 'name', placeholder: 'Name' }),
-          _react2.default.createElement('input', { type: 'text', name: 'time', placeholder: 'Time' }),
-          _react2.default.createElement('input', { type: 'text', name: 'orderFrom', placeholder: 'Ordered From' }),
-          _react2.default.createElement('input', { type: 'text', name: 'orderItem', placeholder: 'Order' }),
-          _react2.default.createElement('input', { type: 'text', name: 'driver', placeholder: 'Driver' }),
-          _react2.default.createElement('input', { type: 'text', name: 'review', placeholder: 'Review' }),
-          _react2.default.createElement(
-            'button',
+        React.createElement(
+          "form",
+          { name: "reviewAdd", onSubmit: this.handleSubmit },
+          React.createElement("input", { type: "text", name: "name", placeholder: "Name" }),
+          React.createElement("input", { type: "text", name: "time", placeholder: "Time" }),
+          React.createElement("input", { type: "text", name: "orderFrom", placeholder: "Ordered From" }),
+          React.createElement("input", { type: "text", name: "orderItem", placeholder: "Order" }),
+          React.createElement("input", { type: "text", name: "driver", placeholder: "Driver" }),
+          React.createElement("input", { type: "text", name: "review", placeholder: "Review" }),
+          React.createElement(
+            "button",
             null,
-            'Add'
+            "Add"
           )
         )
       );
@@ -212,7 +197,7 @@ var ReviewAdd = function (_React$Component2) {
   }]);
 
   return ReviewAdd;
-}(_react2.default.Component);
+}(React.Component);
 
 var ReviewList = function (_React$Component3) {
   _inherits(ReviewList, _React$Component3);
@@ -229,26 +214,26 @@ var ReviewList = function (_React$Component3) {
   }
 
   _createClass(ReviewList, [{
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {
       this.loadData();
     }
+
+    // componentDidUpdate(prevProps) {
+    //   const oldQuery = prevProps.location.query;
+    //   const newQuery = this.props.location.query;
+    //   if (oldQuery.status === newQuery.status) {
+    //     return;
+    //   }
+    //   this.loadData();
+    // }
+
   }, {
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate(prevProps) {
-      var oldQuery = prevProps.location.query;
-      var newQuery = this.props.location.query;
-      if (oldQuery.status === newQuery.status) {
-        return;
-      }
-      this.loadData();
-    }
-  }, {
-    key: 'loadData',
+    key: "loadData",
     value: function loadData() {
       var _this4 = this;
 
-      fetch('/api/reviews' + this.props.location.search).then(function (response) {
+      fetch('/api/reviews').then(function (response) {
         if (response.ok) {
           response.json().then(function (data) {
             console.log("Total count of records:", data._metadata.total_count);
@@ -268,7 +253,7 @@ var ReviewList = function (_React$Component3) {
       });
     }
   }, {
-    key: 'createReview',
+    key: "createReview",
     value: function createReview(newReview) {
       var _this5 = this;
 
@@ -292,32 +277,29 @@ var ReviewList = function (_React$Component3) {
       });
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
-      return _react2.default.createElement(
-        'div',
+      return React.createElement(
+        "div",
         null,
-        _react2.default.createElement(
-          'h1',
+        React.createElement(
+          "h1",
           null,
-          'Reviews'
+          "Reviews"
         ),
-        _react2.default.createElement(SearchBar, null),
-        _react2.default.createElement('hr', null),
-        _react2.default.createElement(ReviewTable, { reviews: this.state.reviews }),
-        _react2.default.createElement('hr', null),
-        _react2.default.createElement(ReviewAdd, { createReview: this.createReview })
+        React.createElement(SearchBar, null),
+        React.createElement("hr", null),
+        React.createElement(ReviewTable, { reviews: this.state.reviews }),
+        React.createElement("hr", null),
+        React.createElement(ReviewAdd, { createReview: this.createReview })
       );
     }
   }]);
 
   return ReviewList;
-}(_react2.default.Component);
-
-IssueList.propTypes = {
-  location: _react2.default.PropTypes.object.isRequired,
-  router: _react2.default.PropTypes.object
-};
+}(React.Component);
 
 // This renders the JSX component inside the content node:
-//ReactDOM.render(<ReviewList />, contentNode);
+
+
+ReactDOM.render(React.createElement(ReviewList, null), contentNode);

@@ -1,8 +1,8 @@
 var contentNode = document.getElementById("contents");
 
-import React from 'react';
-import 'isomorphic-fetch';
-import { Link } from 'react-router';
+// import React from 'react';
+// import 'isomorphic-fetch';
+// import { Link } from 'react-router';
 
 class SearchBar extends React.Component {
   render() {
@@ -12,7 +12,6 @@ class SearchBar extends React.Component {
 
 const ReviewRow = (props) => (
   <tr>
-    <td><Link to={`/reviews/${props.review._id}`}>{props.review._id.substr(-4)}</Link></td>
     <td>{props.review.name}</td>
     <td>{props.review.created.toDateString()}</td>
     <td>{props.review.time}</td>
@@ -25,7 +24,7 @@ const ReviewRow = (props) => (
 
 function ReviewTable(props) {
   const reviewRows = props.reviews.map(review => (
-    <ReviewRow key={review.id} review={review} />
+    <ReviewRow key={review._id} review={review} />
   ));
   return (
     <table className="bordered-table">
@@ -101,17 +100,17 @@ class ReviewList extends React.Component {
     this.loadData();
   }
 
-  componentDidUpdate(prevProps) {
-    const oldQuery = prevProps.location.query;
-    const newQuery = this.props.location.query;
-    if (oldQuery.status === newQuery.status) {
-      return;
-    }
-    this.loadData();
-  }
+  // componentDidUpdate(prevProps) {
+  //   const oldQuery = prevProps.location.query;
+  //   const newQuery = this.props.location.query;
+  //   if (oldQuery.status === newQuery.status) {
+  //     return;
+  //   }
+  //   this.loadData();
+  // }
 
   loadData() {
-    fetch(`/api/reviews${this.props.location.search}`).then(response => {
+    fetch('/api/reviews').then(response => {
       if (response.ok) {
         response.json().then(data => {
           console.log("Total count of records:", data._metadata.total_count);
@@ -172,10 +171,5 @@ class ReviewList extends React.Component {
   }
 }
 
-IssueList.propTypes = {
-  location: React.PropTypes.object.isRequired,
-  router: React.PropTypes.object,
-};
-
 // This renders the JSX component inside the content node:
-//ReactDOM.render(<ReviewList />, contentNode);
+ReactDOM.render(<ReviewList />, contentNode);
