@@ -218,25 +218,15 @@ var ReviewList = function (_React$Component3) {
     value: function componentDidMount() {
       this.loadData();
     }
-
-    // componentDidUpdate(prevProps) {
-    //   const oldQuery = prevProps.location.query;
-    //   const newQuery = this.props.location.query;
-    //   if (oldQuery.status === newQuery.status) {
-    //     return;
-    //   }
-    //   this.loadData();
-    // }
-
   }, {
     key: "loadData",
     value: function loadData() {
       var _this4 = this;
 
-      fetch('/api/reviews').then(function (response) {
+      fetch('/review/reviewDB').then(function (response) {
         if (response.ok) {
           response.json().then(function (data) {
-            console.log("Total count of records:", data._metadata.total_count);
+            //console.log("Total count of records:", data._metadata.total_count);
             data.records.forEach(function (review) {
               review.created = new Date(review.created);
               if (review.completionDate) review.completionDate = new Date(review.completionDate);
@@ -257,7 +247,7 @@ var ReviewList = function (_React$Component3) {
     value: function createReview(newReview) {
       var _this5 = this;
 
-      fetch('/api/reviews', {
+      fetch('/review/reviewDB', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newReview)
