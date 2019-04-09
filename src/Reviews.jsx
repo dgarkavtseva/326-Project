@@ -69,6 +69,7 @@ class ReviewAdd extends React.Component {
     form.orderItem.value = '';
     form.driver.value = '';
     form.review.value = '';
+
   }
 
   render() {
@@ -136,7 +137,7 @@ class ReviewList extends React.Component {
               if (updatedReview.completionDate)
                 updatedReview.completionDate = new Date(updatedReview.completionDate);
               const newReview = this.state.reviews.concat(updatedReview);
-              this.setState({ reviews: newReviews });
+              this.setState({ reviews: newReview });
             });
         }
         else {
