@@ -226,7 +226,7 @@ var ReviewList = function (_React$Component3) {
       fetch('/review/reviewDB').then(function (response) {
         if (response.ok) {
           response.json().then(function (data) {
-            //console.log("Total count of records:", data._metadata.total_count);
+            console.log("Total count of records:", data._metadata.total_count);
             data.records.forEach(function (review) {
               review.created = new Date(review.created);
               if (review.completionDate) review.completionDate = new Date(review.completionDate);

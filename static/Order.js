@@ -10,35 +10,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var contentNode = document.getElementById("contents");
 // let foods = [];
-// const foods = [
-//   {
-//     order: 1, food: 'Chicken Tenders', diningHall: 'Worcester',
-//   },
-//   {
-//     order: 2, food: 'Mac and Cheese', diningHall: 'Berk',
-//   },
-//   {
-//     order: 3, food: 'Orange Chicken', diningHall: 'Frank',
-//   },
-//   {
-//     order: 4, food: 'Sushi', diningHall: 'Worcester',   
-//   }
-//  ];
 
-// const orders = [
-//   {
-//     order: undefined, status: undefined, deliveryAddress: undefined,
-//   }
-// ];
-
-// const FoodRow = (props) => (
-
-//       <tr>
-// <td>{food._order}</td>
-//         <td>{food.food}</td>
-//         <td>{food.diningHall}</td>
-//       </tr>
-//     );
 
 var FoodRow = function FoodRow(props) {
   return (
@@ -68,18 +40,43 @@ var FoodRow = function FoodRow(props) {
   );
 };
 
-// class OrderRow extends React.Component {
-//   render() {
-//     const order = this.props.order;
-//     return (
-//       <tr>
-//         <td>{order.orderNumber}</td>
-//         <td>{order.status}</td>
-//         <td>{order.deliveryAdress}</td>
-//       </tr>
-//     );
-//   }
-// }
+var OrderRow = function (_React$Component) {
+  _inherits(OrderRow, _React$Component);
+
+  function OrderRow() {
+    _classCallCheck(this, OrderRow);
+
+    return _possibleConstructorReturn(this, (OrderRow.__proto__ || Object.getPrototypeOf(OrderRow)).apply(this, arguments));
+  }
+
+  _createClass(OrderRow, [{
+    key: "render",
+    value: function render() {
+      var order = this.props.order;
+      return React.createElement(
+        "tr",
+        null,
+        React.createElement(
+          "td",
+          null,
+          order.orderNumber
+        ),
+        React.createElement(
+          "td",
+          null,
+          order.status
+        ),
+        React.createElement(
+          "td",
+          null,
+          order.deliveryAdress
+        )
+      );
+    }
+  }]);
+
+  return OrderRow;
+}(React.Component);
 
 function FoodTable(props) {
   console.log("foodRows Start");
@@ -122,71 +119,126 @@ function FoodTable(props) {
   );
 }
 
-// class OrderTable extends React.Component {
-//   render() {
-//     const OrderRows = this.props.orders.map(order => (
-//       <OrderRow key={order.order} order={order} />
-//     ));
-//     return (
-//       <table className="bordered-table">
-//         <thead>
-//           <tr>
-//             <th>Order Number</th>
-//             <th>Status</th>
-//             <th>Delivery Address</th>
-//           </tr>
-//         </thead>
-//         <tbody>{OrderRows}</tbody>
-//       </table>
-//     );
-//   }
-// }
-/*class OrderAdd extends React.Component {
-  constructor() {
-    super();
-    //this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  componentDidMount() {
-    this.loadData();
-  }
-  handleSubmit(event) {
-    event.preventDefault();
-    let form = document.forms.orderAdd;
-    this.props.createOrder({
-      orderNumber: form.orderNumber.value, 
-      deliveryAdress: form.deliveryAdress.value,
-      status: 'Pending'
-    });
-    form.orderNumber.value = '';
-    form.deliveryAdress.value = '';
+var OrderTable = function (_React$Component2) {
+  _inherits(OrderTable, _React$Component2);
+
+  function OrderTable() {
+    _classCallCheck(this, OrderTable);
+
+    return _possibleConstructorReturn(this, (OrderTable.__proto__ || Object.getPrototypeOf(OrderTable)).apply(this, arguments));
   }
 
-  render() {
-    return (
-      <div>
-        <form name="orderAdd" onSubmit={this.handleSubmit}>
-          <input type="text" name="orderNumber" placeholder="Order Number" />
-          <input type="text" name="deliveryAdress" placeholder="Your Address" />
-          <button>Add</button>
-        </form>
-      </div>
-    );
-  }
-}*/
+  _createClass(OrderTable, [{
+    key: "render",
+    value: function render() {
+      var OrderRows = this.props.orders.map(function (order) {
+        return React.createElement(OrderRow, { key: order.order, order: order });
+      });
+      return React.createElement(
+        "table",
+        { className: "bordered-table" },
+        React.createElement(
+          "thead",
+          null,
+          React.createElement(
+            "tr",
+            null,
+            React.createElement(
+              "th",
+              null,
+              "Order Number"
+            ),
+            React.createElement(
+              "th",
+              null,
+              "Status"
+            ),
+            React.createElement(
+              "th",
+              null,
+              "Delivery Address"
+            )
+          )
+        ),
+        React.createElement(
+          "tbody",
+          null,
+          OrderRows
+        )
+      );
+    }
+  }]);
 
-var OrderPage = function (_React$Component) {
-  _inherits(OrderPage, _React$Component);
+  return OrderTable;
+}(React.Component);
+
+var OrderAdd = function (_React$Component3) {
+  _inherits(OrderAdd, _React$Component3);
+
+  function OrderAdd() {
+    _classCallCheck(this, OrderAdd);
+
+    var _this3 = _possibleConstructorReturn(this, (OrderAdd.__proto__ || Object.getPrototypeOf(OrderAdd)).call(this));
+
+    _this3.handleSubmit = _this3.handleSubmit.bind(_this3);
+    return _this3;
+  }
+
+  _createClass(OrderAdd, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      //this.loadData();
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      var form = document.forms.orderAdd;
+      this.props.createOrder({
+        orderNumber: form.orderNumber.value,
+        deliveryAdress: form.deliveryAdress.value,
+        status: 'Pending'
+      });
+      form.orderNumber.value = '';
+      form.deliveryAdress.value = '';
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return React.createElement(
+        "div",
+        null,
+        React.createElement(
+          "form",
+          { name: "orderAdd", onSubmit: this.handleSubmit },
+          React.createElement("input", { type: "text", name: "orderNumber", placeholder: "Order Number" }),
+          React.createElement("input", { type: "text", name: "deliveryAdress", placeholder: "Your Address" }),
+          React.createElement(
+            "button",
+            null,
+            "Add"
+          )
+        )
+      );
+    }
+  }]);
+
+  return OrderAdd;
+}(React.Component);
+
+var OrderPage = function (_React$Component4) {
+  _inherits(OrderPage, _React$Component4);
 
   function OrderPage() {
     _classCallCheck(this, OrderPage);
 
-    var _this = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
+    var _this4 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
 
     console.log("constructor");
-    _this.state = { foods: [] };
+    _this4.state = { foods: [], orders: [] };
     console.log("cons complete");
     //this.createOrder = this.createOrder.bind(this);
-    return _this;
+    return _this4;
   }
 
   _createClass(OrderPage, [{
@@ -200,7 +252,7 @@ var OrderPage = function (_React$Component) {
   }, {
     key: "loadData",
     value: function loadData() {
-      var _this2 = this;
+      var _this5 = this;
 
       fetch('/order/orderDB').then(function (response) {
         console.log(response);
@@ -210,14 +262,14 @@ var OrderPage = function (_React$Component) {
             console.log("data at 1");
             console.log(data);
             // foods = data;
-            _this2.state = { foods: data };
+            _this5.state = { foods: data };
             //console.log("Total count of records:", data._metadata.total_count);
             // data.records.forEach(issue => {
             //   issue.created = new Date(issue.created);
             //   if (issue.completionDate)
             //     issue.completionDate = new Date(issue.completionDate);
             // });
-            _this2.setState({ foods: data }); // removed .records
+            _this5.setState({ foods: data }); // removed .records
             //console.log("Updated foods");
           });
         } else {
@@ -237,15 +289,16 @@ var OrderPage = function (_React$Component) {
       newFoods.push(newFood);
       this.setState({ foods: newFoods });
     }
-    // createOrder(newOrder) {
-    //   if(newOrder.orderNumber != "" && newOrder.deliveryAdress != ""){
-    //     const newOrders = this.state.orders.slice();
-    //     newOrder.order = this.state.orders.length + 1;
-    //     newOrders.push(newOrder);
-    //     this.setState({ orders: newOrders });
-    //   }
-    // }
-
+  }, {
+    key: "createOrder",
+    value: function createOrder(newOrder) {
+      if (newOrder.orderNumber != "" && newOrder.deliveryAdress != "") {
+        var newOrders = this.state.orders.slice();
+        newOrder.order = this.state.orders.length + 1;
+        newOrders.push(newOrder);
+        this.setState({ orders: newOrders });
+      }
+    }
   }, {
     key: "render",
     value: function render() {
@@ -268,7 +321,20 @@ var OrderPage = function (_React$Component) {
           "h1",
           null,
           "Place an Order!"
-        )
+        ),
+        React.createElement(
+          "h2",
+          null,
+          "Fill out the form below"
+        ),
+        React.createElement(OrderAdd, { createOrder: this.createOrder }),
+        React.createElement("hr", null),
+        React.createElement(
+          "h3",
+          null,
+          "Here are your current orders:"
+        ),
+        React.createElement(OrderTable, { orders: this.state.orders })
       );
     }
   }]);

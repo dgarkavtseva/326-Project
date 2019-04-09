@@ -1,36 +1,8 @@
 const contentNode = document.getElementById("contents");
 // let foods = [];
-// const foods = [
-//   {
-//     order: 1, food: 'Chicken Tenders', diningHall: 'Worcester',
-//   },
-//   {
-//     order: 2, food: 'Mac and Cheese', diningHall: 'Berk',
-//   },
-//   {
-//     order: 3, food: 'Orange Chicken', diningHall: 'Frank',
-//   },
-//   {
-//     order: 4, food: 'Sushi', diningHall: 'Worcester',   
-//   }
-//  ];
 
-// const orders = [
-//   {
-//     order: undefined, status: undefined, deliveryAddress: undefined,
-//   }
-// ];
- 
-// const FoodRow = (props) => (
-  
-//       <tr>
-        // <td>{food._order}</td>
-//         <td>{food.food}</td>
-//         <td>{food.diningHall}</td>
-//       </tr>
-//     );
 
-const FoodRow= (props) => (
+const FoodRow = (props) => (
   // console.log("in foodrow function");
   // return (
     <tr>
@@ -42,18 +14,18 @@ const FoodRow= (props) => (
 );
 
 
-// class OrderRow extends React.Component {
-//   render() {
-//     const order = this.props.order;
-//     return (
-//       <tr>
-//         <td>{order.orderNumber}</td>
-//         <td>{order.status}</td>
-//         <td>{order.deliveryAdress}</td>
-//       </tr>
-//     );
-//   }
-// }
+class OrderRow extends React.Component {
+  render() {
+    const order = this.props.order;
+    return (
+      <tr>
+        <td>{order.orderNumber}</td>
+        <td>{order.status}</td>
+        <td>{order.deliveryAdress}</td>
+      </tr>
+    );
+  }
+}
 
 function FoodTable(props){
   console.log("foodRows Start")
@@ -77,32 +49,33 @@ function FoodTable(props){
   }
 
 
-// class OrderTable extends React.Component {
-//   render() {
-//     const OrderRows = this.props.orders.map(order => (
-//       <OrderRow key={order.order} order={order} />
-//     ));
-//     return (
-//       <table className="bordered-table">
-//         <thead>
-//           <tr>
-//             <th>Order Number</th>
-//             <th>Status</th>
-//             <th>Delivery Address</th>
-//           </tr>
-//         </thead>
-//         <tbody>{OrderRows}</tbody>
-//       </table>
-//     );
-//   }
-// }
-/*class OrderAdd extends React.Component {
+class OrderTable extends React.Component {
+  render() {
+    const OrderRows = this.props.orders.map(order => (
+      <OrderRow key={order.order} order={order} />
+    ));
+    return (
+      <table className="bordered-table">
+        <thead>
+          <tr>
+            <th>Order Number</th>
+            <th>Status</th>
+            <th>Delivery Address</th>
+          </tr>
+        </thead>
+        <tbody>{OrderRows}</tbody>
+      </table>
+    );
+  }
+}
+
+class OrderAdd extends React.Component {
   constructor() {
     super();
-    //this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
-    this.loadData();
+    //this.loadData();
   }
   handleSubmit(event) {
     event.preventDefault();
@@ -127,12 +100,13 @@ function FoodTable(props){
       </div>
     );
   }
-}*/
+}
+
 class OrderPage extends React.Component {
   constructor() {
     super();
     console.log("constructor")
-    this.state = { foods: []};
+    this.state = { foods: [], orders: []};
     console.log("cons complete")
     //this.createOrder = this.createOrder.bind(this);
   }
@@ -178,14 +152,14 @@ class OrderPage extends React.Component {
     newFoods.push(newFood);
     this.setState({ foods: newFoods });
   }
-  // createOrder(newOrder) {
-  //   if(newOrder.orderNumber != "" && newOrder.deliveryAdress != ""){
-  //     const newOrders = this.state.orders.slice();
-  //     newOrder.order = this.state.orders.length + 1;
-  //     newOrders.push(newOrder);
-  //     this.setState({ orders: newOrders });
-  //   }
-  // }
+  createOrder(newOrder) {
+    if(newOrder.orderNumber != "" && newOrder.deliveryAdress != ""){
+      const newOrders = this.state.orders.slice();
+      newOrder.order = this.state.orders.length + 1;
+      newOrders.push(newOrder);
+      this.setState({ orders: newOrders });
+    }
+  }
   
   render() {
     return (
@@ -195,11 +169,11 @@ class OrderPage extends React.Component {
         <FoodTable foods={this.state.foods} />
         <hr />
         <h1>Place an Order!</h1>
-        {/* <h2>Fill out the form below</h2>        
+        <h2>Fill out the form below</h2>        
         <OrderAdd createOrder={this.createOrder} />
         <hr />
         <h3>Here are your current orders:</h3>
-        <OrderTable orders={this.state.orders} />  */}
+        <OrderTable orders={this.state.orders} />
       </div>
     );
   }
