@@ -1,19 +1,19 @@
 const contentNode = document.getElementById("contents");
 
-const foods = [
-  {
-    order: 1, food: 'Chicken Tenders', diningHall: 'Worcester',
-  },
-  {
-    order: 2, food: 'Mac and Cheese', diningHall: 'Berk',
-  },
-  {
-    order: 3, food: 'Orange Chicken', diningHall: 'Frank',
-  },
-  {
-    order: 4, food: 'Sushi', diningHall: 'Worcester',   
-  }
- ];
+// const foods = [
+//   {
+//     order: 1, food: 'Chicken Tenders', diningHall: 'Worcester',
+//   },
+//   {
+//     order: 2, food: 'Mac and Cheese', diningHall: 'Berk',
+//   },
+//   {
+//     order: 3, food: 'Orange Chicken', diningHall: 'Frank',
+//   },
+//   {
+//     order: 4, food: 'Sushi', diningHall: 'Worcester',   
+//   }
+//  ];
 
 // const orders = [
 //   {
@@ -21,17 +21,24 @@ const foods = [
 //   }
 // ];
  
-class FoodRow extends React.Component {
-  render() {
-    const food = this.props.food;
-    return (
-      <tr>
-        <td>{food.order}</td>
-        <td>{food.food}</td>
-        <td>{food.diningHall}</td>
-      </tr>
-    );
-  }
+// const FoodRow = (props) => (
+  
+//       <tr>
+//         <td>{food._order}</td>
+//         <td>{food.food}</td>
+//         <td>{food.diningHall}</td>
+//       </tr>
+//     );
+
+function FoodRow(props) {
+  console.log("in foodrow function")
+  return (
+    <tr>
+         <td>{food._order}</td>
+         <td>{food.food}</td>
+         <td>{food.diningHall}</td>
+       </tr>
+  );
 }
 
 // class OrderRow extends React.Component {
@@ -47,11 +54,13 @@ class FoodRow extends React.Component {
 //   }
 // }
 
-class FoodTable extends React.Component {
-  render() {
-    const foodRows = this.props.foods.map(food => (
-      <FoodRow key={food.order} food={food} />
+function FoodTable(props){
+  console.log("foodRows Start")
+  console.log(props)
+    const foodRows = props.foods.map(food => (
+      <FoodRow key={food._order} food={food} />
     ));
+    console.log("foodRows")
     return (
       <table className="bordered-table">
         <thead>
@@ -65,7 +74,7 @@ class FoodTable extends React.Component {
       </table>
     );
   }
-}
+
 
 // class OrderTable extends React.Component {
 //   render() {
@@ -121,8 +130,40 @@ class FoodTable extends React.Component {
 class OrderPage extends React.Component {
   constructor() {
     super();
-    this.state = { foods: foods, orders: [] };
+    console.log("constructor")
+    this.state = { foods: []};
+    console.log("cons complete")
     //this.createOrder = this.createOrder.bind(this);
+  }
+  componentDidMount() {
+    console.log("mounted")
+    console.log("mounted")
+
+    this.loadData();
+  }
+
+  loadData() {
+    fetch('/order/orderDB').then(response => {
+      console.log(response)
+      if (response.ok) {
+        response.json().then(data => {
+          console.log(data)
+          //console.log("Total count of records:", data._metadata.total_count);
+          // data.records.forEach(issue => {
+          //   issue.created = new Date(issue.created);
+          //   if (issue.completionDate)
+          //     issue.completionDate = new Date(issue.completionDate);
+          // });
+          this.setState({ foods: data.records });
+        });
+      } else {
+        response.json().then(error => {
+          alert("Failed to fetch issues:" + error.message)
+        });
+      }
+    }).catch(err => {
+      alert("Error in fetching data from server:", err);
+    });
   }
 
   createItem(newFood) {

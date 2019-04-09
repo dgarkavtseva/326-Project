@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -10,15 +10,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var contentNode = document.getElementById("contents");
 
-var foods = [{
-  order: 1, food: 'Chicken Tenders', diningHall: 'Worcester'
-}, {
-  order: 2, food: 'Mac and Cheese', diningHall: 'Berk'
-}, {
-  order: 3, food: 'Orange Chicken', diningHall: 'Frank'
-}, {
-  order: 4, food: 'Sushi', diningHall: 'Worcester'
-}];
+// const foods = [
+//   {
+//     order: 1, food: 'Chicken Tenders', diningHall: 'Worcester',
+//   },
+//   {
+//     order: 2, food: 'Mac and Cheese', diningHall: 'Berk',
+//   },
+//   {
+//     order: 3, food: 'Orange Chicken', diningHall: 'Frank',
+//   },
+//   {
+//     order: 4, food: 'Sushi', diningHall: 'Worcester',   
+//   }
+//  ];
 
 // const orders = [
 //   {
@@ -26,43 +31,37 @@ var foods = [{
 //   }
 // ];
 
-var FoodRow = function (_React$Component) {
-  _inherits(FoodRow, _React$Component);
+// const FoodRow = (props) => (
 
-  function FoodRow() {
-    _classCallCheck(this, FoodRow);
+//       <tr>
+//         <td>{food._order}</td>
+//         <td>{food.food}</td>
+//         <td>{food.diningHall}</td>
+//       </tr>
+//     );
 
-    return _possibleConstructorReturn(this, (FoodRow.__proto__ || Object.getPrototypeOf(FoodRow)).apply(this, arguments));
-  }
-
-  _createClass(FoodRow, [{
-    key: 'render',
-    value: function render() {
-      var food = this.props.food;
-      return React.createElement(
-        'tr',
-        null,
-        React.createElement(
-          'td',
-          null,
-          food.order
-        ),
-        React.createElement(
-          'td',
-          null,
-          food.food
-        ),
-        React.createElement(
-          'td',
-          null,
-          food.diningHall
-        )
-      );
-    }
-  }]);
-
-  return FoodRow;
-}(React.Component);
+function FoodRow(props) {
+  console.log("in foodrow function");
+  return React.createElement(
+    "tr",
+    null,
+    React.createElement(
+      "td",
+      null,
+      food._order
+    ),
+    React.createElement(
+      "td",
+      null,
+      food.food
+    ),
+    React.createElement(
+      "td",
+      null,
+      food.diningHall
+    )
+  );
+}
 
 // class OrderRow extends React.Component {
 //   render() {
@@ -77,58 +76,46 @@ var FoodRow = function (_React$Component) {
 //   }
 // }
 
-var FoodTable = function (_React$Component2) {
-  _inherits(FoodTable, _React$Component2);
-
-  function FoodTable() {
-    _classCallCheck(this, FoodTable);
-
-    return _possibleConstructorReturn(this, (FoodTable.__proto__ || Object.getPrototypeOf(FoodTable)).apply(this, arguments));
-  }
-
-  _createClass(FoodTable, [{
-    key: 'render',
-    value: function render() {
-      var foodRows = this.props.foods.map(function (food) {
-        return React.createElement(FoodRow, { key: food.order, food: food });
-      });
-      return React.createElement(
-        'table',
-        { className: 'bordered-table' },
+function FoodTable(props) {
+  console.log("foodRows Start");
+  console.log(props);
+  var foodRows = props.foods.map(function (food) {
+    return React.createElement(FoodRow, { key: food._order, food: food });
+  });
+  console.log("foodRows");
+  return React.createElement(
+    "table",
+    { className: "bordered-table" },
+    React.createElement(
+      "thead",
+      null,
+      React.createElement(
+        "tr",
+        null,
         React.createElement(
-          'thead',
+          "th",
           null,
-          React.createElement(
-            'tr',
-            null,
-            React.createElement(
-              'th',
-              null,
-              'Order Number'
-            ),
-            React.createElement(
-              'th',
-              null,
-              'Food'
-            ),
-            React.createElement(
-              'th',
-              null,
-              'Dining Hall'
-            )
-          )
+          "Order Number"
         ),
         React.createElement(
-          'tbody',
+          "th",
           null,
-          foodRows
+          "Food"
+        ),
+        React.createElement(
+          "th",
+          null,
+          "Dining Hall"
         )
-      );
-    }
-  }]);
-
-  return FoodTable;
-}(React.Component);
+      )
+    ),
+    React.createElement(
+      "tbody",
+      null,
+      foodRows
+    )
+  );
+}
 
 // class OrderTable extends React.Component {
 //   render() {
@@ -182,22 +169,58 @@ var FoodTable = function (_React$Component2) {
   }
 }*/
 
-
-var OrderPage = function (_React$Component3) {
-  _inherits(OrderPage, _React$Component3);
+var OrderPage = function (_React$Component) {
+  _inherits(OrderPage, _React$Component);
 
   function OrderPage() {
     _classCallCheck(this, OrderPage);
 
-    var _this3 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
+    var _this = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
 
-    _this3.state = { foods: foods, orders: [] };
+    console.log("constructor");
+    _this.state = { foods: [] };
+    console.log("cons complete");
     //this.createOrder = this.createOrder.bind(this);
-    return _this3;
+    return _this;
   }
 
   _createClass(OrderPage, [{
-    key: 'createItem',
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      console.log("mounted");
+      console.log("mounted");
+
+      this.loadData();
+    }
+  }, {
+    key: "loadData",
+    value: function loadData() {
+      var _this2 = this;
+
+      fetch('/order/orderDB').then(function (response) {
+        console.log(response);
+        if (response.ok) {
+          response.json().then(function (data) {
+            console.log(data);
+            //console.log("Total count of records:", data._metadata.total_count);
+            // data.records.forEach(issue => {
+            //   issue.created = new Date(issue.created);
+            //   if (issue.completionDate)
+            //     issue.completionDate = new Date(issue.completionDate);
+            // });
+            _this2.setState({ foods: data.records });
+          });
+        } else {
+          response.json().then(function (error) {
+            alert("Failed to fetch issues:" + error.message);
+          });
+        }
+      }).catch(function (err) {
+        alert("Error in fetching data from server:", err);
+      });
+    }
+  }, {
+    key: "createItem",
     value: function createItem(newFood) {
       var newFoods = this.state.foods.slice();
       newFood.order = this.state.foods.length + 1;
@@ -214,27 +237,27 @@ var OrderPage = function (_React$Component3) {
     // }
 
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       return React.createElement(
-        'div',
+        "div",
         null,
         React.createElement(
-          'h1',
+          "h1",
           null,
-          'Menu'
+          "Menu"
         ),
         React.createElement(
-          'h2',
+          "h2",
           null,
-          'These are the available options for grab and go today!'
+          "These are the available options for grab and go today!"
         ),
         React.createElement(FoodTable, { foods: this.state.foods }),
-        React.createElement('hr', null),
+        React.createElement("hr", null),
         React.createElement(
-          'h1',
+          "h1",
           null,
-          'Place an Order!'
+          "Place an Order!"
         )
       );
     }
