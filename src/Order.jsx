@@ -1,5 +1,5 @@
 const contentNode = document.getElementById("contents");
-
+// let foods = [];
 // const foods = [
 //   {
 //     order: 1, food: 'Chicken Tenders', diningHall: 'Worcester',
@@ -24,22 +24,23 @@ const contentNode = document.getElementById("contents");
 // const FoodRow = (props) => (
   
 //       <tr>
-//         <td>{food._order}</td>
+        // <td>{food._order}</td>
 //         <td>{food.food}</td>
 //         <td>{food.diningHall}</td>
 //       </tr>
 //     );
 
-function FoodRow(props) {
-  console.log("in foodrow function")
-  return (
+const FoodRow= (props) => (
+  // console.log("in foodrow function");
+  // return (
     <tr>
-         <td>{food._order}</td>
-         <td>{food.food}</td>
-         <td>{food.diningHall}</td>
+         <td>{props.food.order}</td>
+         <td>{props.food.food}</td>
+         <td>{props.food.diningHall}</td>
        </tr>
-  );
-}
+  // );
+);
+
 
 // class OrderRow extends React.Component {
 //   render() {
@@ -56,11 +57,11 @@ function FoodRow(props) {
 
 function FoodTable(props){
   console.log("foodRows Start")
-  console.log(props)
+  console.log(props);
     const foodRows = props.foods.map(food => (
-      <FoodRow key={food._order} food={food} />
+      <FoodRow key={food._id} food={food} />
     ));
-    console.log("foodRows")
+    console.log("foodRows");
     return (
       <table className="bordered-table">
         <thead>
@@ -145,16 +146,21 @@ class OrderPage extends React.Component {
   loadData() {
     fetch('/order/orderDB').then(response => {
       console.log(response)
+      console.log("loading");
       if (response.ok) {
         response.json().then(data => {
-          console.log(data)
+          console.log("data at 1");
+          console.log(data);
+          // foods = data;
+          this.state = { foods: data};
           //console.log("Total count of records:", data._metadata.total_count);
           // data.records.forEach(issue => {
           //   issue.created = new Date(issue.created);
           //   if (issue.completionDate)
           //     issue.completionDate = new Date(issue.completionDate);
           // });
-          this.setState({ foods: data.records });
+          this.setState({ foods: data}); // removed .records
+          //console.log("Updated foods");
         });
       } else {
         response.json().then(error => {

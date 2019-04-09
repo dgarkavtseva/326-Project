@@ -9,7 +9,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var contentNode = document.getElementById("contents");
-
+// let foods = [];
 // const foods = [
 //   {
 //     order: 1, food: 'Chicken Tenders', diningHall: 'Worcester',
@@ -34,34 +34,39 @@ var contentNode = document.getElementById("contents");
 // const FoodRow = (props) => (
 
 //       <tr>
-//         <td>{food._order}</td>
+// <td>{food._order}</td>
 //         <td>{food.food}</td>
 //         <td>{food.diningHall}</td>
 //       </tr>
 //     );
 
-function FoodRow(props) {
-  console.log("in foodrow function");
-  return React.createElement(
-    "tr",
-    null,
+var FoodRow = function FoodRow(props) {
+  return (
+    // console.log("in foodrow function");
+    // return (
     React.createElement(
-      "td",
+      "tr",
       null,
-      food._order
-    ),
-    React.createElement(
-      "td",
-      null,
-      food.food
-    ),
-    React.createElement(
-      "td",
-      null,
-      food.diningHall
+      React.createElement(
+        "td",
+        null,
+        props.food.order
+      ),
+      React.createElement(
+        "td",
+        null,
+        props.food.food
+      ),
+      React.createElement(
+        "td",
+        null,
+        props.food.diningHall
+      )
     )
+    // );
+
   );
-}
+};
 
 // class OrderRow extends React.Component {
 //   render() {
@@ -80,7 +85,7 @@ function FoodTable(props) {
   console.log("foodRows Start");
   console.log(props);
   var foodRows = props.foods.map(function (food) {
-    return React.createElement(FoodRow, { key: food._order, food: food });
+    return React.createElement(FoodRow, { key: food._id, food: food });
   });
   console.log("foodRows");
   return React.createElement(
@@ -199,16 +204,21 @@ var OrderPage = function (_React$Component) {
 
       fetch('/order/orderDB').then(function (response) {
         console.log(response);
+        console.log("loading");
         if (response.ok) {
           response.json().then(function (data) {
+            console.log("data at 1");
             console.log(data);
+            // foods = data;
+            _this2.state = { foods: data };
             //console.log("Total count of records:", data._metadata.total_count);
             // data.records.forEach(issue => {
             //   issue.created = new Date(issue.created);
             //   if (issue.completionDate)
             //     issue.completionDate = new Date(issue.completionDate);
             // });
-            _this2.setState({ foods: data.records });
+            _this2.setState({ foods: data }); // removed .records
+            //console.log("Updated foods");
           });
         } else {
           response.json().then(function (error) {
