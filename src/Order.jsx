@@ -119,7 +119,7 @@ class OrderPage extends React.Component {
   }
 
   loadData() {
-    fetch('/order/orderDB').then(response => {
+    fetch('/api/menuDB').then(response => {
       console.log(response)
       console.log("loading");
       if (response.ok) {

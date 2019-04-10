@@ -223,7 +223,7 @@ var ReviewList = function (_React$Component3) {
     value: function loadData() {
       var _this4 = this;
 
-      fetch('/review/reviewDB').then(function (response) {
+      fetch('/api/reviewDB').then(function (response) {
         if (response.ok) {
           response.json().then(function (data) {
             console.log("Total count of records:", data._metadata.total_count);
@@ -247,7 +247,7 @@ var ReviewList = function (_React$Component3) {
     value: function createReview(newReview) {
       var _this5 = this;
 
-      fetch('/review/reviewDB', {
+      fetch('/api/reviewDB', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newReview)
