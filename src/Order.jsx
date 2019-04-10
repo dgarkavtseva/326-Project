@@ -76,7 +76,7 @@ class OrderAdd extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
-    //this.loadData();
+    // this.loadData();
   }
   handleSubmit(event) {
     event.preventDefault();

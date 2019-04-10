@@ -4,13 +4,15 @@
 // does not exist, it will create it with this call.
 OrdersDB = new Mongo().getDB('CS326-DataBase-Orders');
 ReviewsDB = new Mongo().getDB('CS326-DataBase-Reviews');
-UsersDB = new Mongo().getDB('CS326-DataBase-Users')
+UsersDB = new Mongo().getDB('CS326-DataBase-Users');
+DeliveriesDB = new Mongo().getDB('CS326-DataBase-Deliveries');
 
 // Next, we remove everything inside it. This is helpful to ensure that the
 // database starts from a known state.
 OrdersDB.orders.remove({});
 ReviewsDB.reviews.remove({});
 UsersDB.users.remove({});
+DeliveriesDB.orders.remove({});
 
 // Now, we insert some mock data that mirrors the data that we have in the
 // in-memory version of the `order.jsx` code.
@@ -57,6 +59,22 @@ ReviewsDB.reviews.insert([
         review: "Food arrived warm, and within 15 minutes of placing my order"
       }
 ]);      
+
+
+DeliveriesDB.orders.insert([
+  {
+      status: 'pending', deliveryAdress: "Elm", orderID: '30',Deliverer: "Biker"
+    },
+]);
+
+{/* <td>{order.orderNumber}</td>
+        <td>{order.status}</td>
+        <td>{order.deliveryAdress}</td>
+        <td>{order.orderID}</td>
+        <td>{order.Deliverer}</td> */}
+
+
+
 // Lastly, we create "indexes" to make searching faster. For this particular
 // application we know that searching on the status, owner, and created properties
 // will be common, so we create indexes on those.
