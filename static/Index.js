@@ -13,34 +13,64 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // This grabs the DOM element to be used to mount React components.
 var contentNode = document.getElementById("contents");
 
-var MyComponent = function (_React$Component) {
-    _inherits(MyComponent, _React$Component);
+var UserForm = function (_React$Component) {
+    _inherits(UserForm, _React$Component);
 
-    function MyComponent() {
-        _classCallCheck(this, MyComponent);
+    function UserForm() {
+        _classCallCheck(this, UserForm);
 
-        var _this = _possibleConstructorReturn(this, (MyComponent.__proto__ || Object.getPrototypeOf(MyComponent)).call(this));
+        var _this = _possibleConstructorReturn(this, (UserForm.__proto__ || Object.getPrototypeOf(UserForm)).call(this));
 
-        _this.state = { submitted: false };
+        _this.state = { submitted: false, users: [] };
         _this.handleSubmit = _this.submitForm.bind(_this);
+
+        _this.createUser = _this.createUser.bind(_this);
         return _this;
     }
 
-    _createClass(MyComponent, [{
+    _createClass(UserForm, [{
         key: 'submitForm',
         value: function submitForm(event) {
             event.preventDefault();
             this.setState({ submitted: true });
-            emailForm.firstName.value = '';
-            emailForm.lastName.value = '';
+            var form = document.forms.addUserForm;
+            this.createUser({
+                fname: form.fname.value,
+                lname: form.lname.value,
+                email: form.email.value
+            });
+            emailForm.fname.value = '';
+            emailForm.lname.value = '';
             emailForm.email.value = '';
+        }
+    }, {
+        key: 'createUser',
+        value: function createUser(newUser) {
+            var _this2 = this;
+
+            fetch('/api/usersDB', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newUser)
+            }).then(function (res) {
+                if (res.ok) {
+                    res.json().then(function (updatedUser) {
+                        var newUser = _this2.state.users.concat(updatedUser);
+                        _this2.setState({ reviews: newUser });
+                    });
+                } else {
+                    res.json().then(function (error) {
+                        alert('Failed to add user ' + error.message);
+                    });
+                }
+            });
         }
     }, {
         key: 'render',
         value: function render() {
             return React.createElement(
                 'form',
-                _defineProperty({ name: 'temp', onSubmit: this.handleSubmit, id: 'emailForm' }, 'id', 'emailForm'),
+                _defineProperty({ name: 'addUserForm', onSubmit: this.handleSubmit, id: 'emailForm' }, 'id', 'emailForm'),
                 React.createElement(
                     'div',
                     { className: 'forms' },
@@ -49,9 +79,9 @@ var MyComponent = function (_React$Component) {
                         null,
                         'Sign up now!'
                     ),
-                    React.createElement('input', { type: 'text', name: 'firstName', placeholder: 'First Name', value: this.state.text }),
+                    React.createElement('input', { type: 'text', name: 'fname', placeholder: 'First Name', value: this.state.text }),
                     React.createElement('br', null),
-                    React.createElement('input', { type: 'text', name: 'lastName', placeholder: 'Last Name', value: this.state.text }),
+                    React.createElement('input', { type: 'text', name: 'lname', placeholder: 'Last Name', value: this.state.text }),
                     React.createElement('br', null),
                     React.createElement('input', { type: 'text', name: 'email', placeholder: 'Email', value: this.state.text }),
                     React.createElement('br', null),
@@ -70,10 +100,10 @@ var MyComponent = function (_React$Component) {
         }
     }]);
 
-    return MyComponent;
+    return UserForm;
 }(React.Component);
 
 // This renders the JSX component inside the content node:
 
 
-ReactDOM.render(React.createElement(MyComponent, null), contentNode);
+ReactDOM.render(React.createElement(UserForm, null), contentNode);
