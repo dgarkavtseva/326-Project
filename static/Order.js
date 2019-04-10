@@ -187,7 +187,7 @@ var OrderAdd = function (_React$Component3) {
   _createClass(OrderAdd, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      //this.loadData();
+      // this.loadData();
     }
   }, {
     key: "handleSubmit",

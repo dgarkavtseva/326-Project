@@ -15,3 +15,8 @@ Users
 ________________
 curl http://localhost:3000/users/usersDB
 curl -X POST -H 'Content-Type:application/json' http://localhost:3000/review/reviewDB  -d '{"fname":"matt", "lname":"pearce","email":"mpearce"}'
+
+deliveries
+___________________
+curl http://localhost:3000/deliveries/deliverDB
+curl -X POST -H 'Content-Type:application/json' http://localhost:3000/review/reviewDB  -d '{"status":"pending","deliveryAdress":"Maple","orderID":"35","Deliverer":"Walking"}'
