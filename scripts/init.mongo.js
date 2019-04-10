@@ -1,22 +1,20 @@
-// NEW
-
-// Connect to the Project database. Note, if the database
-// does not exist, it will create it with this call.
-OrdersDB = new Mongo().getDB('CS326-DataBase-Orders');
-ReviewsDB = new Mongo().getDB('CS326-DataBase-Reviews');
-UsersDB = new Mongo().getDB('CS326-DataBase-Users');
-DeliveriesDB = new Mongo().getDB('CS326-DataBase-Deliveries');
+menuDB = new Mongo().getDB('menuDB');
+placedOrdersDB = new Mongo().getDB('placedOrdersDB');
+reviewsDB = new Mongo().getDB('reviewsDB');
+usersDB = new Mongo().getDB('usersDB');
+deliveriesDB = new Mongo().getDB('deliveriesDB');
 
 // Next, we remove everything inside it. This is helpful to ensure that the
 // database starts from a known state.
-OrdersDB.orders.remove({});
-ReviewsDB.reviews.remove({});
-UsersDB.users.remove({});
-DeliveriesDB.orders.remove({});
+menuDB.orders.remove({});
+placedOrdersDB.orders.remove({});
+reviewsDB.reviews.remove({});
+usersDB.users.remove({});
+deliveriesDB.deliveries.remove({});
 
 // Now, we insert some mock data that mirrors the data that we have in the
 // in-memory version of the `order.jsx` code.
-OrdersDB.orders.insert([
+menuDB.items.insert([
     {
         order: 1, food: 'Chicken Tenders', diningHall: 'Worcester',
       },
@@ -33,13 +31,13 @@ OrdersDB.orders.insert([
       }
 ]);
 
-UsersDB.users.insert([
+usersDB.users.insert([
     {
         fname: 'Jim', lname: 'Smith', email: 'jsmith@email.com',
       },
 ]);
 
-ReviewsDB.reviews.insert([
+reviewsDB.reviews.insert([
     {
         name: "Joe Shmoe",
         created: new Date("2019-03-24"),
@@ -60,33 +58,14 @@ ReviewsDB.reviews.insert([
       }
 ]);      
 
-
-DeliveriesDB.orders.insert([
+deliveriesDB.deliveries.insert([
   {
       status: 'pending', deliveryAdress: "Elm", orderID: '30',Deliverer: "Biker"
     },
 ]);
 
-{/* <td>{order.orderNumber}</td>
-        <td>{order.status}</td>
-        <td>{order.deliveryAdress}</td>
-        <td>{order.orderID}</td>
-        <td>{order.Deliverer}</td> */}
-
-
-
-// Lastly, we create "indexes" to make searching faster. For this particular
-// application we know that searching on the status, owner, and created properties
-// will be common, so we create indexes on those.
-
-/*  IDK WHAT INDEXES WE NEED
-OrdersDB.orders.createIndex({ status: 1 });
-OrdersDB.orders.createIndex({ owner: 1 });
-OrdersDB.orders.createIndex({ created: 1 });
-
-ReviewsDB.reviews.createIndex({ status: 1 });
-ReviewsDB.reviews.createIndex({ owner: 1 });
-ReviewsDB.reviews.createIndex({ created: 1 });
-
-UsersDB.users.createIndex({ status: 1 });
-*/
+placedOrdersDB.placedOrders.insert([
+  {
+      orderNumber: '5444', status: "Elm", deliveryAdress: 'JQA'
+  },
+]);

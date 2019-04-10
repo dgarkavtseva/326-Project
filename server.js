@@ -8,14 +8,15 @@ app.use(bodyParser.json());
 
 const MongoClient = require('mongodb').MongoClient;
 
-let orderDB;
-let reviewDB;
-let userDB;
-let deliveryDB;
+let menuDB;
+let placedOrdersDB;
+let reviewsDB;
+let usersDB;
+let deliveriesDB;
 
-app.get('/order/orderDB', (req, res) => {
-  orderDB.collection('orders').find().toArray().then(orders => {
-    res.json(orders);
+app.get('/api/menuDB', (req, res) => {
+  menuDB.collection('items').find().toArray().then(items => {
+    res.json(items);
   }).catch(error => {
     console.log(error);
     res.status(500).json({ message: `Internal Server Error: ${error}` });
@@ -23,21 +24,20 @@ app.get('/order/orderDB', (req, res) => {
  });
  
  
- app.post('/order/orderDB', (req, res) => {
-  const newOrder = req.body;
-  orderDB.collection('orders').insertOne(newOrder).then(result =>
-    orderDB.collection('orders').find({ _id: result.insertedId }).limit(1).next()
-  ).then(newOrder => {
-    res.json(newOrder);
+ app.post('/api/menuDB', (req, res) => {
+    const newItem = req.body;
+    menuDB.collection('items').insertOne(newItem).then(result =>
+    menuDB.collection('items').find({ _id: result.insertedId }).limit(1).next()
+  ).then(newItems => {
+    res.json(newItems);
   }).catch(error => {
-    //this isnt acttually doing anything rn since we arent validating and non-complete entries can be added to the database
     console.log(error);
     res.status(500).json({ message: `Internal Server Error: ${error}` });
   });
  });
 
- app.get('/review/reviewDB', (req, res) => {
-  reviewDB.collection('reviews').find().toArray().then(reviews => {
+ app.get('/api/reviewDB', (req, res) => {
+  reviewsDB.collection('reviews').find().toArray().then(reviews => {
     const metadata = {total_count: reviews.length };
     res.json({_metadata: metadata, records: reviews});
   }).catch(error => {
@@ -46,21 +46,20 @@ app.get('/order/orderDB', (req, res) => {
   });
  });
 
- app.post('/review/reviewDB', (req, res) => {
+ app.post('/api/reviewDB', (req, res) => {
   const newReview = req.body;
-  reviewDB.collection('reviews').insertOne(newReview).then(result =>
-    reviewDB.collection('reviews').find({ _id: result.insertedId }).limit(1).next()
+  reviewsDB.collection('reviews').insertOne(newReview).then(result =>
+    reviewsDB.collection('reviews').find({ _id: result.insertedId }).limit(1).next()
   ).then(newReview => {
     res.json(newReview);
   }).catch(error => {
-    //this isnt acttually doing anything rn since we arent validating and non-complete entries can be added to the database
     console.log(error);
     res.status(500).json({ message: `Internal Server Error: ${error}` });
   });
  });
 
- app.get('/users/usersDB', (req, res) => {
-  userDB.collection('users').find().toArray().then(users => {
+ app.get('/api/usersDB', (req, res) => {
+  usersDB.collection('users').find().toArray().then(users => {
     console.log(users);
     res.json(users);
   }).catch(error => {
@@ -69,39 +68,72 @@ app.get('/order/orderDB', (req, res) => {
   });
  });
 
- app.post('/users/usersDB', (req, res) => {
+ app.post('/api/usersDB', (req, res) => {
   const newUser = req.body;
-  userDB.collection('users').insertOne(newUser).then(result =>
-    userDB.collection('users').find({ _id: result.insertedId }).limit(1).next()
+  usersDB.collection('users').insertOne(newUser).then(result =>
+    usersDB.collection('users').find({ _id: result.insertedId }).limit(1).next()
   ).then(newUser => {
     res.json(newUser);
   }).catch(error => {
-    //this isnt acttually doing anything rn since we arent validating and non-complete entries can be added to the database
     console.log(error);
     res.status(500).json({ message: `Internal Server Error: ${error}` });
   });
  });
 
 
- app.get('/deliveries/deliverDB', (req, res) => {
-  deliveryDB.collection('orders').find().toArray().then(orders => {
-    console.log(orders);
-    res.json(orders);
+ app.get('/api/deliverDB', (req, res) => {
+  deliveriesDB.collection('deliveries').find().toArray().then(deliveries => {
+    console.log(deliveries);
+    res.json(deliveries);
   }).catch(error => {
     console.log(error);
     res.status(500).json({ message: `Internal Server Error: ${error}` });
   });
  });
 
- app.post('/deliveries/deliverDB', (req, res) => {
-    const newOrder = req.body;
-    console.log(newOrder);
-    deliveryDB.collection('orders').insertOne(newOrder).then(result =>
-    deliveryDB.collection('orders').find({ _id: result.insertedId }).limit(1).next()
-  ).then(newOrder => {
-    res.json(newOrder);
+ app.post('/api/deliverDB', (req, res) => {
+    const newDeliveries = req.body;
+    console.log(newDeliveries);
+    deliveriesDB.collection('deliveries').insertOne(newDeliveries).then(result =>
+    deliveriesDB.collection('deliveries').find({ _id: result.insertedId }).limit(1).next()
+  ).then(newDeliveries => {
+    res.json(newDeliveries);
   }).catch(error => {
-    //this isnt acttually doing anything rn since we arent validating and non-complete entries can be added to the database
+    console.log(error);
+    res.status(500).json({ message: `Internal Server Error: ${error}` });
+  });
+ });
+
+
+
+ app.get('/api/orderDB', (req, res) => {
+  deliveriesDB.collection('deliveries').find().toArray().then(deliveries => {
+    console.log(deliveries);
+    res.json(deliveries);
+  }).catch(error => {
+    console.log(error);
+    res.status(500).json({ message: `Internal Server Error: ${error}` });
+  });
+ });
+
+
+ app.get('/api/placedOrderDB', (req, res) => {
+  placedOrdersDB.collection('placedOrders').find().toArray().then(placedOrders => {
+    console.log(placedOrders);
+    res.json(placedOrders);
+  }).catch(error => {
+    console.log(error);
+    res.status(500).json({ message: `Internal Server Error: ${error}` });
+  });
+ }); 
+ app.post('/api/placedOrderDB', (req, res) => {
+    const newPlacedOrders = req.body;
+    console.log(newPlacedOrders);
+    placedOrdersDB.collection('placedOrders').insertOne(newPlacedOrders).then(result =>
+    placedOrdersDB.collection('placedOrders').find({ _id: result.insertedId }).limit(1).next()
+  ).then(newPlacedOrders => {
+    res.json(newPlacedOrders);
+  }).catch(error => {
     console.log(error);
     res.status(500).json({ message: `Internal Server Error: ${error}` });
   });
@@ -109,10 +141,11 @@ app.get('/order/orderDB', (req, res) => {
 
 
 MongoClient.connect('mongodb://localhost', { useNewUrlParser: true }).then(connection => {
-    orderDB = connection.db('CS326-DataBase-Orders');
-    reviewDB = connection.db('CS326-DataBase-Reviews');
-    userDB = connection.db('CS326-DataBase-Users');
-    deliveryDB = connection.db('CS326-DataBase-Deliveries');
+    menuDB = connection.db('menuDB');    
+    placedOrdersDB = connection.db('placedOrdersDB');
+    reviewsDB = connection.db('reviewsDB');
+    usersDB = connection.db('usersDB');
+    deliveriesDB = connection.db('deliveriesDB');
 
   app.listen(3000, () => {
     console.log('App started on port 3000');

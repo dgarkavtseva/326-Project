@@ -102,7 +102,7 @@ class ReviewList extends React.Component {
   }
 
   loadData() {
-    fetch('/review/reviewDB').then(response => {
+    fetch('/api/reviewDB').then(response => {
       if (response.ok) {
         response.json().then(data => {
           console.log("Total count of records:", data._metadata.total_count);
@@ -124,7 +124,7 @@ class ReviewList extends React.Component {
   }
 
   createReview(newReview) {
-    fetch('/review/reviewDB', {
+    fetch('/api/reviewDB', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newReview),

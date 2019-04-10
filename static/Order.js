@@ -250,7 +250,7 @@ var OrderPage = function (_React$Component4) {
     value: function loadData() {
       var _this5 = this;
 
-      fetch('/order/orderDB').then(function (response) {
+      fetch('/api/menuDB').then(function (response) {
         console.log(response);
         console.log("loading");
         if (response.ok) {
