@@ -126,7 +126,7 @@ class OrderPage extends React.Component {
         response.json().then(data => {
           console.log("data at 1");
           console.log(data);
-          this.state = { foods: data};
+          this.state = { foods: data, orders: []};
           this.setState({ foods: data});
         });
       } else {

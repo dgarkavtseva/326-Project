@@ -257,7 +257,7 @@ var OrderPage = function (_React$Component4) {
           response.json().then(function (data) {
             console.log("data at 1");
             console.log(data);
-            _this5.state = { foods: data };
+            _this5.state = { foods: data, orders: [] };
             _this5.setState({ foods: data });
           });
         } else {
