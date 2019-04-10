@@ -280,12 +280,38 @@ var OrderPage = function (_React$Component2) {
   }, {
     key: "createOrder",
     value: function createOrder(newOrder) {
-      if (newOrder.orderNumber != "" && newOrder.deliveryAdress != "") {
-        var newOrders = this.state.orders.slice();
-        newOrder.order = this.state.orders.length + 1;
-        newOrders.push(newOrder);
-        this.setState({ orders: newOrders });
-      }
+      var _this5 = this;
+
+      fetch('/api/placedOrderDB', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newOrder)
+      }).then(function (res) {
+        if (res.ok) {
+          res.json().then(function (updatedOrder) {
+            // updatedReview.created = new Date(updatedReview.created);
+            // if (updatedReview.completionDate)
+            //   updatedReview.completionDate = new Date(updatedReview.completionDate);
+            var newOrder = _this5.state.orders.concat(updatedOrder);
+            _this5.setState({ orders: newOrder });
+          });
+        } else {
+          res.json().then(function (error) {
+            alert('Failed to add review: ' + error.message);
+          });
+        }
+      });
+      // fetch('/api/reviewDB', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(newReview),
+      // })
+      // if(newOrder.orderNumber != "" && newOrder.deliveryAdress != ""){
+      //   const newOrders = this.state.orders.slice();
+      //   newOrder.order = this.state.orders.length + 1;
+      //   newOrders.push(newOrder);
+      //   this.setState({ orders: newOrders });
+      // }
     }
   }, {
     key: "render",

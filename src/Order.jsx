@@ -171,12 +171,40 @@ class OrderPage extends React.Component {
 
   
   createOrder(newOrder) {
-    if(newOrder.orderNumber != "" && newOrder.deliveryAdress != ""){
-      const newOrders = this.state.orders.slice();
-      newOrder.order = this.state.orders.length + 1;
-      newOrders.push(newOrder);
-      this.setState({ orders: newOrders });
-    }
+    fetch('/api/placedOrderDB', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newOrder),
+    })
+      .then(res => {
+        if (res.ok) {
+          res.json()
+            .then(updatedOrder => {
+              // updatedReview.created = new Date(updatedReview.created);
+              // if (updatedReview.completionDate)
+              //   updatedReview.completionDate = new Date(updatedReview.completionDate);
+              const newOrder = this.state.orders.concat(updatedOrder);
+              this.setState({ orders: newOrder });
+            });
+        }
+        else {
+          res.json()
+            .then(error => {
+              alert('Failed to add review: ' + error.message);
+            });
+        }
+      });
+    // fetch('/api/reviewDB', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(newReview),
+    // })
+    // if(newOrder.orderNumber != "" && newOrder.deliveryAdress != ""){
+    //   const newOrders = this.state.orders.slice();
+    //   newOrder.order = this.state.orders.length + 1;
+    //   newOrders.push(newOrder);
+    //   this.setState({ orders: newOrders });
+    // }
   }
   
   render() {
