@@ -1,16 +1,17 @@
 const contentNode = document.getElementById("contents");
-// let foods = [];
 
+const orders = [
+  {
+    order: undefined, status: undefined, deliveryAddress: undefined,
+  }
+];
 
 const FoodRow = (props) => (
-  // console.log("in foodrow function");
-  // return (
     <tr>
          <td>{props.food.order}</td>
          <td>{props.food.food}</td>
          <td>{props.food.diningHall}</td>
        </tr>
-  // );
 );
 
 
@@ -108,7 +109,7 @@ class OrderPage extends React.Component {
     console.log("constructor")
     this.state = { foods: [], orders: []};
     console.log("cons complete")
-    //this.createOrder = this.createOrder.bind(this);
+    this.createOrder = this.createOrder.bind(this);
   }
   componentDidMount() {
     console.log("mounted")
@@ -125,16 +126,8 @@ class OrderPage extends React.Component {
         response.json().then(data => {
           console.log("data at 1");
           console.log(data);
-          // foods = data;
           this.state = { foods: data};
-          //console.log("Total count of records:", data._metadata.total_count);
-          // data.records.forEach(issue => {
-          //   issue.created = new Date(issue.created);
-          //   if (issue.completionDate)
-          //     issue.completionDate = new Date(issue.completionDate);
-          // });
-          this.setState({ foods: data}); // removed .records
-          //console.log("Updated foods");
+          this.setState({ foods: data});
         });
       } else {
         response.json().then(error => {

@@ -9,34 +9,30 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var contentNode = document.getElementById("contents");
-// let foods = [];
 
+var orders = [{
+  order: undefined, status: undefined, deliveryAddress: undefined
+}];
 
 var FoodRow = function FoodRow(props) {
-  return (
-    // console.log("in foodrow function");
-    // return (
+  return React.createElement(
+    "tr",
+    null,
     React.createElement(
-      "tr",
+      "td",
       null,
-      React.createElement(
-        "td",
-        null,
-        props.food.order
-      ),
-      React.createElement(
-        "td",
-        null,
-        props.food.food
-      ),
-      React.createElement(
-        "td",
-        null,
-        props.food.diningHall
-      )
+      props.food.order
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.food.food
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.food.diningHall
     )
-    // );
-
   );
 };
 
@@ -237,7 +233,7 @@ var OrderPage = function (_React$Component4) {
     console.log("constructor");
     _this4.state = { foods: [], orders: [] };
     console.log("cons complete");
-    //this.createOrder = this.createOrder.bind(this);
+    _this4.createOrder = _this4.createOrder.bind(_this4);
     return _this4;
   }
 
@@ -261,16 +257,8 @@ var OrderPage = function (_React$Component4) {
           response.json().then(function (data) {
             console.log("data at 1");
             console.log(data);
-            // foods = data;
             _this5.state = { foods: data };
-            //console.log("Total count of records:", data._metadata.total_count);
-            // data.records.forEach(issue => {
-            //   issue.created = new Date(issue.created);
-            //   if (issue.completionDate)
-            //     issue.completionDate = new Date(issue.completionDate);
-            // });
-            _this5.setState({ foods: data }); // removed .records
-            //console.log("Updated foods");
+            _this5.setState({ foods: data });
           });
         } else {
           response.json().then(function (error) {
