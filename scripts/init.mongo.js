@@ -66,6 +66,6 @@ deliveriesDB.deliveries.insert([
 
 placedOrdersDB.placedOrders.insert([
   {
-      orderNumber: '5444', status: "pending", deliveryAdress: 'JQA'
+      orderNumber: '3', status: "pending", deliveryAdress: 'JQA'
   },
 ]);
