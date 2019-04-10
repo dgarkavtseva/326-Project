@@ -36,46 +36,43 @@ var FoodRow = function FoodRow(props) {
   );
 };
 
-var OrderRow = function (_React$Component) {
-  _inherits(OrderRow, _React$Component);
+var OrderRow = function OrderRow(props) {
+  return React.createElement(
+    "tr",
+    null,
+    React.createElement(
+      "td",
+      null,
+      props.order.orderNumber
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.order.status
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.order.deliveryAdress
+    )
+  );
+};
 
-  function OrderRow() {
-    _classCallCheck(this, OrderRow);
-
-    return _possibleConstructorReturn(this, (OrderRow.__proto__ || Object.getPrototypeOf(OrderRow)).apply(this, arguments));
-  }
-
-  _createClass(OrderRow, [{
-    key: "render",
-    value: function render() {
-      var order = this.props.order;
-      return React.createElement(
-        "tr",
-        null,
-        React.createElement(
-          "td",
-          null,
-          order.orderNumber
-        ),
-        React.createElement(
-          "td",
-          null,
-          order.status
-        ),
-        React.createElement(
-          "td",
-          null,
-          order.deliveryAdress
-        )
-      );
-    }
-  }]);
-
-  return OrderRow;
-}(React.Component);
+// class OrderRow extends React.Component {
+//   render() {
+//     const order = this.props.order;
+//     return (
+//       <tr>
+//         <td>{order.orderNumber}</td>
+//         <td>{order.status}</td>
+//         <td>{order.deliveryAdress}</td>
+//       </tr>
+//     );
+//   }
+// }
 
 function FoodTable(props) {
-  console.log("foodRows Start");
+  console.log("food props");
   console.log(props);
   var foodRows = props.foods.map(function (food) {
     return React.createElement(FoodRow, { key: food._id, food: food });
@@ -115,77 +112,62 @@ function FoodTable(props) {
   );
 }
 
-var OrderTable = function (_React$Component2) {
-  _inherits(OrderTable, _React$Component2);
-
-  function OrderTable() {
-    _classCallCheck(this, OrderTable);
-
-    return _possibleConstructorReturn(this, (OrderTable.__proto__ || Object.getPrototypeOf(OrderTable)).apply(this, arguments));
-  }
-
-  _createClass(OrderTable, [{
-    key: "render",
-    value: function render() {
-      var OrderRows = this.props.orders.map(function (order) {
-        return React.createElement(OrderRow, { key: order.order, order: order });
-      });
-      return React.createElement(
-        "table",
-        { className: "bordered-table" },
+function OrderTable(props) {
+  var orderRows = props.orders.map(function (order) {
+    return React.createElement(OrderRow, { key: order._id, order: order });
+  });
+  return React.createElement(
+    "table",
+    { className: "bordered-table" },
+    React.createElement(
+      "thead",
+      null,
+      React.createElement(
+        "tr",
+        null,
         React.createElement(
-          "thead",
+          "th",
           null,
-          React.createElement(
-            "tr",
-            null,
-            React.createElement(
-              "th",
-              null,
-              "Order Number"
-            ),
-            React.createElement(
-              "th",
-              null,
-              "Status"
-            ),
-            React.createElement(
-              "th",
-              null,
-              "Delivery Address"
-            )
-          )
+          "Order Number"
         ),
         React.createElement(
-          "tbody",
+          "th",
           null,
-          OrderRows
+          "Status"
+        ),
+        React.createElement(
+          "th",
+          null,
+          "Delivery Address"
         )
-      );
-    }
-  }]);
+      )
+    ),
+    React.createElement(
+      "tbody",
+      null,
+      orderRows
+    )
+  );
+}
 
-  return OrderTable;
-}(React.Component);
-
-var OrderAdd = function (_React$Component3) {
-  _inherits(OrderAdd, _React$Component3);
+var OrderAdd = function (_React$Component) {
+  _inherits(OrderAdd, _React$Component);
 
   function OrderAdd() {
     _classCallCheck(this, OrderAdd);
 
-    var _this3 = _possibleConstructorReturn(this, (OrderAdd.__proto__ || Object.getPrototypeOf(OrderAdd)).call(this));
+    var _this = _possibleConstructorReturn(this, (OrderAdd.__proto__ || Object.getPrototypeOf(OrderAdd)).call(this));
 
-    _this3.handleSubmit = _this3.handleSubmit.bind(_this3);
-    return _this3;
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
   }
+  // componentDidMount() {
+  //   // this.loadData();
+  //   // this.loadplacedOrders();
+  // }
+
 
   _createClass(OrderAdd, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      // this.loadData();
-    }
-  }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
       event.preventDefault();
@@ -222,33 +204,34 @@ var OrderAdd = function (_React$Component3) {
   return OrderAdd;
 }(React.Component);
 
-var OrderPage = function (_React$Component4) {
-  _inherits(OrderPage, _React$Component4);
+var OrderPage = function (_React$Component2) {
+  _inherits(OrderPage, _React$Component2);
 
   function OrderPage() {
     _classCallCheck(this, OrderPage);
 
-    var _this4 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
+    var _this2 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
 
     console.log("constructor");
-    _this4.state = { foods: [], orders: [] };
+    _this2.state = { foods: [], orders: [] };
     console.log("cons complete");
-    _this4.createOrder = _this4.createOrder.bind(_this4);
-    return _this4;
+    _this2.createOrder = _this2.createOrder.bind(_this2);
+    return _this2;
   }
 
   _createClass(OrderPage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       console.log("mounted");
-      console.log("mounted");
 
       this.loadData();
+      console.log("mounted2");
+      this.loadPlacedOrders();
     }
   }, {
     key: "loadData",
     value: function loadData() {
-      var _this5 = this;
+      var _this3 = this;
 
       fetch('/api/menuDB').then(function (response) {
         console.log(response);
@@ -257,8 +240,8 @@ var OrderPage = function (_React$Component4) {
           response.json().then(function (data) {
             console.log("data at 1");
             console.log(data);
-            _this5.state = { foods: data, orders: [] };
-            _this5.setState({ foods: data });
+            _this3.state = { foods: data, orders: _this3.state.orders };
+            _this3.setState({ foods: data });
           });
         } else {
           response.json().then(function (error) {
@@ -270,22 +253,65 @@ var OrderPage = function (_React$Component4) {
       });
     }
   }, {
-    key: "createItem",
-    value: function createItem(newFood) {
-      var newFoods = this.state.foods.slice();
-      newFood.order = this.state.foods.length + 1;
-      newFoods.push(newFood);
-      this.setState({ foods: newFoods });
+    key: "loadPlacedOrders",
+    value: function loadPlacedOrders() {
+      var _this4 = this;
+
+      console.log("trying to load placed orders");
+      fetch('/api/placedOrderDB').then(function (response) {
+        console.log(response);
+        console.log("loading order retrieval");
+        if (response.ok) {
+          response.json().then(function (data) {
+            console.log("data at 2");
+            console.log(data);
+            _this4.state = { foods: _this4.state.foods, orders: data }; //potential error
+            _this4.setState({ orders: data });
+          });
+        } else {
+          response.json().then(function (error) {
+            alert("Failed to fetch issues:" + error.message);
+          });
+        }
+      }).catch(function (err) {
+        alert("Error in fetching data from server:", err);
+      });
     }
   }, {
     key: "createOrder",
     value: function createOrder(newOrder) {
-      if (newOrder.orderNumber != "" && newOrder.deliveryAdress != "") {
-        var newOrders = this.state.orders.slice();
-        newOrder.order = this.state.orders.length + 1;
-        newOrders.push(newOrder);
-        this.setState({ orders: newOrders });
-      }
+      var _this5 = this;
+
+      fetch('/api/placedOrderDB', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newOrder)
+      }).then(function (res) {
+        if (res.ok) {
+          res.json().then(function (updatedOrder) {
+            // updatedReview.created = new Date(updatedReview.created);
+            // if (updatedReview.completionDate)
+            //   updatedReview.completionDate = new Date(updatedReview.completionDate);
+            var newOrder = _this5.state.orders.concat(updatedOrder);
+            _this5.setState({ orders: newOrder });
+          });
+        } else {
+          res.json().then(function (error) {
+            alert('Failed to add review: ' + error.message);
+          });
+        }
+      });
+      // fetch('/api/reviewDB', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(newReview),
+      // })
+      // if(newOrder.orderNumber != "" && newOrder.deliveryAdress != ""){
+      //   const newOrders = this.state.orders.slice();
+      //   newOrder.order = this.state.orders.length + 1;
+      //   newOrders.push(newOrder);
+      //   this.setState({ orders: newOrders });
+      // }
     }
   }, {
     key: "render",
