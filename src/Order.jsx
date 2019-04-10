@@ -15,21 +15,29 @@ const FoodRow = (props) => (
 );
 
 
-class OrderRow extends React.Component {
-  render() {
-    const order = this.props.order;
-    return (
-      <tr>
-        <td>{order.orderNumber}</td>
-        <td>{order.status}</td>
-        <td>{order.deliveryAdress}</td>
-      </tr>
-    );
-  }
-}
+const OrderRow = (props) => (
+  <tr>
+       <td>{order.orderNumber}</td>
+       <td>{order.status}</td>
+      <td>{order.deliveryAdress}</td>
+  </tr>
+);
+
+// class OrderRow extends React.Component {
+//   render() {
+//     const order = this.props.order;
+//     return (
+//       <tr>
+//         <td>{order.orderNumber}</td>
+//         <td>{order.status}</td>
+//         <td>{order.deliveryAdress}</td>
+//       </tr>
+//     );
+//   }
+// }
 
 function FoodTable(props){
-  console.log("foodRows Start")
+  console.log("food props");
   console.log(props);
     const foodRows = props.foods.map(food => (
       <FoodRow key={food._id} food={food} />
@@ -48,36 +56,57 @@ function FoodTable(props){
       </table>
     );
   }
-
-
-class OrderTable extends React.Component {
-  render() {
-    const OrderRows = this.props.orders.map(order => (
-      <OrderRow key={order.order} order={order} />
-    ));
-    return (
-      <table className="bordered-table">
-        <thead>
-          <tr>
-            <th>Order Number</th>
-            <th>Status</th>
-            <th>Delivery Address</th>
-          </tr>
-        </thead>
-        <tbody>{OrderRows}</tbody>
-      </table>
-    );
+  function OrderTable(props) {
+    console.log("order table start");  
+    console.log(props);
+    console.log("order table start 2");  
+    const OrderRows = props.orders.map(order => (
+        <OrderRow key={order._id} order={order} />
+      ));
+      return (
+        <table className="bordered-table">
+          <thead>
+            <tr>
+              <th>Order Number</th>
+              <th>Status</th>
+              <th>Delivery Address</th>
+            </tr>
+          </thead>
+          <tbody>{OrderRows}</tbody>
+        </table>
+      );
+    
   }
-}
+
+// class OrderTable extends React.Component {
+//   render() {
+//     const OrderRows = this.props.orders.map(order => (
+//       <OrderRow key={order.order} order={order} />
+//     ));
+//     return (
+//       <table className="bordered-table">
+//         <thead>
+//           <tr>
+//             <th>Order Number</th>
+//             <th>Status</th>
+//             <th>Delivery Address</th>
+//           </tr>
+//         </thead>
+//         <tbody>{OrderRows}</tbody>
+//       </table>
+//     );
+//   }
+// }
 
 class OrderAdd extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  componentDidMount() {
-    // this.loadData();
-  }
+  // componentDidMount() {
+  //   // this.loadData();
+  //   // this.loadplacedOrders();
+  // }
   handleSubmit(event) {
     event.preventDefault();
     let form = document.forms.orderAdd;
@@ -112,10 +141,11 @@ class OrderPage extends React.Component {
     this.createOrder = this.createOrder.bind(this);
   }
   componentDidMount() {
-    console.log("mounted")
-    console.log("mounted")
+    console.log("mounted");
 
     this.loadData();
+    console.log("mounted2");
+    this.loadPlacedOrders();
   }
 
   loadData() {
@@ -139,12 +169,29 @@ class OrderPage extends React.Component {
     });
   }
 
-  createItem(newFood) {
-    const newFoods = this.state.foods.slice();
-    newFood.order = this.state.foods.length + 1;
-    newFoods.push(newFood);
-    this.setState({ foods: newFoods });
+  loadPlacedOrders() {
+    console.log("trying to load placed orders");
+    fetch('/api/placedOrderDB').then(response => {
+      console.log(response)
+      console.log("loading order retrieval");
+      if (response.ok) {
+        response.json().then(data => {
+          console.log("data at 2");
+          console.log(data);
+          this.state = { foods: this.state.foods , orders: data}; //potential error
+          this.setState({ orders: data});
+        });
+      } else {
+        response.json().then(error => {
+          alert("Failed to fetch issues:" + error.message)
+        });
+      }
+    }).catch(err => {
+      alert("Error in fetching data from server:", err);
+    });
   }
+
+  
   createOrder(newOrder) {
     if(newOrder.orderNumber != "" && newOrder.deliveryAdress != ""){
       const newOrders = this.state.orders.slice();
