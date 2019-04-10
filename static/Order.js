@@ -43,17 +43,17 @@ var OrderRow = function OrderRow(props) {
     React.createElement(
       "td",
       null,
-      order.orderNumber
+      props.order.orderNumber
     ),
     React.createElement(
       "td",
       null,
-      order.status
+      props.order.status
     ),
     React.createElement(
       "td",
       null,
-      order.deliveryAdress
+      props.order.deliveryAdress
     )
   );
 };
@@ -111,11 +111,9 @@ function FoodTable(props) {
     )
   );
 }
+
 function OrderTable(props) {
-  console.log("order table start");
-  console.log(props);
-  console.log("order table start 2");
-  var OrderRows = props.orders.map(function (order) {
+  var orderRows = props.orders.map(function (order) {
     return React.createElement(OrderRow, { key: order._id, order: order });
   });
   return React.createElement(
@@ -147,30 +145,10 @@ function OrderTable(props) {
     React.createElement(
       "tbody",
       null,
-      OrderRows
+      orderRows
     )
   );
 }
-
-// class OrderTable extends React.Component {
-//   render() {
-//     const OrderRows = this.props.orders.map(order => (
-//       <OrderRow key={order.order} order={order} />
-//     ));
-//     return (
-//       <table className="bordered-table">
-//         <thead>
-//           <tr>
-//             <th>Order Number</th>
-//             <th>Status</th>
-//             <th>Delivery Address</th>
-//           </tr>
-//         </thead>
-//         <tbody>{OrderRows}</tbody>
-//       </table>
-//     );
-//   }
-// }
 
 var OrderAdd = function (_React$Component) {
   _inherits(OrderAdd, _React$Component);
@@ -262,7 +240,7 @@ var OrderPage = function (_React$Component2) {
           response.json().then(function (data) {
             console.log("data at 1");
             console.log(data);
-            _this3.state = { foods: data, orders: [] };
+            _this3.state = { foods: data, orders: _this3.state.orders };
             _this3.setState({ foods: data });
           });
         } else {

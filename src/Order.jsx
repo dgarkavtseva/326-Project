@@ -17,9 +17,9 @@ const FoodRow = (props) => (
 
 const OrderRow = (props) => (
   <tr>
-       <td>{order.orderNumber}</td>
-       <td>{order.status}</td>
-      <td>{order.deliveryAdress}</td>
+       <td>{props.order.orderNumber}</td>
+       <td>{props.order.status}</td>
+      <td>{props.order.deliveryAdress}</td>
   </tr>
 );
 
@@ -56,47 +56,25 @@ function FoodTable(props){
       </table>
     );
   }
+ 
   function OrderTable(props) {
-    console.log("order table start");  
-    console.log(props);
-    console.log("order table start 2");  
-    const OrderRows = props.orders.map(order => (
-        <OrderRow key={order._id} order={order} />
-      ));
-      return (
-        <table className="bordered-table">
-          <thead>
-            <tr>
-              <th>Order Number</th>
-              <th>Status</th>
-              <th>Delivery Address</th>
-            </tr>
-          </thead>
-          <tbody>{OrderRows}</tbody>
-        </table>
-      );
-    
+    const orderRows = props.orders.map(order => (
+      <OrderRow key={order._id} order={order} />
+    ));
+    return (
+      <table className="bordered-table">
+        <thead>
+        <tr>
+            <th>Order Number</th>
+             <th>Status</th>
+             <th>Delivery Address</th>
+           </tr>
+        </thead>
+        <tbody>{orderRows}</tbody>
+      </table>
+    );
   }
 
-// class OrderTable extends React.Component {
-//   render() {
-//     const OrderRows = this.props.orders.map(order => (
-//       <OrderRow key={order.order} order={order} />
-//     ));
-//     return (
-//       <table className="bordered-table">
-//         <thead>
-//           <tr>
-//             <th>Order Number</th>
-//             <th>Status</th>
-//             <th>Delivery Address</th>
-//           </tr>
-//         </thead>
-//         <tbody>{OrderRows}</tbody>
-//       </table>
-//     );
-//   }
-// }
 
 class OrderAdd extends React.Component {
   constructor() {
@@ -156,7 +134,7 @@ class OrderPage extends React.Component {
         response.json().then(data => {
           console.log("data at 1");
           console.log(data);
-          this.state = { foods: data, orders: []};
+          this.state = { foods: data, orders: this.state.orders};
           this.setState({ foods: data});
         });
       } else {
