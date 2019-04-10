@@ -56,7 +56,7 @@ class OrderAdd extends React.Component {
       <div>
         <form name="orderAdd" onSubmit={this.handleSubmit}>
           <input type="text" name="orderNumber" placeholder="Order Number" />
-          <input type="text" name="deliveryAdress" placeholder="Your Address" />
+          <input type="text" name="deliveryAdress" placeholder="Your Name" />
           <button>Add</button>
         </form>
       </div>
@@ -128,8 +128,32 @@ class OrderPage extends React.Component {
         if (res.ok) {
           res.json()
             .then(updatedOrder => {
-              const newOrder = this.state.orders.concat(updatedOrder);
-              this.setState({ orders: newOrder });
+              console.log("updated order");
+              console.log(updatedOrder);
+              console.log("existing orders");
+              console.log(this.state.orders.slice());
+              let apples = this.state.orders.slice();
+              let exists = false;
+              apples.forEach(function match(element){
+                console.log(element.orderNumber);
+                console.log("match?????");
+                console.log(element.orderNumber* 2 / 2 === updatedOrder.orderNumber * 2 / 2)
+                if(element.orderNumber* 2 / 2 === updatedOrder.orderNumber * 2 / 2){
+                  console.log("match found");
+                  element.status = "accepted";
+                  element.Deliverer = updatedOrder.Deliverer;
+                  exists = true;
+                }
+              });
+
+              if(!exists){
+                const apples = this.state.orders.concat(updatedOrder);
+              
+                
+              }
+              this.setState({ orders: apples });
+
+              
             });
         }
         else {
@@ -149,15 +173,41 @@ class OrderPage extends React.Component {
         <h2>These are the available options for grab and go today!</h2> */}
         {/* <FoodTable foods={this.state.foods} /> */}
         <hr />
-        <h1>Place an Order!</h1>
-        <h2>Fill out the form below</h2>        
-        <OrderAdd createOrder={this.createOrder} />
+             
+        
         <hr />
         <h3>Here are your current orders:</h3>
+        <br></br>
+        <hr></hr>
+        <h1>Claim an Order!</h1>
+        <h2>Fill out the form below</h2>   
+        <OrderAdd createOrder={this.createOrder} />
         <OrderTable orders={this.state.orders} />
       </div>
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ReactDOM.render(<OrderPage />, contentNode);

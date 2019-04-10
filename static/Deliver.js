@@ -109,7 +109,7 @@ var OrderAdd = function (_React$Component) {
           "form",
           { name: "orderAdd", onSubmit: this.handleSubmit },
           React.createElement("input", { type: "text", name: "orderNumber", placeholder: "Order Number" }),
-          React.createElement("input", { type: "text", name: "deliveryAdress", placeholder: "Your Address" }),
+          React.createElement("input", { type: "text", name: "deliveryAdress", placeholder: "Your Name" }),
           React.createElement(
             "button",
             null,
@@ -183,8 +183,28 @@ var OrderPage = function (_React$Component2) {
       }).then(function (res) {
         if (res.ok) {
           res.json().then(function (updatedOrder) {
-            var newOrder = _this4.state.orders.concat(updatedOrder);
-            _this4.setState({ orders: newOrder });
+            console.log("updated order");
+            console.log(updatedOrder);
+            console.log("existing orders");
+            console.log(_this4.state.orders.slice());
+            var apples = _this4.state.orders.slice();
+            var exists = false;
+            apples.forEach(function match(element) {
+              console.log(element.orderNumber);
+              console.log("match?????");
+              console.log(element.orderNumber * 2 / 2 === updatedOrder.orderNumber * 2 / 2);
+              if (element.orderNumber * 2 / 2 === updatedOrder.orderNumber * 2 / 2) {
+                console.log("match found");
+                element.status = "accepted";
+                element.Deliverer = updatedOrder.Deliverer;
+                exists = true;
+              }
+            });
+
+            if (!exists) {
+              var _apples = _this4.state.orders.concat(updatedOrder);
+            }
+            _this4.setState({ orders: apples });
           });
         } else {
           res.json().then(function (error) {
@@ -199,21 +219,19 @@ var OrderPage = function (_React$Component2) {
       return React.createElement(
         "div",
         null,
+        React.createElement("hr", null),
+        React.createElement("hr", null),
         React.createElement(
-          "h1",
+          "h3",
           null,
-          "Menu"
+          "Here are your current orders:"
         ),
-        React.createElement(
-          "h2",
-          null,
-          "These are the available options for grab and go today!"
-        ),
+        React.createElement("br", null),
         React.createElement("hr", null),
         React.createElement(
           "h1",
           null,
-          "Place an Order!"
+          "Claim an Order!"
         ),
         React.createElement(
           "h2",
@@ -221,12 +239,6 @@ var OrderPage = function (_React$Component2) {
           "Fill out the form below"
         ),
         React.createElement(OrderAdd, { createOrder: this.createOrder }),
-        React.createElement("hr", null),
-        React.createElement(
-          "h3",
-          null,
-          "Here are your current orders:"
-        ),
         React.createElement(OrderTable, { orders: this.state.orders })
       );
     }
