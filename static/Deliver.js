@@ -8,213 +8,37 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// const contentNode = document.getElementById("contents");
-// const orders = [
-//   {
-//     orderNumber: "2", status: 'pending', deliveryAdress: "Elm", orderID: 50, Deliverer: "NA", 
-//   }, {
-//     orderNumber: "5", status: 'pending', deliveryAdress: "Van Meter", orderID: 51, Deliverer: "NA",
-//   }
-// ];
-
-// class OrderRow extends React.Component {
-//   render() {
-//     const order = this.props.order;
-//     return (
-//       <tr>
-//         <td>{order.orderNumber}</td>
-//         <td>{order.status}</td>
-//         <td>{order.deliveryAdress}</td>
-//         <td>{order.orderID}</td>
-//         <td>{order.Deliverer}</td>
-//       </tr>
-//     );
-//   }
-// }
-
-
-// class OrderTable extends React.Component {
-//   render() {
-//     const OrderRows = this.props.orders.map(order => (
-//       <OrderRow key={order.order} order={order} />
-//     ));
-//     return (
-//       <table className="bordered-table">
-//         <thead>
-//           <tr>
-//             <th>Menu Item</th>
-//             <th>Status</th>
-//             <th>Delivery Address</th>
-//             <th>Order ID</th>
-//             <th>Deliverer</th>
-//           </tr>
-//         </thead>
-//         <tbody>{OrderRows}</tbody>
-//       </table>
-//     );
-//   }
-// }
-// class OrderAdd extends React.Component {
-//   constructor() {
-//     super();
-//     this.handleSubmit = this.handleSubmit.bind(this);
-//   }
-//   handleSubmit(event) {
-//     event.preventDefault();
-//     let form = document.forms.orderAdd;
-//     this.props.createOrder({
-//       Deliverer: form.deliveryAdress.value, 
-//       orderID: form.orderNumber.value,
-//       status: 'Pending'
-//     });
-//     form.orderNumber.value = '';
-//     form.deliveryAdress.value = '';
-//   }
-
-//   render() {
-//     return (
-//       <div>
-//         <form name="orderAdd" onSubmit={this.handleSubmit}>
-//           <input type="text" name="deliveryAdress" placeholder="Name" />
-//           <input type="text" name="orderNumber" placeholder="Order ID" />
-//           <button>Add</button>
-//         </form>
-//       </div>
-//     );
-//   }
-// }
-// class OrderPage extends React.Component {
-//   constructor() {
-//     super();
-//     this.state = {orders: orders };
-//     setTimeout(this.createOrderInit.bind(this), 2000);
-//     this.createOrder = this.createOrder.bind(this);
-//   }
-
-
-//   createOrder(newOrder) {
-//     if(newOrder.orderID != "" && newOrder.deliveryAdress != ""){
-//       const newOrders = this.state.orders.slice();
-//       let exists = false;
-//       newOrders.forEach(function match(element){
-
-//         if(element.orderID * 2 / 2 === newOrder.orderID * 2 / 2){
-//           element.status = "accepted";
-//           element.Deliverer = newOrder.Deliverer;
-//           exists = true;
-//         }
-//       });
-//       if(!exists){
-//         newOrder.order = this.state.orders.length + 1;
-//         newOrders.push(newOrder);
-
-//       }
-//       this.setState({ orders: newOrders });
-//     }
-//   }
-
-//   createOrderInit() {
-//     this.createOrder({
-//       orderNumber: 1,
-//       status: "pending",
-//       deliveryAdress: "Maple", 
-//       orderID: 52, Deliverer: "NA"
-//     });
-//   }
-
-
-//   render() {
-//     return (
-//       <div>
-
-//         <h2>Select an order to fulfill</h2>        
-
-//         <hr />
-//         <h3>Current orders:</h3>
-//         <OrderTable orders={this.state.orders} />
-//         <OrderAdd createOrder={this.createOrder} />
-//       </div>
-//     );
-//   }
-// }
-
-// ReactDOM.render(<OrderPage />, contentNode);
-
-
 var contentNode = document.getElementById("contents");
 
-// import React from 'react';
-// import 'isomorphic-fetch';
-// import { Link } from 'react-router';
+var orders = [{
+  order: undefined, status: undefined, deliveryAddress: undefined
+}];
 
-var SearchBar = function (_React$Component) {
-  _inherits(SearchBar, _React$Component);
-
-  function SearchBar() {
-    _classCallCheck(this, SearchBar);
-
-    return _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).apply(this, arguments));
-  }
-
-  _createClass(SearchBar, [{
-    key: "render",
-    value: function render() {
-      return React.createElement(
-        "div",
-        null,
-        "We will add a search bar here to searh for specific items."
-      );
-    }
-  }]);
-
-  return SearchBar;
-}(React.Component);
-
-var ReviewRow = function ReviewRow(props) {
+var OrderRow = function OrderRow(props) {
   return React.createElement(
     "tr",
     null,
     React.createElement(
       "td",
       null,
-      props.review.name
+      props.order.orderNumber
     ),
     React.createElement(
       "td",
       null,
-      props.review.created.toDateString()
+      props.order.status
     ),
     React.createElement(
       "td",
       null,
-      props.review.time
-    ),
-    React.createElement(
-      "td",
-      null,
-      props.review.orderFrom
-    ),
-    React.createElement(
-      "td",
-      null,
-      props.review.orderItem
-    ),
-    React.createElement(
-      "td",
-      null,
-      props.review.driver
-    ),
-    React.createElement(
-      "td",
-      null,
-      props.review.review
+      props.order.deliveryAdress
     )
   );
 };
 
-function ReviewTable(props) {
-  var reviewRows = props.reviews.map(function (review) {
-    return React.createElement(ReviewRow, { key: review._id, review: review });
+function OrderTable(props) {
+  var orderRows = props.orders.map(function (order) {
+    return React.createElement(OrderRow, { key: order._id, order: order });
   });
   return React.createElement(
     "table",
@@ -228,81 +52,52 @@ function ReviewTable(props) {
         React.createElement(
           "th",
           null,
-          "Name"
+          "Order Number"
         ),
         React.createElement(
           "th",
           null,
-          "Date"
+          "Status"
         ),
         React.createElement(
           "th",
           null,
-          "Time"
-        ),
-        React.createElement(
-          "th",
-          null,
-          "Ordered From"
-        ),
-        React.createElement(
-          "th",
-          null,
-          "Order"
-        ),
-        React.createElement(
-          "th",
-          null,
-          "Driver"
-        ),
-        React.createElement(
-          "th",
-          null,
-          "Review"
+          "Delivery Address"
         )
       )
     ),
     React.createElement(
       "tbody",
       null,
-      reviewRows
+      orderRows
     )
   );
 }
 
-var ReviewAdd = function (_React$Component2) {
-  _inherits(ReviewAdd, _React$Component2);
+var OrderAdd = function (_React$Component) {
+  _inherits(OrderAdd, _React$Component);
 
-  function ReviewAdd() {
-    _classCallCheck(this, ReviewAdd);
+  function OrderAdd() {
+    _classCallCheck(this, OrderAdd);
 
-    var _this2 = _possibleConstructorReturn(this, (ReviewAdd.__proto__ || Object.getPrototypeOf(ReviewAdd)).call(this));
+    var _this = _possibleConstructorReturn(this, (OrderAdd.__proto__ || Object.getPrototypeOf(OrderAdd)).call(this));
 
-    _this2.handleSubmit = _this2.handleSubmit.bind(_this2);
-    return _this2;
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
   }
 
-  _createClass(ReviewAdd, [{
+  _createClass(OrderAdd, [{
     key: "handleSubmit",
-    value: function handleSubmit(e) {
-      e.preventDefault();
-      var form = document.forms.reviewAdd;
-      this.props.createReview({
-        name: form.name.value,
-        time: form.time.value,
-        orderFrom: form.orderFrom.value,
-        orderItem: form.orderItem.value,
-        driver: form.driver.value,
-        review: form.review.value,
-        created: new Date()
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      var form = document.forms.orderAdd;
+      this.props.createOrder({
+        orderNumber: form.orderNumber.value,
+        deliveryAdress: form.deliveryAdress.value,
+        status: 'Pending'
       });
-      // Clear the form for the next input.
-      form.name.value = '';
-      form.time.value = '';
-      form.orderFrom.value = '';
-      form.orderItem.value = '';
-      form.driver.value = '';
-      form.review.value = '';
+      form.orderNumber.value = '';
+      form.deliveryAdress.value = '';
     }
   }, {
     key: "render",
@@ -312,13 +107,9 @@ var ReviewAdd = function (_React$Component2) {
         null,
         React.createElement(
           "form",
-          { name: "reviewAdd", onSubmit: this.handleSubmit },
-          React.createElement("input", { type: "text", name: "name", placeholder: "Name" }),
-          React.createElement("input", { type: "text", name: "time", placeholder: "Time" }),
-          React.createElement("input", { type: "text", name: "orderFrom", placeholder: "Ordered From" }),
-          React.createElement("input", { type: "text", name: "orderItem", placeholder: "Order" }),
-          React.createElement("input", { type: "text", name: "driver", placeholder: "Driver" }),
-          React.createElement("input", { type: "text", name: "review", placeholder: "Review" }),
+          { name: "orderAdd", onSubmit: this.handleSubmit },
+          React.createElement("input", { type: "text", name: "orderNumber", placeholder: "Order Number" }),
+          React.createElement("input", { type: "text", name: "deliveryAdress", placeholder: "Your Address" }),
           React.createElement(
             "button",
             null,
@@ -329,79 +120,79 @@ var ReviewAdd = function (_React$Component2) {
     }
   }]);
 
-  return ReviewAdd;
+  return OrderAdd;
 }(React.Component);
 
-var ReviewList = function (_React$Component3) {
-  _inherits(ReviewList, _React$Component3);
+var OrderPage = function (_React$Component2) {
+  _inherits(OrderPage, _React$Component2);
 
-  function ReviewList() {
-    _classCallCheck(this, ReviewList);
+  function OrderPage() {
+    _classCallCheck(this, OrderPage);
 
-    var _this3 = _possibleConstructorReturn(this, (ReviewList.__proto__ || Object.getPrototypeOf(ReviewList)).call(this));
+    var _this2 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
 
-    _this3.state = { reviews: [] };
-
-    // this.createReview = this.createReview.bind(this);
-    return _this3;
+    console.log("constructor");
+    _this2.state = { orders: [] };
+    console.log("cons complete");
+    _this2.createOrder = _this2.createOrder.bind(_this2);
+    return _this2;
   }
 
-  _createClass(ReviewList, [{
+  _createClass(OrderPage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.loadData();
+      console.log("mounted");
+
+      console.log("mounted2");
+      this.loadPlacedOrders();
     }
   }, {
-    key: "loadData",
-    value: function loadData() {
-      var _this4 = this;
+    key: "loadPlacedOrders",
+    value: function loadPlacedOrders() {
+      var _this3 = this;
 
-      fetch('/api/reviewDB').then(function (response) {
+      console.log("trying to load placed orders");
+      fetch('/api/placedOrderDB').then(function (response) {
+        console.log(response);
+        console.log("loading order retrieval");
         if (response.ok) {
           response.json().then(function (data) {
-            console.log("Total count of records:", data._metadata.total_count);
-            data.records.forEach(function (review) {
-              review.created = new Date(review.created);
-              if (review.completionDate) review.completionDate = new Date(review.completionDate);
-            });
-            _this4.setState({ reviews: data.records });
+            console.log("data at 2");
+            console.log(data);
+            _this3.state = { orders: data }; //potential error
+            _this3.setState({ orders: data });
           });
         } else {
           response.json().then(function (error) {
-            alert("Failed to fetch reviews:" + error.message);
+            alert("Failed to fetch issues:" + error.message);
           });
         }
       }).catch(function (err) {
         alert("Error in fetching data from server:", err);
       });
     }
+  }, {
+    key: "createOrder",
+    value: function createOrder(newOrder) {
+      var _this4 = this;
 
-    // createReview(newReview) {
-    //   fetch('/api/reviewDB', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(newReview),
-    //   })
-    //     .then(res => {
-    //       if (res.ok) {
-    //         res.json()
-    //           .then(updatedReview => {
-    //             updatedReview.created = new Date(updatedReview.created);
-    //             if (updatedReview.completionDate)
-    //               updatedReview.completionDate = new Date(updatedReview.completionDate);
-    //             const newReview = this.state.reviews.concat(updatedReview);
-    //             this.setState({ reviews: newReview });
-    //           });
-    //       }
-    //       else {
-    //         res.json()
-    //           .then(error => {
-    //             alert('Failed to add review: ' + error.message);
-    //           });
-    //       }
-    //     });
-    // }
-
+      fetch('/api/placedOrderDB', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newOrder)
+      }).then(function (res) {
+        if (res.ok) {
+          res.json().then(function (updatedOrder) {
+            var newOrder = _this4.state.orders.concat(updatedOrder);
+            _this4.setState({ orders: newOrder });
+          });
+        } else {
+          res.json().then(function (error) {
+            alert('Failed to add review: ' + error.message);
+          });
+        }
+      });
+    }
   }, {
     key: "render",
     value: function render() {
@@ -411,21 +202,37 @@ var ReviewList = function (_React$Component3) {
         React.createElement(
           "h1",
           null,
-          "Reviews"
+          "Menu"
         ),
-        React.createElement(SearchBar, null),
+        React.createElement(
+          "h2",
+          null,
+          "These are the available options for grab and go today!"
+        ),
         React.createElement("hr", null),
-        React.createElement(ReviewTable, { reviews: this.state.reviews }),
+        React.createElement(
+          "h1",
+          null,
+          "Place an Order!"
+        ),
+        React.createElement(
+          "h2",
+          null,
+          "Fill out the form below"
+        ),
+        React.createElement(OrderAdd, { createOrder: this.createOrder }),
         React.createElement("hr", null),
-        React.createElement(ReviewAdd, { createReview: this.createReview })
+        React.createElement(
+          "h3",
+          null,
+          "Here are your current orders:"
+        ),
+        React.createElement(OrderTable, { orders: this.state.orders })
       );
     }
   }]);
 
-  return ReviewList;
+  return OrderPage;
 }(React.Component);
 
-// This renders the JSX component inside the content node:
-
-
-ReactDOM.render(React.createElement(ReviewList, null), contentNode);
+ReactDOM.render(React.createElement(OrderPage, null), contentNode);
