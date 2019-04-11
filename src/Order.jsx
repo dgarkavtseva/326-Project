@@ -63,13 +63,16 @@ class OrderAdd extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     let form = document.forms.orderAdd;
-    this.props.createOrder({
-      orderNumber: form.orderNumber.value, 
-      deliveryAdress: form.deliveryAdress.value,
-      status: 'Pending'
-    });
-    form.orderNumber.value = '';
-    form.deliveryAdress.value = '';
+    //check that all fields are filled out
+    if(form.orderNumber.value != "" && form.deliveryAdress.value != ""){
+      this.props.createOrder({
+        orderNumber: form.orderNumber.value, 
+        deliveryAdress: form.deliveryAdress.value,
+        status: 'Pending'
+      });
+      form.orderNumber.value = '';
+      form.deliveryAdress.value = '';
+    }
   }
 
   render() {
@@ -162,7 +165,7 @@ class OrderPage extends React.Component {
         <FoodTable foods={this.state.foods} />
         <hr />
         <h1>Place an Order!</h1>
-        <h2>Fill out the form below</h2>        
+        <h2>Fill out the form below. You must fill out all fields in the form to place an order.</h2>        
         <OrderAdd createOrder={this.createOrder} />
         <hr />
         <h3>Here are your current orders:</h3>

@@ -49,23 +49,26 @@ class ReviewAdd extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     let form = document.forms.reviewAdd;
-    this.props.createReview({
-      name: form.name.value,
-      time: form.time.value,
-      orderFrom: form.orderFrom.value,
-      orderItem: form.orderItem.value,
-      driver: form.driver.value,
-      review: form.review.value,
-      created: new Date(),
-    });
-    // Clear the form for the next input.
-    form.name.value = '';
-    form.time.value = '';
-    form.orderFrom.value = '';
-    form.orderItem.value = '';
-    form.driver.value = '';
-    form.review.value = '';
-
+    //check that all fields are filled out
+    if(form.name.value != "" && form.time.value != "" && form.orderFrom.value != "" && form.orderItem.value != "" && form.driver.value != "" && form.review.value != ""){
+      this.props.createReview({
+        name: form.name.value,
+        time: form.time.value,
+        orderFrom: form.orderFrom.value,
+        orderItem: form.orderItem.value,
+        driver: form.driver.value,
+        review: form.review.value,
+        created: new Date(),
+      });
+    
+      // Clear the form for the next input.
+      form.name.value = '';
+      form.time.value = '';
+      form.orderFrom.value = '';
+      form.orderItem.value = '';
+      form.driver.value = '';
+      form.review.value = '';
+    }
   }
 
   render() {
@@ -153,6 +156,7 @@ class ReviewList extends React.Component {
         <hr />
         <ReviewTable reviews={this.state.reviews} />
         <hr />
+        <h3>Add a Review! You must fill out all fields in the form.</h3>
         <ReviewAdd createReview={this.createReview} />
       </div>
     );

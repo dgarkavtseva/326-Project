@@ -147,13 +147,16 @@ var OrderAdd = function (_React$Component) {
     value: function handleSubmit(event) {
       event.preventDefault();
       var form = document.forms.orderAdd;
-      this.props.createOrder({
-        orderNumber: form.orderNumber.value,
-        deliveryAdress: form.deliveryAdress.value,
-        status: 'Pending'
-      });
-      form.orderNumber.value = '';
-      form.deliveryAdress.value = '';
+      //check that all fields are filled out
+      if (form.orderNumber.value != "" && form.deliveryAdress.value != "") {
+        this.props.createOrder({
+          orderNumber: form.orderNumber.value,
+          deliveryAdress: form.deliveryAdress.value,
+          status: 'Pending'
+        });
+        form.orderNumber.value = '';
+        form.deliveryAdress.value = '';
+      }
     }
   }, {
     key: "render",
@@ -286,7 +289,7 @@ var OrderPage = function (_React$Component2) {
         React.createElement(
           "h2",
           null,
-          "Fill out the form below"
+          "Fill out the form below. You must fill out all fields in the form to place an order."
         ),
         React.createElement(OrderAdd, { createOrder: this.createOrder }),
         React.createElement("hr", null),

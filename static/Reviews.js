@@ -150,22 +150,26 @@ var ReviewAdd = function (_React$Component2) {
     value: function handleSubmit(e) {
       e.preventDefault();
       var form = document.forms.reviewAdd;
-      this.props.createReview({
-        name: form.name.value,
-        time: form.time.value,
-        orderFrom: form.orderFrom.value,
-        orderItem: form.orderItem.value,
-        driver: form.driver.value,
-        review: form.review.value,
-        created: new Date()
-      });
-      // Clear the form for the next input.
-      form.name.value = '';
-      form.time.value = '';
-      form.orderFrom.value = '';
-      form.orderItem.value = '';
-      form.driver.value = '';
-      form.review.value = '';
+      //check that all fields are filled out
+      if (form.name.value != "" && form.time.value != "" && form.orderFrom.value != "" && form.orderItem.value != "" && form.driver.value != "" && form.review.value != "") {
+        this.props.createReview({
+          name: form.name.value,
+          time: form.time.value,
+          orderFrom: form.orderFrom.value,
+          orderItem: form.orderItem.value,
+          driver: form.driver.value,
+          review: form.review.value,
+          created: new Date()
+        });
+
+        // Clear the form for the next input.
+        form.name.value = '';
+        form.time.value = '';
+        form.orderFrom.value = '';
+        form.orderItem.value = '';
+        form.driver.value = '';
+        form.review.value = '';
+      }
     }
   }, {
     key: "render",
@@ -277,6 +281,11 @@ var ReviewList = function (_React$Component3) {
         React.createElement("hr", null),
         React.createElement(ReviewTable, { reviews: this.state.reviews }),
         React.createElement("hr", null),
+        React.createElement(
+          "h3",
+          null,
+          "Add a Review! You must fill out all fields in the form."
+        ),
         React.createElement(ReviewAdd, { createReview: this.createReview })
       );
     }

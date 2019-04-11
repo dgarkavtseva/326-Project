@@ -12,16 +12,19 @@ class UserForm extends React.Component {
 
     submitForm(event) {
         event.preventDefault();
-        this.setState({ submitted: true });
         let form = document.forms.addUserForm;
-        this.createUser({
-            fname: form.fname.value,
-            lname: form.lname.value,
-            email: form.email.value,
-        });
-        emailForm.fname.value = '';
-        emailForm.lname.value = '';
-        emailForm.email.value = '';
+        //check that all fields are filled out
+        if(form.fname.value != "" && form.lname.value != "" && form.email.value != ""){
+            this.setState({ submitted: true });
+            this.createUser({
+                fname: form.fname.value,
+                lname: form.lname.value,
+                email: form.email.value,
+            });
+            emailForm.fname.value = '';
+            emailForm.lname.value = '';
+            emailForm.email.value = '';
+        }
     }
 
     createUser(newUser) {
@@ -52,6 +55,7 @@ class UserForm extends React.Component {
                 <form name="addUserForm" onSubmit={this.handleSubmit} id = "emailForm" id="emailForm">
                     <div className="forms">
                         <h4>Sign up now!</h4>
+                        <h5>You must fill out all fields in the form</h5>
                         <input type="text" name="fname" placeholder="First Name" value={this.state.text} />
                         <br></br>
                         <input type="text" name="lname" placeholder="Last Name" value={this.state.text} />
