@@ -1,10 +1,5 @@
 const contentNode = document.getElementById("contents");
 
-const orders = [
-  {
-    order: undefined, status: undefined, deliveryAddress: undefined,
-  }
-];
 
 const OrderRow = (props) => (
   <tr>
@@ -66,44 +61,22 @@ class OrderAdd extends React.Component {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 class OrderPage extends React.Component {
   constructor() {
     super();
-    console.log("constructor")
     this.state = { orders: []};
-    console.log("cons complete")
     this.createOrder = this.createOrder.bind(this);
   }
   componentDidMount() {
-    console.log("mounted");
-
-    console.log("mounted2");
     this.loadPlacedOrders();
   }
 
   
 
   loadPlacedOrders() {
-    console.log("trying to load placed orders");
     fetch('/api/placedOrderDB').then(response => {
-      console.log(response)
-      console.log("loading order retrieval");
       if (response.ok) {
         response.json().then(data => {
-          console.log("data at 2");
-          console.log(data);
           this.state = {  orders: data}; //potential error
           this.setState({ orders: data});
         });
@@ -128,18 +101,10 @@ class OrderPage extends React.Component {
         if (res.ok) {
           res.json()
             .then(updatedOrder => {
-              console.log("updated order");
-              console.log(updatedOrder);
-              console.log("existing orders");
-              console.log(this.state.orders.slice());
               let apples = this.state.orders.slice();
               let exists = false;
               apples.forEach(function match(element){
-                console.log(element.orderNumber);
-                console.log("match?????");
-                console.log(element.orderNumber* 2 / 2 === updatedOrder.orderNumber * 2 / 2)
                 if(element.orderNumber* 2 / 2 === updatedOrder.orderNumber * 2 / 2){
-                  console.log("match found");
                   element.status = "accepted";
                   element.Deliverer = updatedOrder.Deliverer;
                   exists = true;
@@ -148,12 +113,8 @@ class OrderPage extends React.Component {
 
               if(!exists){
                 const apples = this.state.orders.concat(updatedOrder);
-              
-                
               }
-              this.setState({ orders: apples });
-
-              
+              this.setState({ orders: apples });  
             });
         }
         else {
@@ -169,19 +130,11 @@ class OrderPage extends React.Component {
   render() {
     return (
       <div>
-        {/* <h1>Menu</h1>
-        <h2>These are the available options for grab and go today!</h2> */}
-        {/* <FoodTable foods={this.state.foods} /> */}
-        <hr />
-             
-        
-        <hr />
-        <h3>Here are your current orders:</h3>
-        <br></br>
-        <hr></hr>
         <h1>Claim an Order!</h1>
-        <h2>Fill out the form below</h2>   
+        <h2>Fill out the form below</h2>  
+        <hr /> 
         <OrderAdd createOrder={this.createOrder} />
+        <hr />
         <OrderTable orders={this.state.orders} />
       </div>
     );

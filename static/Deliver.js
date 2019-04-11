@@ -10,10 +10,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var contentNode = document.getElementById("contents");
 
-var orders = [{
-  order: undefined, status: undefined, deliveryAddress: undefined
-}];
-
 var OrderRow = function OrderRow(props) {
   return React.createElement(
     "tr",
@@ -131,9 +127,7 @@ var OrderPage = function (_React$Component2) {
 
     var _this2 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
 
-    console.log("constructor");
     _this2.state = { orders: [] };
-    console.log("cons complete");
     _this2.createOrder = _this2.createOrder.bind(_this2);
     return _this2;
   }
@@ -141,9 +135,6 @@ var OrderPage = function (_React$Component2) {
   _createClass(OrderPage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      console.log("mounted");
-
-      console.log("mounted2");
       this.loadPlacedOrders();
     }
   }, {
@@ -151,14 +142,9 @@ var OrderPage = function (_React$Component2) {
     value: function loadPlacedOrders() {
       var _this3 = this;
 
-      console.log("trying to load placed orders");
       fetch('/api/placedOrderDB').then(function (response) {
-        console.log(response);
-        console.log("loading order retrieval");
         if (response.ok) {
           response.json().then(function (data) {
-            console.log("data at 2");
-            console.log(data);
             _this3.state = { orders: data }; //potential error
             _this3.setState({ orders: data });
           });
@@ -183,18 +169,10 @@ var OrderPage = function (_React$Component2) {
       }).then(function (res) {
         if (res.ok) {
           res.json().then(function (updatedOrder) {
-            console.log("updated order");
-            console.log(updatedOrder);
-            console.log("existing orders");
-            console.log(_this4.state.orders.slice());
             var apples = _this4.state.orders.slice();
             var exists = false;
             apples.forEach(function match(element) {
-              console.log(element.orderNumber);
-              console.log("match?????");
-              console.log(element.orderNumber * 2 / 2 === updatedOrder.orderNumber * 2 / 2);
               if (element.orderNumber * 2 / 2 === updatedOrder.orderNumber * 2 / 2) {
-                console.log("match found");
                 element.status = "accepted";
                 element.Deliverer = updatedOrder.Deliverer;
                 exists = true;
@@ -219,15 +197,6 @@ var OrderPage = function (_React$Component2) {
       return React.createElement(
         "div",
         null,
-        React.createElement("hr", null),
-        React.createElement("hr", null),
-        React.createElement(
-          "h3",
-          null,
-          "Here are your current orders:"
-        ),
-        React.createElement("br", null),
-        React.createElement("hr", null),
         React.createElement(
           "h1",
           null,
@@ -238,7 +207,9 @@ var OrderPage = function (_React$Component2) {
           null,
           "Fill out the form below"
         ),
+        React.createElement("hr", null),
         React.createElement(OrderAdd, { createOrder: this.createOrder }),
+        React.createElement("hr", null),
         React.createElement(OrderTable, { orders: this.state.orders })
       );
     }

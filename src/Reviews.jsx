@@ -1,9 +1,5 @@
 var contentNode = document.getElementById("contents");
 
-// import React from 'react';
-// import 'isomorphic-fetch';
-// import { Link } from 'react-router';
-
 class SearchBar extends React.Component {
   render() {
     return <div>We will add a search bar here to searh for specific items.</div>;

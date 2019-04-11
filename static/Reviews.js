@@ -10,10 +10,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var contentNode = document.getElementById("contents");
 
-// import React from 'react';
-// import 'isomorphic-fetch';
-// import { Link } from 'react-router';
-
 var SearchBar = function (_React$Component) {
   _inherits(SearchBar, _React$Component);
 

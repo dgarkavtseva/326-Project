@@ -3,13 +3,10 @@
 var contentNode = document.getElementById("contents");
 
 class UserForm extends React.Component {
-
-
     constructor() {
         super();
         this.state = { submitted: false, users: []};
         this.handleSubmit = this.submitForm.bind(this);
-
         this.createUser = this.createUser.bind(this);
     }
 

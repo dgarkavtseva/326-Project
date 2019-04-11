@@ -1,48 +1,26 @@
 const contentNode = document.getElementById("contents");
 
-const orders = [
-  {
-    order: undefined, status: undefined, deliveryAddress: undefined,
-  }
-];
-
 const FoodRow = (props) => (
-    <tr>
-         <td>{props.food.order}</td>
-         <td>{props.food.food}</td>
-         <td>{props.food.diningHall}</td>
-       </tr>
+  <tr>
+    <td>{props.food.order}</td>
+    <td>{props.food.food}</td>
+    <td>{props.food.diningHall}</td>
+  </tr>
 );
 
 
 const OrderRow = (props) => (
   <tr>
-       <td>{props.order.orderNumber}</td>
-       <td>{props.order.status}</td>
-      <td>{props.order.deliveryAdress}</td>
+    <td>{props.order.orderNumber}</td>
+    <td>{props.order.status}</td>
+    <td>{props.order.deliveryAdress}</td>
   </tr>
 );
 
-// class OrderRow extends React.Component {
-//   render() {
-//     const order = this.props.order;
-//     return (
-//       <tr>
-//         <td>{order.orderNumber}</td>
-//         <td>{order.status}</td>
-//         <td>{order.deliveryAdress}</td>
-//       </tr>
-//     );
-//   }
-// }
-
 function FoodTable(props){
-  console.log("food props");
-  console.log(props);
     const foodRows = props.foods.map(food => (
       <FoodRow key={food._id} food={food} />
     ));
-    console.log("foodRows");
     return (
       <table className="bordered-table">
         <thead>
@@ -55,7 +33,7 @@ function FoodTable(props){
         <tbody>{foodRows}</tbody>
       </table>
     );
-  }
+}
  
   function OrderTable(props) {
     const orderRows = props.orders.map(order => (
@@ -81,10 +59,7 @@ class OrderAdd extends React.Component {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  // componentDidMount() {
-  //   // this.loadData();
-  //   // this.loadplacedOrders();
-  // }
+
   handleSubmit(event) {
     event.preventDefault();
     let form = document.forms.orderAdd;
@@ -113,27 +88,18 @@ class OrderAdd extends React.Component {
 class OrderPage extends React.Component {
   constructor() {
     super();
-    console.log("constructor")
     this.state = { foods: [], orders: []};
-    console.log("cons complete")
     this.createOrder = this.createOrder.bind(this);
   }
   componentDidMount() {
-    console.log("mounted");
-
     this.loadData();
-    console.log("mounted2");
     this.loadPlacedOrders();
   }
 
   loadData() {
     fetch('/api/menuDB').then(response => {
-      console.log(response)
-      console.log("loading");
       if (response.ok) {
         response.json().then(data => {
-          console.log("data at 1");
-          console.log(data);
           this.state = { foods: data, orders: this.state.orders};
           this.setState({ foods: data});
         });
@@ -148,14 +114,9 @@ class OrderPage extends React.Component {
   }
 
   loadPlacedOrders() {
-    console.log("trying to load placed orders");
     fetch('/api/placedOrderDB').then(response => {
-      console.log(response)
-      console.log("loading order retrieval");
       if (response.ok) {
         response.json().then(data => {
-          console.log("data at 2");
-          console.log(data);
           this.state = { foods: this.state.foods , orders: data}; //potential error
           this.setState({ orders: data});
         });
@@ -180,9 +141,6 @@ class OrderPage extends React.Component {
         if (res.ok) {
           res.json()
             .then(updatedOrder => {
-              // updatedReview.created = new Date(updatedReview.created);
-              // if (updatedReview.completionDate)
-              //   updatedReview.completionDate = new Date(updatedReview.completionDate);
               const newOrder = this.state.orders.concat(updatedOrder);
               this.setState({ orders: newOrder });
             });
@@ -194,17 +152,6 @@ class OrderPage extends React.Component {
             });
         }
       });
-    // fetch('/api/reviewDB', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(newReview),
-    // })
-    // if(newOrder.orderNumber != "" && newOrder.deliveryAdress != ""){
-    //   const newOrders = this.state.orders.slice();
-    //   newOrder.order = this.state.orders.length + 1;
-    //   newOrders.push(newOrder);
-    //   this.setState({ orders: newOrders });
-    // }
   }
   
   render() {

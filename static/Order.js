@@ -10,10 +10,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var contentNode = document.getElementById("contents");
 
-var orders = [{
-  order: undefined, status: undefined, deliveryAddress: undefined
-}];
-
 var FoodRow = function FoodRow(props) {
   return React.createElement(
     "tr",
@@ -58,26 +54,10 @@ var OrderRow = function OrderRow(props) {
   );
 };
 
-// class OrderRow extends React.Component {
-//   render() {
-//     const order = this.props.order;
-//     return (
-//       <tr>
-//         <td>{order.orderNumber}</td>
-//         <td>{order.status}</td>
-//         <td>{order.deliveryAdress}</td>
-//       </tr>
-//     );
-//   }
-// }
-
 function FoodTable(props) {
-  console.log("food props");
-  console.log(props);
   var foodRows = props.foods.map(function (food) {
     return React.createElement(FoodRow, { key: food._id, food: food });
   });
-  console.log("foodRows");
   return React.createElement(
     "table",
     { className: "bordered-table" },
@@ -161,11 +141,6 @@ var OrderAdd = function (_React$Component) {
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     return _this;
   }
-  // componentDidMount() {
-  //   // this.loadData();
-  //   // this.loadplacedOrders();
-  // }
-
 
   _createClass(OrderAdd, [{
     key: "handleSubmit",
@@ -212,9 +187,7 @@ var OrderPage = function (_React$Component2) {
 
     var _this2 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
 
-    console.log("constructor");
     _this2.state = { foods: [], orders: [] };
-    console.log("cons complete");
     _this2.createOrder = _this2.createOrder.bind(_this2);
     return _this2;
   }
@@ -222,10 +195,7 @@ var OrderPage = function (_React$Component2) {
   _createClass(OrderPage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      console.log("mounted");
-
       this.loadData();
-      console.log("mounted2");
       this.loadPlacedOrders();
     }
   }, {
@@ -234,12 +204,8 @@ var OrderPage = function (_React$Component2) {
       var _this3 = this;
 
       fetch('/api/menuDB').then(function (response) {
-        console.log(response);
-        console.log("loading");
         if (response.ok) {
           response.json().then(function (data) {
-            console.log("data at 1");
-            console.log(data);
             _this3.state = { foods: data, orders: _this3.state.orders };
             _this3.setState({ foods: data });
           });
@@ -257,14 +223,9 @@ var OrderPage = function (_React$Component2) {
     value: function loadPlacedOrders() {
       var _this4 = this;
 
-      console.log("trying to load placed orders");
       fetch('/api/placedOrderDB').then(function (response) {
-        console.log(response);
-        console.log("loading order retrieval");
         if (response.ok) {
           response.json().then(function (data) {
-            console.log("data at 2");
-            console.log(data);
             _this4.state = { foods: _this4.state.foods, orders: data }; //potential error
             _this4.setState({ orders: data });
           });
@@ -289,9 +250,6 @@ var OrderPage = function (_React$Component2) {
       }).then(function (res) {
         if (res.ok) {
           res.json().then(function (updatedOrder) {
-            // updatedReview.created = new Date(updatedReview.created);
-            // if (updatedReview.completionDate)
-            //   updatedReview.completionDate = new Date(updatedReview.completionDate);
             var newOrder = _this5.state.orders.concat(updatedOrder);
             _this5.setState({ orders: newOrder });
           });
@@ -301,17 +259,6 @@ var OrderPage = function (_React$Component2) {
           });
         }
       });
-      // fetch('/api/reviewDB', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(newReview),
-      // })
-      // if(newOrder.orderNumber != "" && newOrder.deliveryAdress != ""){
-      //   const newOrders = this.state.orders.slice();
-      //   newOrder.order = this.state.orders.length + 1;
-      //   newOrders.push(newOrder);
-      //   this.setState({ orders: newOrders });
-      // }
     }
   }, {
     key: "render",

@@ -23,7 +23,6 @@ var UserForm = function (_React$Component) {
 
         _this.state = { submitted: false, users: [] };
         _this.handleSubmit = _this.submitForm.bind(_this);
-
         _this.createUser = _this.createUser.bind(_this);
         return _this;
     }
