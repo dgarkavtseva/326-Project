@@ -6,8 +6,8 @@ deliveriesDB = new Mongo().getDB('deliveriesDB');
 
 // Next, we remove everything inside it. This is helpful to ensure that the
 // database starts from a known state.
-menuDB.orders.remove({});
-placedOrdersDB.orders.remove({});
+menuDB.items.remove({});
+placedOrdersDB.placedOrders.remove({});
 reviewsDB.reviews.remove({});
 usersDB.users.remove({});
 deliveriesDB.deliveries.remove({});
