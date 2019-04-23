@@ -104,20 +104,19 @@ class OrderPage extends React.Component {
         if (res.ok) {
           res.json()
             .then(updatedOrder => {
-              let apples = this.state.orders.slice();
+              let existingOrders = this.state.orders.slice();
               let exists = false;
-              apples.forEach(function match(element){
-                if(element.orderNumber* 2 / 2 === updatedOrder.orderNumber * 2 / 2){
-                  element.status = "accepted";
+              existingOrders.forEach(function match(element){
+                if(parseInt(element.orderNumber) === parseInt(updatedOrder.orderNumber)){
+                  element.status = "Accepted";
                   element.Deliverer = updatedOrder.Deliverer;
                   exists = true;
                 }
               });
-
               if(!exists){
-                const apples = this.state.orders.concat(updatedOrder);
+                existingOrders = this.state.orders.concat(updatedOrder);
               }
-              this.setState({ orders: apples });  
+              this.setState({ orders: existingOrders });  
             });
         }
         else {

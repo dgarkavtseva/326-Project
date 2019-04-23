@@ -60,12 +60,12 @@ reviewsDB.reviews.insert([
 
 deliveriesDB.deliveries.insert([
   {
-      status: 'pending', deliveryAdress: "Elm", orderID: '30',Deliverer: "Biker"
+      status: 'Pending', deliveryAdress: "Elm", orderID: '30',Deliverer: "Biker"
     },
 ]);
 
 placedOrdersDB.placedOrders.insert([
   {
-      orderNumber: '3', status: "pending", deliveryAdress: 'JQA'
+      orderNumber: '3', status: "Pending", deliveryAdress: 'JQA'
   },
 ]);

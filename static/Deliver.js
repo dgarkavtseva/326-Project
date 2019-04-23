@@ -172,20 +172,19 @@ var OrderPage = function (_React$Component2) {
       }).then(function (res) {
         if (res.ok) {
           res.json().then(function (updatedOrder) {
-            var apples = _this4.state.orders.slice();
+            var existingOrders = _this4.state.orders.slice();
             var exists = false;
-            apples.forEach(function match(element) {
-              if (element.orderNumber * 2 / 2 === updatedOrder.orderNumber * 2 / 2) {
-                element.status = "accepted";
+            existingOrders.forEach(function match(element) {
+              if (parseInt(element.orderNumber) === parseInt(updatedOrder.orderNumber)) {
+                element.status = "Accepted";
                 element.Deliverer = updatedOrder.Deliverer;
                 exists = true;
               }
             });
-
             if (!exists) {
-              var _apples = _this4.state.orders.concat(updatedOrder);
+              existingOrders = _this4.state.orders.concat(updatedOrder);
             }
-            _this4.setState({ orders: apples });
+            _this4.setState({ orders: existingOrders });
           });
         } else {
           res.json().then(function (error) {
