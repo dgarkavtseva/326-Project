@@ -122,7 +122,7 @@ class OrderPage extends React.Component {
         else {
           res.json()
             .then(error => {
-              alert('Failed to add review: ' + error.message);
+              alert('Failed to add delivery: ' + error.message);
             });
         }
       });
@@ -133,7 +133,7 @@ class OrderPage extends React.Component {
     return (
       <div>
         <h1>Claim an Order!</h1>
-        <h3>Fill out the form below. You must fill out all fields in the form to accept an order.</h3>  
+        <h3>Fill out all fields in the form below.</h3>  
         <hr /> 
         <OrderAdd createOrder={this.createOrder} />
         <hr />

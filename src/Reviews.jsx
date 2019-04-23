@@ -149,7 +149,7 @@ class ReviewList extends React.Component {
         <h1>Reviews</h1>
         <ReviewTable reviews={this.state.reviews} />
         <hr />
-        <h3>Add a Review! You must fill out all fields in the form.</h3>
+        <h3>Add a Review by filling out all fields in the form!</h3>
         <ReviewAdd createReview={this.createReview} />
       </div>
     );

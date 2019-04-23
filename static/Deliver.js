@@ -188,7 +188,7 @@ var OrderPage = function (_React$Component2) {
           });
         } else {
           res.json().then(function (error) {
-            alert('Failed to add review: ' + error.message);
+            alert('Failed to add delivery: ' + error.message);
           });
         }
       });
@@ -207,7 +207,7 @@ var OrderPage = function (_React$Component2) {
         React.createElement(
           "h3",
           null,
-          "Fill out the form below. You must fill out all fields in the form to accept an order."
+          "Fill out all fields in the form below."
         ),
         React.createElement("hr", null),
         React.createElement(OrderAdd, { createOrder: this.createOrder }),

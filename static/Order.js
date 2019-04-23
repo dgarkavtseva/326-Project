@@ -289,7 +289,7 @@ var OrderPage = function (_React$Component2) {
         React.createElement(
           "h2",
           null,
-          "Fill out the form below. You must fill out all fields in the form to place an order."
+          "Fill out all fields in the form below."
         ),
         React.createElement(OrderAdd, { createOrder: this.createOrder }),
         React.createElement("hr", null),

@@ -259,7 +259,7 @@ var ReviewList = function (_React$Component2) {
         React.createElement(
           "h3",
           null,
-          "Add a Review! You must fill out all fields in the form."
+          "Add a Review by filling out all fields in the form!"
         ),
         React.createElement(ReviewAdd, { createReview: this.createReview })
       );

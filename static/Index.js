@@ -79,12 +79,12 @@ var UserForm = function (_React$Component) {
                     React.createElement(
                         "h4",
                         null,
-                        "Sign up now!"
+                        "Sign up for our email list!"
                     ),
                     React.createElement(
                         "h5",
                         null,
-                        "You must fill out all fields in the form"
+                        "You must fill out all fields in the form."
                     ),
                     React.createElement("input", { type: "text", name: "fname", placeholder: "First Name", value: this.state.text }),
                     React.createElement("br", null),
