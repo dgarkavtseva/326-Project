@@ -1,10 +1,5 @@
 var contentNode = document.getElementById("contents");
 
-class SearchBar extends React.Component {
-  render() {
-    return <div>We will add a search bar here to searh for specific items.</div>;
-  }
-}
 
 const ReviewRow = (props) => (
   <tr>
@@ -152,8 +147,6 @@ class ReviewList extends React.Component {
     return (
       <div>
         <h1>Reviews</h1>
-        <SearchBar />
-        <hr />
         <ReviewTable reviews={this.state.reviews} />
         <hr />
         <h3>Add a Review! You must fill out all fields in the form.</h3>
