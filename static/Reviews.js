@@ -10,29 +10,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var contentNode = document.getElementById("contents");
 
-var SearchBar = function (_React$Component) {
-  _inherits(SearchBar, _React$Component);
-
-  function SearchBar() {
-    _classCallCheck(this, SearchBar);
-
-    return _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).apply(this, arguments));
-  }
-
-  _createClass(SearchBar, [{
-    key: "render",
-    value: function render() {
-      return React.createElement(
-        "div",
-        null,
-        "We will add a search bar here to searh for specific items."
-      );
-    }
-  }]);
-
-  return SearchBar;
-}(React.Component);
-
 var ReviewRow = function ReviewRow(props) {
   return React.createElement(
     "tr",
@@ -133,16 +110,16 @@ function ReviewTable(props) {
   );
 }
 
-var ReviewAdd = function (_React$Component2) {
-  _inherits(ReviewAdd, _React$Component2);
+var ReviewAdd = function (_React$Component) {
+  _inherits(ReviewAdd, _React$Component);
 
   function ReviewAdd() {
     _classCallCheck(this, ReviewAdd);
 
-    var _this2 = _possibleConstructorReturn(this, (ReviewAdd.__proto__ || Object.getPrototypeOf(ReviewAdd)).call(this));
+    var _this = _possibleConstructorReturn(this, (ReviewAdd.__proto__ || Object.getPrototypeOf(ReviewAdd)).call(this));
 
-    _this2.handleSubmit = _this2.handleSubmit.bind(_this2);
-    return _this2;
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
   }
 
   _createClass(ReviewAdd, [{
@@ -199,18 +176,18 @@ var ReviewAdd = function (_React$Component2) {
   return ReviewAdd;
 }(React.Component);
 
-var ReviewList = function (_React$Component3) {
-  _inherits(ReviewList, _React$Component3);
+var ReviewList = function (_React$Component2) {
+  _inherits(ReviewList, _React$Component2);
 
   function ReviewList() {
     _classCallCheck(this, ReviewList);
 
-    var _this3 = _possibleConstructorReturn(this, (ReviewList.__proto__ || Object.getPrototypeOf(ReviewList)).call(this));
+    var _this2 = _possibleConstructorReturn(this, (ReviewList.__proto__ || Object.getPrototypeOf(ReviewList)).call(this));
 
-    _this3.state = { reviews: [] };
+    _this2.state = { reviews: [] };
 
-    _this3.createReview = _this3.createReview.bind(_this3);
-    return _this3;
+    _this2.createReview = _this2.createReview.bind(_this2);
+    return _this2;
   }
 
   _createClass(ReviewList, [{
@@ -221,7 +198,7 @@ var ReviewList = function (_React$Component3) {
   }, {
     key: "loadData",
     value: function loadData() {
-      var _this4 = this;
+      var _this3 = this;
 
       fetch('/api/reviewDB').then(function (response) {
         if (response.ok) {
@@ -231,7 +208,7 @@ var ReviewList = function (_React$Component3) {
               review.created = new Date(review.created);
               if (review.completionDate) review.completionDate = new Date(review.completionDate);
             });
-            _this4.setState({ reviews: data.records });
+            _this3.setState({ reviews: data.records });
           });
         } else {
           response.json().then(function (error) {
@@ -245,7 +222,7 @@ var ReviewList = function (_React$Component3) {
   }, {
     key: "createReview",
     value: function createReview(newReview) {
-      var _this5 = this;
+      var _this4 = this;
 
       fetch('/api/reviewDB', {
         method: 'POST',
@@ -256,8 +233,8 @@ var ReviewList = function (_React$Component3) {
           res.json().then(function (updatedReview) {
             updatedReview.created = new Date(updatedReview.created);
             if (updatedReview.completionDate) updatedReview.completionDate = new Date(updatedReview.completionDate);
-            var newReview = _this5.state.reviews.concat(updatedReview);
-            _this5.setState({ reviews: newReview });
+            var newReview = _this4.state.reviews.concat(updatedReview);
+            _this4.setState({ reviews: newReview });
           });
         } else {
           res.json().then(function (error) {
@@ -277,8 +254,6 @@ var ReviewList = function (_React$Component3) {
           null,
           "Reviews"
         ),
-        React.createElement(SearchBar, null),
-        React.createElement("hr", null),
         React.createElement(ReviewTable, { reviews: this.state.reviews }),
         React.createElement("hr", null),
         React.createElement(

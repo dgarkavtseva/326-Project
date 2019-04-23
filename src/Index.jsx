@@ -54,7 +54,7 @@ class UserForm extends React.Component {
         return (
                 <form name="addUserForm" onSubmit={this.handleSubmit} id = "emailForm" id="emailForm">
                     <div className="forms">
-                        <h4>Sign up now!</h4>
+                        <h4>Sign up for our email list!</h4>
                         <h5>You must fill out all fields in the form</h5>
                         <input type="text" name="fname" placeholder="First Name" value={this.state.text} />
                         <br></br>
