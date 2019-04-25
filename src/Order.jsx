@@ -162,14 +162,18 @@ class OrderPage extends React.Component {
       <div>
         <h1>Menu</h1>
         <h2>These are the available options for grab and go today!</h2>
+        <center>
         <FoodTable foods={this.state.foods} />
+        </center>
         <hr />
         <h1>Place an Order!</h1>
         <h2>Fill out all fields in the form below.</h2>        
         <OrderAdd createOrder={this.createOrder} />
         <hr />
         <h3>Here are your current orders:</h3>
+        <center>
         <OrderTable orders={this.state.orders} />
+        </center>
       </div>
     );
   }

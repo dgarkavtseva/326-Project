@@ -279,7 +279,11 @@ var OrderPage = function (_React$Component2) {
           null,
           "These are the available options for grab and go today!"
         ),
-        React.createElement(FoodTable, { foods: this.state.foods }),
+        React.createElement(
+          "center",
+          null,
+          React.createElement(FoodTable, { foods: this.state.foods })
+        ),
         React.createElement("hr", null),
         React.createElement(
           "h1",
@@ -298,7 +302,11 @@ var OrderPage = function (_React$Component2) {
           null,
           "Here are your current orders:"
         ),
-        React.createElement(OrderTable, { orders: this.state.orders })
+        React.createElement(
+          "center",
+          null,
+          React.createElement(OrderTable, { orders: this.state.orders })
+        )
       );
     }
   }]);
