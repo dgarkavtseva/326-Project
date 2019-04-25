@@ -92,16 +92,16 @@ var UserForm = function (_React$Component) {
                     React.createElement("br", null),
                     React.createElement("input", { type: "text", name: "email", placeholder: "Email", value: this.state.text }),
                     React.createElement("br", null),
-                    React.createElement(
-                        "button",
-                        null,
-                        "Submit"
-                    ),
                     this.state.submitted ? React.createElement(
                         "p",
                         null,
                         "Thanks!"
-                    ) : React.createElement("div", null)
+                    ) : React.createElement("div", null),
+                    React.createElement(
+                        "button",
+                        { className: "btn btn-outline-secondary" },
+                        "Submit"
+                    )
                 )
             );
         }

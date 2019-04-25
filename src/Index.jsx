@@ -1,4 +1,3 @@
-
 // This grabs the DOM element to be used to mount React components.
 var contentNode = document.getElementById("contents");
 
@@ -62,8 +61,8 @@ class UserForm extends React.Component {
                         <br></br>
                         <input type="text" name="email" placeholder="Email" value={this.state.text} />
                         <br></br>
-                        <button>Submit</button>
                         {this.state.submitted ? <p>Thanks!</p> : <div></div>}
+                        <button className="btn btn-outline-secondary">Submit</button>                        
                     </div>
                 </form>
         );
@@ -130,3 +129,4 @@ function sendNotification () {
     } 
   }
 }////end notifications 
+
