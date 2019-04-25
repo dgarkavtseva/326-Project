@@ -5,8 +5,17 @@
 
 body {
     text-align: center;
+    color: antiqueWhite;
+    background-image: linear-gradient(to right, brown, maroon);
 }
 
 form {
     display: inline-block;
 }
+
+.container{
+    border: 5px solid black;
+}
+/* .table{
+    border: 1px solid green;
+} */
