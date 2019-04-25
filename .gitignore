@@ -1,2 +1,6 @@
 .gitignore
 node_modules
+static/Reviews.js
+static/Order.js
+static/Index.js
+static/Deliver.js
