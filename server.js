@@ -9,10 +9,9 @@ app.use(bodyParser.json());
 const MongoClient = require('mongodb').MongoClient;
 
 let menuDB;
-let placedOrdersDB;
 let reviewsDB;
 let usersDB;
-let deliveriesDB;
+let ordersDB;
 
 app.get('/api/menuDB', (req, res) => {
   menuDB.collection('items').find().toArray().then(items => {
@@ -81,74 +80,36 @@ app.get('/api/menuDB', (req, res) => {
  });
 
 
- app.get('/api/deliverDB', (req, res) => {
-  deliveriesDB.collection('deliveries').find().toArray().then(deliveries => {
-    console.log(deliveries);
-    res.json(deliveries);
-  }).catch(error => {
-    console.log(error);
-    res.status(500).json({ message: `Internal Server Error: ${error}` });
-  });
- });
+app.get('/api/ordersDB', (req, res) => {
+    ordersDB.collection('orders').find().toArray().then(orders => {
+        console.log(orders);
+        res.json(orders);
+    }).catch(error => {
+        console.log(error);
+        res.status(500).json({ message: `Internal Server Error: ${error}` });
+    }); 
+});
 
- app.post('/api/deliverDB', (req, res) => {
-    const newDeliveries = req.body;
-    console.log(newDeliveries);
-    deliveriesDB.collection('deliveries').insertOne(newDeliveries).then(result =>
-    deliveriesDB.collection('deliveries').find({ _id: result.insertedId }).limit(1).next()
-  ).then(newDeliveries => {
-    res.json(newDeliveries);
-  }).catch(error => {
-    console.log(error);
-    res.status(500).json({ message: `Internal Server Error: ${error}` });
-  });
- });
+app.post('/api/ordersDB', (req, res) => {
+    const newOrders = req.body;
+    console.log(newOrders);
+    ordersDB.collection('orders').insertOne(newOrders).then(result =>
+        ordersDB.collection('orders').find({ _id: result.insertedId }).limit(1).next()
+    ).then(newOrders => {
+        res.json(newOrders);
+    }).catch(error => {
+        console.log(error);
+        res.status(500).json({ message: `Internal Server Error: ${error}` });
+    });
+});
 
-
-
- app.get('/api/orderDB', (req, res) => {
-  deliveriesDB.collection('deliveries').find().toArray().then(deliveries => {
-    console.log(deliveries);
-    res.json(deliveries);
-  }).catch(error => {
-    console.log(error);
-    res.status(500).json({ message: `Internal Server Error: ${error}` });
-  });
- });
-
-
- app.get('/api/placedOrderDB', (req, res) => {
-  placedOrdersDB.collection('placedOrders').find().toArray().then(placedOrders => {
-    console.log("retrieved");
-    // console.log(placedOrders);
-    // console.log("length");
-    // console.log(placedOrdersDB.collection('placedOrders').find());
-    res.json(placedOrders);
-  }).catch(error => {
-    console.log(error);
-    res.status(500).json({ message: `Internal Server Error: ${error}` });
-  });
- }); 
- app.post('/api/placedOrderDB', (req, res) => {
-    const newPlacedOrders = req.body;
-    console.log(newPlacedOrders);
-    placedOrdersDB.collection('placedOrders').insertOne(newPlacedOrders).then(result =>
-    placedOrdersDB.collection('placedOrders').find({ _id: result.insertedId }).limit(1).next()
-  ).then(newPlacedOrders => {
-    res.json(newPlacedOrders);
-  }).catch(error => {
-    console.log(error);
-    res.status(500).json({ message: `Internal Server Error: ${error}` });
-  });
- });
 
 
 MongoClient.connect('mongodb://localhost', { useNewUrlParser: true }).then(connection => {
     menuDB = connection.db('menuDB');    
-    placedOrdersDB = connection.db('placedOrdersDB');
     reviewsDB = connection.db('reviewsDB');
     usersDB = connection.db('usersDB');
-    deliveriesDB = connection.db('deliveriesDB');
+    ordersDB = connection.db('ordersDB');
 
   app.listen(3000, () => {
     console.log('App started on port 3000');

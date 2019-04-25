@@ -3,7 +3,7 @@ let existingLength = -1;
 let currLength = -1;
 function refresh(){
   console.log("inf");
-  fetch('/api/placedOrderDB').then(response => {
+  fetch('/api/OrdersDB').then(response => {
     if (response.ok) {
       response.json().then(data => {
         currLength = data.length;
@@ -42,9 +42,12 @@ const FoodRow = (props) => (
 
 const OrderRow = (props) => (
   <tr>
-    <td>{props.order.orderNumber}</td>
-    <td>{props.order.status}</td>
-    <td>{props.order.deliveryAdress}</td>
+        <td>{props.order.orderID}</td>
+        <td>{props.order.buyer}</td>
+        <td>{props.order.itemID}</td>
+        <td>{props.order.address}</td>
+        <td>{props.order.driver}</td>
+        <td>{props.order.status}</td>
   </tr>
 );
 
@@ -74,9 +77,12 @@ function FoodTable(props){
       <table className="bordered-table">
         <thead>
         <tr>
-            <th>Order Number</th>
-             <th>Status</th>
-             <th>Delivery Address</th>
+                    <th>orderID</th>
+                    <th>buyer</th>
+                    <th>itemID</th>
+                    <th>address</th>
+                    <th>driver</th>
+                    <th>status</th>
            </tr>
         </thead>
         <tbody>{orderRows}</tbody>
@@ -86,25 +92,30 @@ function FoodTable(props){
 
 
 class OrderAdd extends React.Component {
-  constructor() {
-    super();
-    this.handleSubmit = this.handleSubmit.bind(this);
-    
+
+    constructor() {
+        super();
+        this.state = { currOrderID: 100 };
+        this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
   handleSubmit(event) {
     event.preventDefault();
     let form = document.forms.orderAdd;
     //check that all fields are filled out
-    if(form.orderNumber.value != "" && form.deliveryAdress.value != ""){
-      this.props.createOrder({
-        orderNumber: form.orderNumber.value, 
-        deliveryAdress: form.deliveryAdress.value,
-        status: 'Pending'
-      });
-      form.orderNumber.value = '';
-      form.deliveryAdress.value = '';
-      
+
+    if(form.itemID.value != "" && form.address.value != ""){
+        this.props.createOrder({
+            itemID: form.itemID.value, 
+            orderID: this.state.currOrderID,
+            address: form.address.value,
+            status: 'Pending'
+        });
+        this.state.currOrderID++;
+        form.itemID.value = '';
+        form.address.value = '';
+
     }
   }
 
@@ -112,8 +123,8 @@ class OrderAdd extends React.Component {
     return (
       <div>
         <form name="orderAdd" onSubmit={this.handleSubmit}>
-          <input type="text" name="orderNumber" placeholder="Order Number" />
-          <input type="text" name="deliveryAdress" placeholder="Your Address" />
+          <input type="text" name="itemID" placeholder="Item Number" />
+          <input type="text" name="address" placeholder="Your Address" />
           <button>Add</button>
         </form>
       </div>
@@ -152,7 +163,7 @@ class OrderPage extends React.Component {
   }
 
   loadPlacedOrders() {
-    fetch('/api/placedOrderDB').then(response => {
+    fetch('/api/ordersDB').then(response => {
       if (response.ok) {
         response.json().then(data => {
           this.state = { foods: this.state.foods , orders: data}; //potential error
@@ -173,8 +184,8 @@ class OrderPage extends React.Component {
 
   
   createOrder(newOrder) {
-    
-    fetch('/api/placedOrderDB', {
+
+    fetch('/api/ordersDB', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newOrder),
@@ -204,14 +215,18 @@ class OrderPage extends React.Component {
       <div>
         <h1>Menu</h1>
         <h2>These are the available options for grab and go today!</h2>
+        <center>
         <FoodTable foods={this.state.foods} />
+        </center>
         <hr />
         <h1>Place an Order!</h1>
         <h2>Fill out all fields in the form below.</h2>        
         <OrderAdd createOrder={this.createOrder} />
         <hr />
         <h3>Here are your current orders:</h3>
+        <center>
         <OrderTable orders={this.state.orders} />
+        </center>
       </div>
     );
   }

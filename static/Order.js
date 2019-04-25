@@ -69,17 +69,32 @@ var OrderRow = function OrderRow(props) {
     React.createElement(
       "td",
       null,
-      props.order.orderNumber
+      props.order.orderID
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.order.buyer
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.order.itemID
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.order.address
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.order.driver
     ),
     React.createElement(
       "td",
       null,
       props.order.status
-    ),
-    React.createElement(
-      "td",
-      null,
-      props.order.deliveryAdress
     )
   );
 };
@@ -138,17 +153,32 @@ function OrderTable(props) {
         React.createElement(
           "th",
           null,
-          "Order Number"
+          "orderID"
         ),
         React.createElement(
           "th",
           null,
-          "Status"
+          "buyer"
         ),
         React.createElement(
           "th",
           null,
-          "Delivery Address"
+          "itemID"
+        ),
+        React.createElement(
+          "th",
+          null,
+          "address"
+        ),
+        React.createElement(
+          "th",
+          null,
+          "driver"
+        ),
+        React.createElement(
+          "th",
+          null,
+          "status"
         )
       )
     ),
@@ -168,6 +198,7 @@ var OrderAdd = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (OrderAdd.__proto__ || Object.getPrototypeOf(OrderAdd)).call(this));
 
+    _this.state = { currOrderID: 100 };
     _this.handleSubmit = _this.handleSubmit.bind(_this);
 
     return _this;
@@ -179,14 +210,16 @@ var OrderAdd = function (_React$Component) {
       event.preventDefault();
       var form = document.forms.orderAdd;
       //check that all fields are filled out
-      if (form.orderNumber.value != "" && form.deliveryAdress.value != "") {
+      if (form.itemID.value != "" && form.address.value != "") {
         this.props.createOrder({
-          orderNumber: form.orderNumber.value,
-          deliveryAdress: form.deliveryAdress.value,
+          itemID: form.itemID.value,
+          orderID: this.state.currOrderID,
+          address: form.address.value,
           status: 'Pending'
         });
-        form.orderNumber.value = '';
-        form.deliveryAdress.value = '';
+        this.state.currOrderID++;
+        form.itemID.value = '';
+        form.address.value = '';
       }
     }
   }, {
@@ -198,8 +231,8 @@ var OrderAdd = function (_React$Component) {
         React.createElement(
           "form",
           { name: "orderAdd", onSubmit: this.handleSubmit },
-          React.createElement("input", { type: "text", name: "orderNumber", placeholder: "Order Number" }),
-          React.createElement("input", { type: "text", name: "deliveryAdress", placeholder: "Your Address" }),
+          React.createElement("input", { type: "text", name: "itemID", placeholder: "Item Number" }),
+          React.createElement("input", { type: "text", name: "address", placeholder: "Your Address" }),
           React.createElement(
             "button",
             null,
@@ -257,7 +290,7 @@ var OrderPage = function (_React$Component2) {
     value: function loadPlacedOrders() {
       var _this4 = this;
 
-      fetch('/api/placedOrderDB').then(function (response) {
+      fetch('/api/ordersDB').then(function (response) {
         if (response.ok) {
           response.json().then(function (data) {
             _this4.state = { foods: _this4.state.foods, orders: data }; //potential error
@@ -277,7 +310,7 @@ var OrderPage = function (_React$Component2) {
     value: function createOrder(newOrder) {
       var _this5 = this;
 
-      fetch('/api/placedOrderDB', {
+      fetch('/api/ordersDB', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newOrder)
@@ -313,7 +346,11 @@ var OrderPage = function (_React$Component2) {
           null,
           "These are the available options for grab and go today!"
         ),
-        React.createElement(FoodTable, { foods: this.state.foods }),
+        React.createElement(
+          "center",
+          null,
+          React.createElement(FoodTable, { foods: this.state.foods })
+        ),
         React.createElement("hr", null),
         React.createElement(
           "h1",
@@ -332,7 +369,11 @@ var OrderPage = function (_React$Component2) {
           null,
           "Here are your current orders:"
         ),
-        React.createElement(OrderTable, { orders: this.state.orders })
+        React.createElement(
+          "center",
+          null,
+          React.createElement(OrderTable, { orders: this.state.orders })
+        )
       );
     }
   }]);

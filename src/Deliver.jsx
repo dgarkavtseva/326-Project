@@ -1,11 +1,14 @@
 const contentNode = document.getElementById("contents");
-
+//const MongoClient = require('mongodb').MongoClient;
 
 const OrderRow = (props) => (
   <tr>
-       <td>{props.order.orderNumber}</td>
-       <td>{props.order.status}</td>
-      <td>{props.order.deliveryAdress}</td>
+      <td>{props.order.orderID}</td>
+      <td>{props.order.buyer}</td>
+      <td>{props.order.itemID}</td>
+      <td>{props.order.address}</td>
+      <td>{props.order.driver}</td>
+      <td>{props.order.status}</td>
   </tr>
 );
 
@@ -16,10 +19,13 @@ function OrderTable(props) {
   return (
     <table className="bordered-table">
       <thead>
-      <tr>
-          <th>Order Number</th>
-           <th>Status</th>
-           <th>Delivery Address</th>
+        <tr>
+           <th>orderID</th>
+           <th>buyer</th>
+           <th>itemID</th>
+           <th>address</th>
+           <th>driver</th>
+           <th>status</th>
          </tr>
       </thead>
       <tbody>{orderRows}</tbody>
@@ -38,14 +44,14 @@ class OrderAdd extends React.Component {
     event.preventDefault();
     let form = document.forms.orderAdd;
     //check that all fields are filled out
-    if(form.orderNumber.value != "" && form.deliveryAdress.value != ""){
-      this.props.createOrder({
-        orderNumber: form.orderNumber.value, 
-        deliveryAdress: form.deliveryAdress.value,
-        status: 'Pending'
-      });
-      form.orderNumber.value = '';
-      form.deliveryAdress.value = '';
+      if (form.orderID.value != "" && form.driver.value != "") {
+          this.props.createOrder({ //this needs fixing with the new name system
+            orderID: form.orderID.value, 
+            driver: form.driver.value,
+            status: 'Pending'
+          });
+          form.orderID.value = '';
+          form.driver.value = '';
     }
   }
 
@@ -53,8 +59,8 @@ class OrderAdd extends React.Component {
     return (
       <div>
         <form name="orderAdd" onSubmit={this.handleSubmit}>
-          <input type="text" name="orderNumber" placeholder="Order Number" />
-          <input type="text" name="deliveryAdress" placeholder="Your Name" />
+          <input type="text" name="orderID" placeholder="OrderID" />
+          <input type="text" name="driver" placeholder="Your Name" />
           <button>Add</button>
         </form>
       </div>
@@ -67,8 +73,14 @@ class OrderAdd extends React.Component {
 class OrderPage extends React.Component {
   constructor() {
     super();
-    this.state = { orders: []};
+    this.state = { orders: [], ordersDB: []};
     this.createOrder = this.createOrder.bind(this);
+    /*MongoClient.connect('mongodb://localhost', { useNewUrlParser: true }).then(connection => {
+        this.state.ordersDB = connection.db('ordersDB');
+      }).catch(error => {
+          console.log('ERROR:', error);
+    });*/
+
   }
   componentDidMount() {
     this.loadPlacedOrders();
@@ -77,7 +89,7 @@ class OrderPage extends React.Component {
   
 
   loadPlacedOrders() {
-    fetch('/api/placedOrderDB').then(response => {
+    fetch('/api/ordersDB').then(response => {
       if (response.ok) {
         response.json().then(data => {
           this.state = {  orders: data}; //potential error
@@ -95,7 +107,7 @@ class OrderPage extends React.Component {
 
   
   createOrder(newOrder) {
-    fetch('/api/placedOrderDB', {
+    fetch('/api/ordersDB', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newOrder),
@@ -105,17 +117,20 @@ class OrderPage extends React.Component {
           res.json()
             .then(updatedOrder => {
               let existingOrders = this.state.orders.slice();
-              let exists = false;
               existingOrders.forEach(function match(element){
-                if(parseInt(element.orderNumber) === parseInt(updatedOrder.orderNumber)){
+                if(parseInt(element.orderID) === parseInt(updatedOrder.orderID)){
                   element.status = "Accepted";
-                  element.Deliverer = updatedOrder.Deliverer;
-                  exists = true;
-                }
+                  element.driver = updatedOrder.driver;
+                }/*
+                  let query = { orderID: parseInt(updatedOrder.orderID) };
+                  let newValues = { $set: { driver: updatedOrder.driver, status: "Accetped" } };
+                  this.state.ordersDB.collection("orders").updateOne(query, newValues, function (err, res) {
+                      if (err) {
+                          throw err;
+                      }
+                      console.log("1 order updated");
+                  });*/
               });
-              if(!exists){
-                existingOrders = this.state.orders.concat(updatedOrder);
-              }
               this.setState({ orders: existingOrders });  
             });
         }
@@ -142,27 +157,6 @@ class OrderPage extends React.Component {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ReactDOM.render(<OrderPage />, contentNode);
