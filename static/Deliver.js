@@ -9,6 +9,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var contentNode = document.getElementById("contents");
+//const MongoClient = require('mongodb').MongoClient;
 
 var OrderRow = function OrderRow(props) {
   return React.createElement(
@@ -160,8 +161,14 @@ var OrderPage = function (_React$Component2) {
 
     var _this2 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
 
-    _this2.state = { orders: [] };
+    _this2.state = { orders: [], ordersDB: [] };
     _this2.createOrder = _this2.createOrder.bind(_this2);
+    /*MongoClient.connect('mongodb://localhost', { useNewUrlParser: true }).then(connection => {
+        this.state.ordersDB = connection.db('ordersDB');
+      }).catch(error => {
+          console.log('ERROR:', error);
+    });*/
+
     return _this2;
   }
 
@@ -203,18 +210,20 @@ var OrderPage = function (_React$Component2) {
         if (res.ok) {
           res.json().then(function (updatedOrder) {
             var existingOrders = _this4.state.orders.slice();
-            var exists = false;
             existingOrders.forEach(function match(element) {
               if (parseInt(element.orderID) === parseInt(updatedOrder.orderID)) {
                 element.status = "Accepted";
                 element.driver = updatedOrder.driver;
-                exists = true;
-              }
+              } /*
+                 let query = { orderID: parseInt(updatedOrder.orderID) };
+                 let newValues = { $set: { driver: updatedOrder.driver, status: "Accetped" } };
+                 this.state.ordersDB.collection("orders").updateOne(query, newValues, function (err, res) {
+                     if (err) {
+                         throw err;
+                     }
+                     console.log("1 order updated");
+                 });*/
             });
-
-            /*if (!exists) {
-               existingOrders = this.state.orders.concat(updatedOrder);
-             }*/
             _this4.setState({ orders: existingOrders });
           });
         } else {

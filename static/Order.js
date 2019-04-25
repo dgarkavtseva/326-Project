@@ -168,6 +168,7 @@ var OrderAdd = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (OrderAdd.__proto__ || Object.getPrototypeOf(OrderAdd)).call(this));
 
+    _this.state = { currOrderID: 100 };
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     return _this;
   }
@@ -181,9 +182,11 @@ var OrderAdd = function (_React$Component) {
       if (form.itemID.value != "" && form.address.value != "") {
         this.props.createOrder({
           itemID: form.itemID.value,
+          orderID: this.state.currOrderID,
           address: form.address.value,
           status: 'Pending'
         });
+        this.state.currOrderID++;
         form.itemID.value = '';
         form.address.value = '';
       }

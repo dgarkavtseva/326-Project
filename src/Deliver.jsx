@@ -1,5 +1,5 @@
 const contentNode = document.getElementById("contents");
-
+//const MongoClient = require('mongodb').MongoClient;
 
 const OrderRow = (props) => (
   <tr>
@@ -73,8 +73,14 @@ class OrderAdd extends React.Component {
 class OrderPage extends React.Component {
   constructor() {
     super();
-    this.state = { orders: []};
+    this.state = { orders: [], ordersDB: []};
     this.createOrder = this.createOrder.bind(this);
+    /*MongoClient.connect('mongodb://localhost', { useNewUrlParser: true }).then(connection => {
+        this.state.ordersDB = connection.db('ordersDB');
+      }).catch(error => {
+          console.log('ERROR:', error);
+    });*/
+
   }
   componentDidMount() {
     this.loadPlacedOrders();
@@ -111,18 +117,20 @@ class OrderPage extends React.Component {
           res.json()
             .then(updatedOrder => {
               let existingOrders = this.state.orders.slice();
-              let exists = false;
               existingOrders.forEach(function match(element){
                 if(parseInt(element.orderID) === parseInt(updatedOrder.orderID)){
                   element.status = "Accepted";
                   element.driver = updatedOrder.driver;
-                  exists = true;
-                }
+                }/*
+                  let query = { orderID: parseInt(updatedOrder.orderID) };
+                  let newValues = { $set: { driver: updatedOrder.driver, status: "Accetped" } };
+                  this.state.ordersDB.collection("orders").updateOne(query, newValues, function (err, res) {
+                      if (err) {
+                          throw err;
+                      }
+                      console.log("1 order updated");
+                  });*/
               });
-
-             /*if (!exists) {
-                existingOrders = this.state.orders.concat(updatedOrder);
-              }*/
               this.setState({ orders: existingOrders });  
             });
         }

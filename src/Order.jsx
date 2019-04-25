@@ -61,9 +61,10 @@ function FoodTable(props){
 
 
 class OrderAdd extends React.Component {
-  constructor() {
-    super();
-    this.handleSubmit = this.handleSubmit.bind(this);
+    constructor() {
+        super();
+        this.state = { currOrderID: 100 };
+        this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(event) {
@@ -71,13 +72,15 @@ class OrderAdd extends React.Component {
     let form = document.forms.orderAdd;
     //check that all fields are filled out
     if(form.itemID.value != "" && form.address.value != ""){
-      this.props.createOrder({
-        itemID: form.itemID.value, 
-        address: form.address.value,
-        status: 'Pending'
-      });
-      form.itemID.value = '';
-      form.address.value = '';
+        this.props.createOrder({
+            itemID: form.itemID.value, 
+            orderID: this.state.currOrderID,
+            address: form.address.value,
+            status: 'Pending'
+        });
+        this.state.currOrderID++;
+        form.itemID.value = '';
+        form.address.value = '';
     }
   }
 

@@ -75,6 +75,6 @@ placedOrdersDB.placedOrders.insert([
 */
 ordersDB.orders.insert([
     {
-        buyer: "Eric", itemID: "5", orderID: "101", address: "Maple", driver: "", status: "Pending"
+        buyer: "Eric", itemID: "5", orderID: "99", address: "Maple", driver: "", status: "Pending"
     },
 ]);
