@@ -1,21 +1,23 @@
 menuDB = new Mongo().getDB('menuDB');
-placedOrdersDB = new Mongo().getDB('placedOrdersDB');
+//placedOrdersDB = new Mongo().getDB('placedOrdersDB');
 reviewsDB = new Mongo().getDB('reviewsDB');
 usersDB = new Mongo().getDB('usersDB');
-deliveriesDB = new Mongo().getDB('deliveriesDB');
+//deliveriesDB = new Mongo().getDB('deliveriesDB');
+ordersDB = new Mongo().getDB('ordersDB');
 
 // Next, we remove everything inside it. This is helpful to ensure that the
 // database starts from a known state.
 menuDB.items.remove({});
-placedOrdersDB.placedOrders.remove({});
+//placedOrdersDB.placedOrders.remove({});
 reviewsDB.reviews.remove({});
 usersDB.users.remove({});
-deliveriesDB.deliveries.remove({});
+//deliveriesDB.deliveries.remove({});
+ordersDB.orders.remove({});
 
 // Now, we insert some mock data that mirrors the data that we have in the
 // in-memory version of the `order.jsx` code.
 menuDB.items.insert([
-    {
+      {
         order: 1, food: 'Chicken Tenders', diningHall: 'Worcester',
       },
       {
@@ -26,7 +28,8 @@ menuDB.items.insert([
       },
       {
         order: 4, food: 'Sushi', diningHall: 'Worcester',   
-      }, {
+      },
+      {
         order: 5, food: 'Potatoes', diningHall: 'Berk',   
       }
 ]);
@@ -57,7 +60,7 @@ reviewsDB.reviews.insert([
         review: "Food arrived warm, and within 15 minutes of placing my order"
       }
 ]);      
-
+/*
 deliveriesDB.deliveries.insert([
   {
       status: 'Pending', deliveryAdress: "Elm", orderID: '30',Deliverer: "Biker"
@@ -68,4 +71,10 @@ placedOrdersDB.placedOrders.insert([
   {
       orderNumber: '3', status: "Pending", deliveryAdress: 'JQA'
   },
+]);
+*/
+ordersDB.orders.insert([
+    {
+        buyer: "Eric", itemID: "5", orderID: "101", address: "Maple", driver: "", status: "Pending"
+    },
 ]);

@@ -39,17 +39,32 @@ var OrderRow = function OrderRow(props) {
     React.createElement(
       "td",
       null,
-      props.order.orderNumber
+      props.order.orderID
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.order.buyer
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.order.itemID
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.order.address
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.order.driver
     ),
     React.createElement(
       "td",
       null,
       props.order.status
-    ),
-    React.createElement(
-      "td",
-      null,
-      props.order.deliveryAdress
     )
   );
 };
@@ -108,17 +123,32 @@ function OrderTable(props) {
         React.createElement(
           "th",
           null,
-          "Order Number"
+          "orderID"
         ),
         React.createElement(
           "th",
           null,
-          "Status"
+          "buyer"
         ),
         React.createElement(
           "th",
           null,
-          "Delivery Address"
+          "itemID"
+        ),
+        React.createElement(
+          "th",
+          null,
+          "address"
+        ),
+        React.createElement(
+          "th",
+          null,
+          "driver"
+        ),
+        React.createElement(
+          "th",
+          null,
+          "status"
         )
       )
     ),
@@ -148,14 +178,14 @@ var OrderAdd = function (_React$Component) {
       event.preventDefault();
       var form = document.forms.orderAdd;
       //check that all fields are filled out
-      if (form.orderNumber.value != "" && form.deliveryAdress.value != "") {
+      if (form.itemID.value != "" && form.address.value != "") {
         this.props.createOrder({
-          orderNumber: form.orderNumber.value,
-          deliveryAdress: form.deliveryAdress.value,
+          itemID: form.itemID.value,
+          address: form.address.value,
           status: 'Pending'
         });
-        form.orderNumber.value = '';
-        form.deliveryAdress.value = '';
+        form.itemID.value = '';
+        form.address.value = '';
       }
     }
   }, {
@@ -167,8 +197,8 @@ var OrderAdd = function (_React$Component) {
         React.createElement(
           "form",
           { name: "orderAdd", onSubmit: this.handleSubmit },
-          React.createElement("input", { type: "text", name: "orderNumber", placeholder: "Order Number" }),
-          React.createElement("input", { type: "text", name: "deliveryAdress", placeholder: "Your Address" }),
+          React.createElement("input", { type: "text", name: "itemID", placeholder: "Item Number" }),
+          React.createElement("input", { type: "text", name: "address", placeholder: "Your Address" }),
           React.createElement(
             "button",
             null,
@@ -226,7 +256,7 @@ var OrderPage = function (_React$Component2) {
     value: function loadPlacedOrders() {
       var _this4 = this;
 
-      fetch('/api/placedOrderDB').then(function (response) {
+      fetch('/api/ordersDB').then(function (response) {
         if (response.ok) {
           response.json().then(function (data) {
             _this4.state = { foods: _this4.state.foods, orders: data }; //potential error
@@ -246,7 +276,7 @@ var OrderPage = function (_React$Component2) {
     value: function createOrder(newOrder) {
       var _this5 = this;
 
-      fetch('/api/placedOrderDB', {
+      fetch('/api/ordersDB', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newOrder)
@@ -315,3 +345,49 @@ var OrderPage = function (_React$Component2) {
 }(React.Component);
 
 ReactDOM.render(React.createElement(OrderPage, null), contentNode);
+
+//internet code
+function sendNotification() {
+  var data = {
+    title: 'Dine Online',
+    message: 'A new order has been placed! - v5',
+    icon: 'truck.png',
+    clickCallback: function clickCallback() {
+      alert('do something when clicked on notification');
+    }
+  };
+
+  if (data == undefined || !data) {
+    return false;
+  }
+  var title = data.title === undefined ? 'Notification' : data.title;
+  var clickCallback = data.clickCallback;
+  var message = data.message === undefined ? 'null' : data.message;
+  var icon = data.icon === undefined ? 'https://cdn2.iconfinder.com/data/icons/mixed-rounded-flat-icon/512/megaphone-64.png' : data.icon;
+  var sendNotification = function sendNotification() {
+    var notification = new Notification(title, {
+      icon: icon,
+      body: message
+    });
+    if (clickCallback !== undefined) {
+      notification.onclick = function () {
+        clickCallback();
+        notification.close();
+      };
+    }
+  };
+
+  if (!window.Notification) {
+    return false;
+  } else {
+    if (Notification.permission === 'default') {
+      Notification.requestPermission(function (p) {
+        if (p !== 'denied') {
+          sendNotification();
+        }
+      });
+    } else {
+      sendNotification();
+    }
+  }
+}

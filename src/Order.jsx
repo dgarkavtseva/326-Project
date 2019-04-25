@@ -11,9 +11,12 @@ const FoodRow = (props) => (
 
 const OrderRow = (props) => (
   <tr>
-    <td>{props.order.orderNumber}</td>
-    <td>{props.order.status}</td>
-    <td>{props.order.deliveryAdress}</td>
+        <td>{props.order.orderID}</td>
+        <td>{props.order.buyer}</td>
+        <td>{props.order.itemID}</td>
+        <td>{props.order.address}</td>
+        <td>{props.order.driver}</td>
+        <td>{props.order.status}</td>
   </tr>
 );
 
@@ -43,9 +46,12 @@ function FoodTable(props){
       <table className="bordered-table">
         <thead>
         <tr>
-            <th>Order Number</th>
-             <th>Status</th>
-             <th>Delivery Address</th>
+                    <th>orderID</th>
+                    <th>buyer</th>
+                    <th>itemID</th>
+                    <th>address</th>
+                    <th>driver</th>
+                    <th>status</th>
            </tr>
         </thead>
         <tbody>{orderRows}</tbody>
@@ -64,14 +70,14 @@ class OrderAdd extends React.Component {
     event.preventDefault();
     let form = document.forms.orderAdd;
     //check that all fields are filled out
-    if(form.orderNumber.value != "" && form.deliveryAdress.value != ""){
+    if(form.itemID.value != "" && form.address.value != ""){
       this.props.createOrder({
-        orderNumber: form.orderNumber.value, 
-        deliveryAdress: form.deliveryAdress.value,
+        itemID: form.itemID.value, 
+        address: form.address.value,
         status: 'Pending'
       });
-      form.orderNumber.value = '';
-      form.deliveryAdress.value = '';
+      form.itemID.value = '';
+      form.address.value = '';
     }
   }
 
@@ -79,8 +85,8 @@ class OrderAdd extends React.Component {
     return (
       <div>
         <form name="orderAdd" onSubmit={this.handleSubmit}>
-          <input type="text" name="orderNumber" placeholder="Order Number" />
-          <input type="text" name="deliveryAdress" placeholder="Your Address" />
+          <input type="text" name="itemID" placeholder="Item Number" />
+          <input type="text" name="address" placeholder="Your Address" />
           <button>Add</button>
         </form>
       </div>
@@ -117,7 +123,7 @@ class OrderPage extends React.Component {
   }
 
   loadPlacedOrders() {
-    fetch('/api/placedOrderDB').then(response => {
+    fetch('/api/ordersDB').then(response => {
       if (response.ok) {
         response.json().then(data => {
           this.state = { foods: this.state.foods , orders: data}; //potential error
@@ -135,7 +141,7 @@ class OrderPage extends React.Component {
 
   
   createOrder(newOrder) {
-    fetch('/api/placedOrderDB', {
+    fetch('/api/ordersDB', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newOrder),
@@ -180,3 +186,48 @@ class OrderPage extends React.Component {
 }
 
 ReactDOM.render(<OrderPage />, contentNode);
+
+
+//internet code
+function sendNotification () {
+  let data = {
+    title: 'Dine Online',
+    message: 'A new order has been placed! - v5',
+    icon:'truck.png',
+    clickCallback: function () {
+      alert('do something when clicked on notification');
+    }
+  };
+  
+  if (data == undefined || !data) { return false }
+  var title = (data.title === undefined) ? 'Notification' : data.title
+  var clickCallback = data.clickCallback
+  var message = (data.message === undefined) ? 'null' : data.message
+  var icon = (data.icon === undefined) ? 'https://cdn2.iconfinder.com/data/icons/mixed-rounded-flat-icon/512/megaphone-64.png' : data.icon
+  var sendNotification = function (){
+      var notification = new Notification(title, {
+          icon: icon,
+          body: message
+      })
+      if (clickCallback !== undefined) {
+          notification.onclick = function () {
+              clickCallback()
+              notification.close()
+          }
+      }
+  }
+
+  if (!window.Notification) {
+      return false
+  } else {
+      if (Notification.permission === 'default') {
+          Notification.requestPermission(function (p) {
+              if (p !== 'denied') {
+                  sendNotification()
+              }
+          })
+      } else {
+          sendNotification()
+      }
+  }
+}
