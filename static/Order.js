@@ -8,6 +8,36 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+//notifications
+var existingLength = -1;
+var currLength = -1;
+function refresh() {
+  console.log("inf");
+  fetch('/api/placedOrderDB').then(function (response) {
+    if (response.ok) {
+      response.json().then(function (data) {
+        currLength = data.length;
+      });
+    } else {
+      response.json().then(function (error) {
+        alert("Failed to fetch issues:" + error.message);
+      });
+    }
+  }).catch(function (err) {});
+
+  if (existingLength === -1) {
+    existingLength = currLength; //prevents notification on load
+  }
+  if (currLength != existingLength) {
+    existingLength = currLength;
+    sendNotification();
+  }
+  setTimeout(refresh, 2000);
+}
+setTimeout(refresh, 5000);
+
+////end notifications 
+
 var contentNode = document.getElementById("contents");
 
 var FoodRow = function FoodRow(props) {
@@ -139,6 +169,7 @@ var OrderAdd = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (OrderAdd.__proto__ || Object.getPrototypeOf(OrderAdd)).call(this));
 
     _this.handleSubmit = _this.handleSubmit.bind(_this);
+
     return _this;
   }
 
@@ -252,6 +283,9 @@ var OrderPage = function (_React$Component2) {
         body: JSON.stringify(newOrder)
       }).then(function (res) {
         if (res.ok) {
+          var existingOrders = _this5.state.orders.slice();
+          currLength = existingOrders.length;
+          // console.log(existingOrders.length);
           res.json().then(function (updatedOrder) {
             var newOrder = _this5.state.orders.concat(updatedOrder);
             _this5.setState({ orders: newOrder });
@@ -308,47 +342,28 @@ var OrderPage = function (_React$Component2) {
 
 ReactDOM.render(React.createElement(OrderPage, null), contentNode);
 
-//internet code
 function sendNotification() {
-  var data = {
-    title: 'Dine Online',
-    message: 'A new order has been placed! - v5',
-    icon: 'truck.png',
-    clickCallback: function clickCallback() {
-      alert('do something when clicked on notification');
-    }
-  };
-
-  if (data == undefined || !data) {
-    return false;
-  }
-  var title = data.title === undefined ? 'Notification' : data.title;
-  var clickCallback = data.clickCallback;
-  var message = data.message === undefined ? 'null' : data.message;
-  var icon = data.icon === undefined ? 'https://cdn2.iconfinder.com/data/icons/mixed-rounded-flat-icon/512/megaphone-64.png' : data.icon;
-  var sendNotification = function sendNotification() {
-    var notification = new Notification(title, {
-      icon: icon,
-      body: message
-    });
-    if (clickCallback !== undefined) {
-      notification.onclick = function () {
-        clickCallback();
-        notification.close();
-      };
-    }
-  };
-
-  if (!window.Notification) {
-    return false;
+  var mobile = false;
+  if (typeof window.orientation !== "undefined" || navigator.userAgent.indexOf('IEMobile') !== -1) {
+    //mobile detectoin strategy found here: https://coderwall.com/p/i817wa/one-line-function-to-detect-mobile-devices-with-javascript
+    alert("A new order has been placed!");
   } else {
-    if (Notification.permission === 'default') {
-      Notification.requestPermission(function (p) {
-        if (p !== 'denied') {
-          sendNotification();
-        }
+    var notificationContent = {
+      title: 'Dine Online',
+      message: 'A new order has been placed! - v5',
+      icon: 'truck.png'
+    };
+    var sendNotification = function sendNotification() {
+      var notification = new Notification('Dine Online', {
+        icon: 'truck.png',
+        body: 'A new order has been placed!'
       });
-    } else {
+    };
+
+    if (window.Notification) {
+      if (Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
       sendNotification();
     }
   }

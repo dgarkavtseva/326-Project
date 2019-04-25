@@ -1,3 +1,34 @@
+//notifications
+let existingLength = -1;
+let currLength = -1;
+function refresh(){
+  console.log("inf");
+  fetch('/api/placedOrderDB').then(response => {
+    if (response.ok) {
+      response.json().then(data => {
+        currLength = data.length;
+      });
+    } else {
+      response.json().then(error => {
+        alert("Failed to fetch issues:" + error.message)
+      });
+    }
+  }).catch(err => {
+  });
+  
+    if (existingLength === -1){
+      existingLength = currLength; //prevents notification on load
+    }
+     if (currLength != existingLength){
+      existingLength = currLength;
+      sendNotification();
+    }
+  setTimeout(refresh, 500);
+}
+setTimeout(refresh, 4000);
+
+////end notifications 
+
 const contentNode = document.getElementById("contents");
 
 const FoodRow = (props) => (
@@ -58,6 +89,7 @@ class OrderAdd extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
+    
   }
 
   handleSubmit(event) {
@@ -72,6 +104,7 @@ class OrderAdd extends React.Component {
       });
       form.orderNumber.value = '';
       form.deliveryAdress.value = '';
+      
     }
   }
 
@@ -87,6 +120,7 @@ class OrderAdd extends React.Component {
     );
   }
 }
+
 
 class OrderPage extends React.Component {
   constructor() {
@@ -114,6 +148,7 @@ class OrderPage extends React.Component {
     }).catch(err => {
       alert("Error in fetching data from server:", err);
     });
+    
   }
 
   loadPlacedOrders() {
@@ -122,6 +157,8 @@ class OrderPage extends React.Component {
         response.json().then(data => {
           this.state = { foods: this.state.foods , orders: data}; //potential error
           this.setState({ orders: data});
+          
+          
         });
       } else {
         response.json().then(error => {
@@ -131,10 +168,12 @@ class OrderPage extends React.Component {
     }).catch(err => {
       alert("Error in fetching data from server:", err);
     });
+   
   }
 
   
   createOrder(newOrder) {
+    
     fetch('/api/placedOrderDB', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -142,6 +181,9 @@ class OrderPage extends React.Component {
     })
       .then(res => {
         if (res.ok) {
+          let existingOrders = this.state.orders.slice();
+          currLength = existingOrders.length;
+          // console.log(existingOrders.length);
           res.json()
             .then(updatedOrder => {
               const newOrder = this.state.orders.concat(updatedOrder);
@@ -178,46 +220,29 @@ class OrderPage extends React.Component {
 ReactDOM.render(<OrderPage />, contentNode);
 
 
-//internet code
-function sendNotification () {
-  let data = {
-    title: 'Dine Online',
-    message: 'A new order has been placed! - v5',
-    icon:'truck.png',
-    clickCallback: function () {
-      alert('do something when clicked on notification');
-    }
-  };
-  
-  if (data == undefined || !data) { return false }
-  var title = (data.title === undefined) ? 'Notification' : data.title
-  var clickCallback = data.clickCallback
-  var message = (data.message === undefined) ? 'null' : data.message
-  var icon = (data.icon === undefined) ? 'https://cdn2.iconfinder.com/data/icons/mixed-rounded-flat-icon/512/megaphone-64.png' : data.icon
-  var sendNotification = function (){
-      var notification = new Notification(title, {
-          icon: icon,
-          body: message
-      })
-      if (clickCallback !== undefined) {
-          notification.onclick = function () {
-              clickCallback()
-              notification.close()
-          }
-      }
-  }
 
-  if (!window.Notification) {
-      return false
-  } else {
+function sendNotification () {
+  let mobile = false;
+  if((typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1)){
+    //mobile detectoin strategy found here: https://coderwall.com/p/i817wa/one-line-function-to-detect-mobile-devices-with-javascript
+    alert("A new order has been placed!");
+  }else{
+    let notificationContent = {
+    title: 'Dine Online',
+    message: 'A new order has been placed!',
+    icon:'truck.png',
+    };
+      var sendNotification = function (){
+      var notification = new Notification('Dine Online', {
+        icon: 'truck.png',
+        body: 'A new order has been placed!'
+      })
+    }
+    if (window.Notification) {
       if (Notification.permission === 'default') {
-          Notification.requestPermission(function (p) {
-              if (p !== 'denied') {
-                  sendNotification()
-              }
-          })
-      } else {
-          sendNotification()
-      }
+        Notification.requestPermission();
+      } 
+      sendNotification()
+    } 
   }
 }
