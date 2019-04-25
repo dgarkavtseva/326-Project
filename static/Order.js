@@ -8,36 +8,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-//notifications
-var existingLength = -1;
-var currLength = -1;
-function refresh() {
-  console.log("inf");
-  fetch('/api/placedOrderDB').then(function (response) {
-    if (response.ok) {
-      response.json().then(function (data) {
-        currLength = data.length;
-      });
-    } else {
-      response.json().then(function (error) {
-        alert("Failed to fetch issues:" + error.message);
-      });
-    }
-  }).catch(function (err) {});
-
-  if (existingLength === -1) {
-    existingLength = currLength; //prevents notification on load
-  }
-  if (currLength != existingLength) {
-    existingLength = currLength;
-    sendNotification();
-  }
-  setTimeout(refresh, 2000);
-}
-setTimeout(refresh, 5000);
-
-////end notifications 
-
 var contentNode = document.getElementById("contents");
 
 var FoodRow = function FoodRow(props) {
@@ -210,6 +180,7 @@ var OrderAdd = function (_React$Component) {
       event.preventDefault();
       var form = document.forms.orderAdd;
       //check that all fields are filled out
+
       if (form.itemID.value != "" && form.address.value != "") {
         this.props.createOrder({
           itemID: form.itemID.value,
@@ -383,6 +354,34 @@ var OrderPage = function (_React$Component2) {
 
 ReactDOM.render(React.createElement(OrderPage, null), contentNode);
 
+//notifications
+var existingLength = -1;
+var currLength = -1;
+function refresh() {
+  console.log("inf");
+  fetch('/api/OrdersDB').then(function (response) {
+    if (response.ok) {
+      response.json().then(function (data) {
+        currLength = data.length;
+      });
+    } else {
+      response.json().then(function (error) {
+        alert("Failed to fetch issues:" + error.message);
+      });
+    }
+  }).catch(function (err) {});
+
+  if (existingLength === -1) {
+    existingLength = currLength; //prevents notification on load
+  }
+  if (currLength != existingLength) {
+    existingLength = currLength;
+    sendNotification();
+  }
+  setTimeout(refresh, 500);
+}
+setTimeout(refresh, 4000);
+
 function sendNotification() {
   var mobile = false;
   if (typeof window.orientation !== "undefined" || navigator.userAgent.indexOf('IEMobile') !== -1) {
@@ -391,7 +390,7 @@ function sendNotification() {
   } else {
     var notificationContent = {
       title: 'Dine Online',
-      message: 'A new order has been placed! - v5',
+      message: 'A new order has been placed!',
       icon: 'truck.png'
     };
     var sendNotification = function sendNotification() {
@@ -400,7 +399,6 @@ function sendNotification() {
         body: 'A new order has been placed!'
       });
     };
-
     if (window.Notification) {
       if (Notification.permission === 'default') {
         Notification.requestPermission();
@@ -408,4 +406,4 @@ function sendNotification() {
       sendNotification();
     }
   }
-}
+} ////end notifications

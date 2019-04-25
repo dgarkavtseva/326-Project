@@ -261,3 +261,56 @@ var OrderPage = function (_React$Component2) {
 }(React.Component);
 
 ReactDOM.render(React.createElement(OrderPage, null), contentNode);
+//notifications
+var existingLength = -1;
+var currLength = -1;
+function refresh() {
+  console.log("inf");
+  fetch('/api/OrdersDB').then(function (response) {
+    if (response.ok) {
+      response.json().then(function (data) {
+        currLength = data.length;
+      });
+    } else {
+      response.json().then(function (error) {
+        alert("Failed to fetch issues:" + error.message);
+      });
+    }
+  }).catch(function (err) {});
+
+  if (existingLength === -1) {
+    existingLength = currLength; //prevents notification on load
+  }
+  if (currLength != existingLength) {
+    existingLength = currLength;
+    sendNotification();
+  }
+  setTimeout(refresh, 500);
+}
+setTimeout(refresh, 4000);
+
+function sendNotification() {
+  var mobile = false;
+  if (typeof window.orientation !== "undefined" || navigator.userAgent.indexOf('IEMobile') !== -1) {
+    //mobile detectoin strategy found here: https://coderwall.com/p/i817wa/one-line-function-to-detect-mobile-devices-with-javascript
+    alert("A new order has been placed!");
+  } else {
+    var notificationContent = {
+      title: 'Dine Online',
+      message: 'A new order has been placed!',
+      icon: 'truck.png'
+    };
+    var sendNotification = function sendNotification() {
+      var notification = new Notification('Dine Online', {
+        icon: 'truck.png',
+        body: 'A new order has been placed!'
+      });
+    };
+    if (window.Notification) {
+      if (Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+      sendNotification();
+    }
+  }
+} ////end notifications

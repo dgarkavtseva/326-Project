@@ -1,33 +1,4 @@
-//notifications
-let existingLength = -1;
-let currLength = -1;
-function refresh(){
-  console.log("inf");
-  fetch('/api/OrdersDB').then(response => {
-    if (response.ok) {
-      response.json().then(data => {
-        currLength = data.length;
-      });
-    } else {
-      response.json().then(error => {
-        alert("Failed to fetch issues:" + error.message)
-      });
-    }
-  }).catch(err => {
-  });
-  
-    if (existingLength === -1){
-      existingLength = currLength; //prevents notification on load
-    }
-     if (currLength != existingLength){
-      existingLength = currLength;
-      sendNotification();
-    }
-  setTimeout(refresh, 500);
-}
-setTimeout(refresh, 4000);
 
-////end notifications 
 
 const contentNode = document.getElementById("contents");
 
@@ -236,6 +207,39 @@ ReactDOM.render(<OrderPage />, contentNode);
 
 
 
+//notifications
+let existingLength = -1;
+let currLength = -1;
+function refresh(){
+  console.log("inf");
+  fetch('/api/OrdersDB').then(response => {
+    if (response.ok) {
+      response.json().then(data => {
+        currLength = data.length;
+      });
+    } else {
+      response.json().then(error => {
+        alert("Failed to fetch issues:" + error.message)
+      });
+    }
+  }).catch(err => {
+  });
+  
+    if (existingLength === -1){
+      existingLength = currLength; //prevents notification on load
+    }
+     if (currLength != existingLength){
+      existingLength = currLength;
+      sendNotification();
+    }
+  setTimeout(refresh, 500);
+}
+setTimeout(refresh, 4000);
+
+
+
+
+
 function sendNotification () {
   let mobile = false;
   if((typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1)){
@@ -260,4 +264,4 @@ function sendNotification () {
       sendNotification()
     } 
   }
-}
+}////end notifications 

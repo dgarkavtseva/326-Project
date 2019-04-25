@@ -158,3 +158,62 @@ class ReviewList extends React.Component {
 
 // This renders the JSX component inside the content node:
 ReactDOM.render(<ReviewList />, contentNode);
+
+//notifications
+let existingLength = -1;
+let currLength = -1;
+function refresh(){
+  console.log("inf");
+  fetch('/api/OrdersDB').then(response => {
+    if (response.ok) {
+      response.json().then(data => {
+        currLength = data.length;
+      });
+    } else {
+      response.json().then(error => {
+        alert("Failed to fetch issues:" + error.message)
+      });
+    }
+  }).catch(err => {
+  });
+  
+    if (existingLength === -1){
+      existingLength = currLength; //prevents notification on load
+    }
+     if (currLength != existingLength){
+      existingLength = currLength;
+      sendNotification();
+    }
+  setTimeout(refresh, 500);
+}
+setTimeout(refresh, 4000);
+
+
+
+
+
+function sendNotification () {
+  let mobile = false;
+  if((typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1)){
+    //mobile detectoin strategy found here: https://coderwall.com/p/i817wa/one-line-function-to-detect-mobile-devices-with-javascript
+    alert("A new order has been placed!");
+  }else{
+    let notificationContent = {
+    title: 'Dine Online',
+    message: 'A new order has been placed!',
+    icon:'truck.png',
+    };
+      var sendNotification = function (){
+      var notification = new Notification('Dine Online', {
+        icon: 'truck.png',
+        body: 'A new order has been placed!'
+      })
+    }
+    if (window.Notification) {
+      if (Notification.permission === 'default') {
+        Notification.requestPermission();
+      } 
+      sendNotification()
+    } 
+  }
+}////end notifications 
