@@ -64,32 +64,32 @@ function OrderTable(props) {
         React.createElement(
           "th",
           null,
-          "orderID"
+          "Order ID"
         ),
         React.createElement(
           "th",
           null,
-          "buyer"
+          "Buyer"
         ),
         React.createElement(
           "th",
           null,
-          "itemID"
+          "Item ID"
         ),
         React.createElement(
           "th",
           null,
-          "address"
+          "Address"
         ),
         React.createElement(
           "th",
           null,
-          "driver"
+          "Driver"
         ),
         React.createElement(
           "th",
           null,
-          "status"
+          "Status"
         )
       )
     ),
@@ -252,7 +252,11 @@ var OrderPage = function (_React$Component2) {
         React.createElement("hr", null),
         React.createElement(OrderAdd, { createOrder: this.createOrder }),
         React.createElement("hr", null),
-        React.createElement(OrderTable, { orders: this.state.orders })
+        React.createElement(
+          "center",
+          null,
+          React.createElement(OrderTable, { orders: this.state.orders })
+        )
       );
     }
   }]);
