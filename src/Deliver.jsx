@@ -1,6 +1,4 @@
 const contentNode = document.getElementById("contents");
-//const MongoClient = require('mongodb').MongoClient;
-
 const OrderRow = (props) => (
   <tr>
       <td>{props.order.orderID}</td>
@@ -48,7 +46,7 @@ class OrderAdd extends React.Component {
           this.props.createOrder({ //this needs fixing with the new name system
             orderID: form.orderID.value, 
             driver: form.driver.value,
-            status: 'Pending'
+            status: 'Accepted'
           });
           form.orderID.value = '';
           form.driver.value = '';
@@ -73,13 +71,8 @@ class OrderAdd extends React.Component {
 class OrderPage extends React.Component {
   constructor() {
     super();
-    this.state = { orders: [], ordersDB: []};
+    this.state = { orders: []};
     this.createOrder = this.createOrder.bind(this);
-    /*MongoClient.connect('mongodb://localhost', { useNewUrlParser: true }).then(connection => {
-        this.state.ordersDB = connection.db('ordersDB');
-      }).catch(error => {
-          console.log('ERROR:', error);
-    });*/
 
   }
   componentDidMount() {
@@ -108,7 +101,7 @@ class OrderPage extends React.Component {
   
   createOrder(newOrder) {
     fetch('/api/ordersDB', {
-      method: 'POST',
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newOrder),
     })
@@ -117,19 +110,11 @@ class OrderPage extends React.Component {
           res.json()
             .then(updatedOrder => {
               let existingOrders = this.state.orders.slice();
-              existingOrders.forEach(function match(element){
-                if(parseInt(element.orderID) === parseInt(updatedOrder.orderID)){
+              existingOrders.forEach(function match(element) {
+                if(parseInt(element.orderID) === parseInt(newOrder.orderID)){
                   element.status = "Accepted";
-                  element.driver = updatedOrder.driver;
-                }/*
-                  let query = { orderID: parseInt(updatedOrder.orderID) };
-                  let newValues = { $set: { driver: updatedOrder.driver, status: "Accetped" } };
-                  this.state.ordersDB.collection("orders").updateOne(query, newValues, function (err, res) {
-                      if (err) {
-                          throw err;
-                      }
-                      console.log("1 order updated");
-                  });*/
+                  element.driver = newOrder.driver;
+                }
               });
               this.setState({ orders: existingOrders });  
             });
@@ -166,7 +151,7 @@ ReactDOM.render(<OrderPage />, contentNode);
 let existingLength = -1;
 let currLength = -1;
 function refresh(){
-  console.log("inf");
+  //console.log("inf");
   fetch('/api/OrdersDB').then(response => {
     if (response.ok) {
       response.json().then(data => {

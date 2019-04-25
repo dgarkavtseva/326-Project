@@ -79,7 +79,7 @@ class OrderAdd extends React.Component {
     if(form.itemID.value != "" && form.address.value != ""){
         this.props.createOrder({
             itemID: form.itemID.value, 
-            orderID: this.state.currOrderID,
+            orderID: this.state.currOrderID.toString(),
             address: form.address.value,
             status: 'Pending'
         });

@@ -59,7 +59,7 @@ app.get('/api/menuDB', (req, res) => {
 
  app.get('/api/usersDB', (req, res) => {
   usersDB.collection('users').find().toArray().then(users => {
-    console.log(users);
+    //console.log(users);
     res.json(users);
   }).catch(error => {
     console.log(error);
@@ -82,7 +82,7 @@ app.get('/api/menuDB', (req, res) => {
 
 app.get('/api/ordersDB', (req, res) => {
     ordersDB.collection('orders').find().toArray().then(orders => {
-        console.log(orders);
+        //console.log(orders);
         res.json(orders);
     }).catch(error => {
         console.log(error);
@@ -92,8 +92,34 @@ app.get('/api/ordersDB', (req, res) => {
 
 app.post('/api/ordersDB', (req, res) => {
     const newOrders = req.body;
-    console.log(newOrders);
+    //console.log(newOrders);
     ordersDB.collection('orders').insertOne(newOrders).then(result =>
+        ordersDB.collection('orders').find({ _id: result.insertedId }).limit(1).next()
+    ).then(newOrders => {
+        res.json(newOrders);
+    }).catch(error => {
+        console.log(error);
+        res.status(500).json({ message: `Internal Server Error: ${error}` });
+    });
+});
+
+app.put('/api/ordersDB', (req, res) => {
+    /*const newOrders = req.body;
+    let query = { orderID: newOrders.orderID, status: "Pending" };
+    let newValues = { $set: { driver: newOrders.driver, status: "Accepted" }};
+    //console.log(newValues);
+    ordersDB.collection("orders").updateOne(query, newValues, {}).then(newOrders => {
+        res.json(newOrders);
+    }).catch(error => {
+        console.log(error);
+        res.status(500).json({ message: `Internal Server Error: ${error}` });
+        });*/
+
+
+    const newOrders = req.body;
+    let query = { orderID: newOrders.orderID, status: "Pending" };
+    let newValues = { $set: { driver: newOrders.driver, status: "Accepted" } };
+    ordersDB.collection("orders").updateOne(query, newValues, {}).then(result =>
         ordersDB.collection('orders').find({ _id: result.insertedId }).limit(1).next()
     ).then(newOrders => {
         res.json(newOrders);
