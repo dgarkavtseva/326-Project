@@ -182,3 +182,48 @@ class OrderPage extends React.Component {
 }
 
 ReactDOM.render(<OrderPage />, contentNode);
+
+
+//internet code
+function sendNotification () {
+  let data = {
+    title: 'Dine Online',
+    message: 'A new order has been placed! - v5',
+    icon:'truck.png',
+    clickCallback: function () {
+      alert('do something when clicked on notification');
+    }
+  };
+  
+  if (data == undefined || !data) { return false }
+  var title = (data.title === undefined) ? 'Notification' : data.title
+  var clickCallback = data.clickCallback
+  var message = (data.message === undefined) ? 'null' : data.message
+  var icon = (data.icon === undefined) ? 'https://cdn2.iconfinder.com/data/icons/mixed-rounded-flat-icon/512/megaphone-64.png' : data.icon
+  var sendNotification = function (){
+      var notification = new Notification(title, {
+          icon: icon,
+          body: message
+      })
+      if (clickCallback !== undefined) {
+          notification.onclick = function () {
+              clickCallback()
+              notification.close()
+          }
+      }
+  }
+
+  if (!window.Notification) {
+      return false
+  } else {
+      if (Notification.permission === 'default') {
+          Notification.requestPermission(function (p) {
+              if (p !== 'denied') {
+                  sendNotification()
+              }
+          })
+      } else {
+          sendNotification()
+      }
+  }
+}
