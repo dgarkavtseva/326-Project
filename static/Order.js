@@ -123,32 +123,32 @@ function OrderTable(props) {
         React.createElement(
           "th",
           null,
-          "orderID"
+          "Order ID"
         ),
         React.createElement(
           "th",
           null,
-          "buyer"
+          "Buyer"
         ),
         React.createElement(
           "th",
           null,
-          "itemID"
+          "Item ID"
         ),
         React.createElement(
           "th",
           null,
-          "address"
+          "Address"
         ),
         React.createElement(
           "th",
           null,
-          "driver"
+          "Driver"
         ),
         React.createElement(
           "th",
           null,
-          "status"
+          "Status"
         )
       )
     ),

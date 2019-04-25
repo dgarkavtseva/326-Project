@@ -48,12 +48,12 @@ function FoodTable(props){
       <table className="bordered-table">
         <thead>
         <tr>
-                    <th>orderID</th>
-                    <th>buyer</th>
-                    <th>itemID</th>
-                    <th>address</th>
-                    <th>driver</th>
-                    <th>status</th>
+                    <th>Order ID</th>
+                    <th>Buyer</th>
+                    <th>Item ID</th>
+                    <th>Address</th>
+                    <th>Driver</th>
+                    <th>Status</th>
            </tr>
         </thead>
         <tbody>{orderRows}</tbody>
