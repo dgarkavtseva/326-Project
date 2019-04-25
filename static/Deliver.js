@@ -17,17 +17,32 @@ var OrderRow = function OrderRow(props) {
     React.createElement(
       "td",
       null,
-      props.order.orderNumber
+      props.order.orderID
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.order.buyer
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.order.itemID
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.order.address
+    ),
+    React.createElement(
+      "td",
+      null,
+      props.order.driver
     ),
     React.createElement(
       "td",
       null,
       props.order.status
-    ),
-    React.createElement(
-      "td",
-      null,
-      props.order.deliveryAdress
     )
   );
 };
@@ -48,17 +63,32 @@ function OrderTable(props) {
         React.createElement(
           "th",
           null,
-          "Order Number"
+          "orderID"
         ),
         React.createElement(
           "th",
           null,
-          "Status"
+          "buyer"
         ),
         React.createElement(
           "th",
           null,
-          "Delivery Address"
+          "itemID"
+        ),
+        React.createElement(
+          "th",
+          null,
+          "address"
+        ),
+        React.createElement(
+          "th",
+          null,
+          "driver"
+        ),
+        React.createElement(
+          "th",
+          null,
+          "status"
         )
       )
     ),
@@ -88,14 +118,14 @@ var OrderAdd = function (_React$Component) {
       event.preventDefault();
       var form = document.forms.orderAdd;
       //check that all fields are filled out
-      if (form.orderNumber.value != "" && form.deliveryAdress.value != "") {
-        this.props.createOrder({
-          orderNumber: form.orderNumber.value,
-          deliveryAdress: form.deliveryAdress.value,
+      if (form.orderID.value != "" && form.driver.value != "") {
+        this.props.createOrder({ //this needs fixing with the new name system
+          orderID: form.orderID.value,
+          driver: form.driver.value,
           status: 'Pending'
         });
-        form.orderNumber.value = '';
-        form.deliveryAdress.value = '';
+        form.orderID.value = '';
+        form.driver.value = '';
       }
     }
   }, {
@@ -107,8 +137,8 @@ var OrderAdd = function (_React$Component) {
         React.createElement(
           "form",
           { name: "orderAdd", onSubmit: this.handleSubmit },
-          React.createElement("input", { type: "text", name: "orderNumber", placeholder: "Order Number" }),
-          React.createElement("input", { type: "text", name: "deliveryAdress", placeholder: "Your Name" }),
+          React.createElement("input", { type: "text", name: "orderID", placeholder: "OrderID" }),
+          React.createElement("input", { type: "text", name: "driver", placeholder: "Your Name" }),
           React.createElement(
             "button",
             null,
@@ -145,7 +175,7 @@ var OrderPage = function (_React$Component2) {
     value: function loadPlacedOrders() {
       var _this3 = this;
 
-      fetch('/api/placedOrderDB').then(function (response) {
+      fetch('/api/ordersDB').then(function (response) {
         if (response.ok) {
           response.json().then(function (data) {
             _this3.state = { orders: data }; //potential error
@@ -165,7 +195,7 @@ var OrderPage = function (_React$Component2) {
     value: function createOrder(newOrder) {
       var _this4 = this;
 
-      fetch('/api/placedOrderDB', {
+      fetch('/api/ordersDB', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newOrder)
@@ -175,15 +205,16 @@ var OrderPage = function (_React$Component2) {
             var existingOrders = _this4.state.orders.slice();
             var exists = false;
             existingOrders.forEach(function match(element) {
-              if (parseInt(element.orderNumber) === parseInt(updatedOrder.orderNumber)) {
+              if (parseInt(element.orderID) === parseInt(updatedOrder.orderID)) {
                 element.status = "Accepted";
-                element.Deliverer = updatedOrder.Deliverer;
+                element.driver = updatedOrder.driver;
                 exists = true;
               }
             });
-            if (!exists) {
-              existingOrders = _this4.state.orders.concat(updatedOrder);
-            }
+
+            /*if (!exists) {
+               existingOrders = this.state.orders.concat(updatedOrder);
+             }*/
             _this4.setState({ orders: existingOrders });
           });
         } else {

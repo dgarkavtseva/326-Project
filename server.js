@@ -9,10 +9,11 @@ app.use(bodyParser.json());
 const MongoClient = require('mongodb').MongoClient;
 
 let menuDB;
-let placedOrdersDB;
+//let placedOrdersDB;
 let reviewsDB;
 let usersDB;
-let deliveriesDB;
+//let deliveriesDB;
+let ordersDB;
 
 app.get('/api/menuDB', (req, res) => {
   menuDB.collection('items').find().toArray().then(items => {
@@ -79,7 +80,7 @@ app.get('/api/menuDB', (req, res) => {
     res.status(500).json({ message: `Internal Server Error: ${error}` });
   });
  });
-
+/*
 
  app.get('/api/deliverDB', (req, res) => {
   deliveriesDB.collection('deliveries').find().toArray().then(deliveries => {
@@ -137,15 +138,41 @@ app.get('/api/menuDB', (req, res) => {
     console.log(error);
     res.status(500).json({ message: `Internal Server Error: ${error}` });
   });
- });
+});
+
+*/
+
+app.get('/api/ordersDB', (req, res) => {
+    ordersDB.collection('orders').find().toArray().then(orders => {
+        console.log(orders);
+        res.json(orders);
+    }).catch(error => {
+        console.log(error);
+        res.status(500).json({ message: `Internal Server Error: ${error}` });
+    }); 
+});
+
+app.post('/api/ordersDB', (req, res) => {
+    const newOrders = req.body;
+    console.log(newOrders);
+    ordersDB.collection('orders').insertOne(newOrders).then(result =>
+        ordersDB.collection('orders').find({ _id: result.insertedId }).limit(1).next()
+    ).then(newOrders => {
+        res.json(newOrders);
+    }).catch(error => {
+        console.log(error);
+        res.status(500).json({ message: `Internal Server Error: ${error}` });
+    });
+});
 
 
 MongoClient.connect('mongodb://localhost', { useNewUrlParser: true }).then(connection => {
     menuDB = connection.db('menuDB');    
-    placedOrdersDB = connection.db('placedOrdersDB');
+    //placedOrdersDB = connection.db('placedOrdersDB');
     reviewsDB = connection.db('reviewsDB');
     usersDB = connection.db('usersDB');
-    deliveriesDB = connection.db('deliveriesDB');
+    //deliveriesDB = connection.db('deliveriesDB');
+    ordersDB = connection.db('ordersDB');
 
   app.listen(3000, () => {
     console.log('App started on port 3000');
