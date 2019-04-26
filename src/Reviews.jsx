@@ -18,13 +18,13 @@ function ReviewTable(props) {
     <ReviewRow key={review._id} review={review} />
   ));
   return (
-    <table className="bordered-table">
-      <thead>
+    <table className="table table-hover table-striped table-light">
+      <thead className="thead-dark">
         <tr>
           <th>Name</th>
           <th>Date</th>
           <th>Time</th>
-          <th>Ordered From</th>
+          <th width="15%">Ordered From</th>
           <th>Order</th>
           <th>Driver</th>
           <th>Review</th>
@@ -70,13 +70,31 @@ class ReviewAdd extends React.Component {
     return (
       <div>
         <form name="reviewAdd" onSubmit={this.handleSubmit}>
-          <input type="text" name="name" placeholder="Name" />
-          <input type="text" name="time" placeholder="Time" />
-          <input type="text" name="orderFrom" placeholder="Ordered From" />
-          <input type="text" name="orderItem" placeholder="Order" />
-          <input type="text" name="driver" placeholder="Driver" />
-          <input type="text" name="review" placeholder="Review" />
+        <div className="form-row">
+          <div className="col">
+          <input type="text" className="form-control" name="name" placeholder="Name" />
+          </div>
+          <div className="col">
+          <input type="text" className="form-control" name="time" placeholder="Time" />
+          </div>
+          <div className="col">
+          <input type="text" className="form-control" name="orderFrom" placeholder="Ordered From" />
+          </div>
+          <div className="col">
+          <input type="text" className="form-control" name="orderItem" placeholder="Order" />
+          </div>
+          <div className="col">
+          <input type="text" className="form-control" name="driver" placeholder="Driver" />
+          </div>
+          <div className="col">
+          <input type="text" className="form-control" name="review" placeholder="Review" />
+          </div>
+          <br></br>
+          <br></br>
+          </div>
           <button className="btn btn-outline-dark">Add</button>
+          <br></br>
+          
         </form>
       </div>
     );
@@ -143,10 +161,11 @@ class ReviewList extends React.Component {
       });
   }
 
-  render() {
+  render() { 
     return (
       <div>
         <h1>Reviews</h1>
+        <br></br>
         <ReviewTable reviews={this.state.reviews} />
         <hr />
         <h3>Add a Review by filling out all fields in the form!</h3>

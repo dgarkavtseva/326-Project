@@ -201,7 +201,7 @@ class OrderPage extends React.Component {
                 <h1>Menu</h1>
                 <h2>These are the available options for grab and go today!</h2>
                 <center>
-                    <div className="col-md-10">
+                    <div className="col-md-8">
                         <FoodTable foods={this.state.foods} />
                     </div>
                 </center>
@@ -212,7 +212,7 @@ class OrderPage extends React.Component {
                 <hr />
                 <h3>Here are your current orders:</h3>
                 <center>
-                    <div className="col-md-10">
+                    <div className="col-md-8">
                         <OrderTable orders={this.state.orders} />
                     </div>
                 </center>

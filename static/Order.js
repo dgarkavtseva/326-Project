@@ -342,7 +342,7 @@ var OrderPage = function (_React$Component2) {
                     null,
                     React.createElement(
                         "div",
-                        { className: "col-md-10" },
+                        { className: "col-md-8" },
                         React.createElement(FoodTable, { foods: this.state.foods })
                     )
                 ),
@@ -369,7 +369,7 @@ var OrderPage = function (_React$Component2) {
                     null,
                     React.createElement(
                         "div",
-                        { className: "col-md-10" },
+                        { className: "col-md-8" },
                         React.createElement(OrderTable, { orders: this.state.orders })
                     )
                 )

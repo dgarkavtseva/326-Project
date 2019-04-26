@@ -154,7 +154,7 @@ var OrderAdd = function (_React$Component) {
                     React.createElement(
                         "button",
                         { className: "btn btn-outline-dark" },
-                        "Add"
+                        "Submit"
                     )
                 )
             );
@@ -253,7 +253,11 @@ var OrderPage = function (_React$Component2) {
                 React.createElement(
                     "center",
                     null,
-                    React.createElement(OrderTable, { orders: this.state.orders })
+                    React.createElement(
+                        "div",
+                        { className: "col-md-8" },
+                        React.createElement(OrderTable, { orders: this.state.orders })
+                    )
                 )
             );
         }

@@ -58,10 +58,10 @@ function ReviewTable(props) {
   });
   return React.createElement(
     "table",
-    { className: "bordered-table" },
+    { className: "table table-hover table-striped table-light" },
     React.createElement(
       "thead",
-      null,
+      { className: "thead-dark" },
       React.createElement(
         "tr",
         null,
@@ -82,7 +82,7 @@ function ReviewTable(props) {
         ),
         React.createElement(
           "th",
-          null,
+          { width: "15%" },
           "Ordered From"
         ),
         React.createElement(
@@ -157,17 +157,48 @@ var ReviewAdd = function (_React$Component) {
         React.createElement(
           "form",
           { name: "reviewAdd", onSubmit: this.handleSubmit },
-          React.createElement("input", { type: "text", name: "name", placeholder: "Name" }),
-          React.createElement("input", { type: "text", name: "time", placeholder: "Time" }),
-          React.createElement("input", { type: "text", name: "orderFrom", placeholder: "Ordered From" }),
-          React.createElement("input", { type: "text", name: "orderItem", placeholder: "Order" }),
-          React.createElement("input", { type: "text", name: "driver", placeholder: "Driver" }),
-          React.createElement("input", { type: "text", name: "review", placeholder: "Review" }),
+          React.createElement(
+            "div",
+            { className: "form-row" },
+            React.createElement(
+              "div",
+              { className: "col" },
+              React.createElement("input", { type: "text", className: "form-control", name: "name", placeholder: "Name" })
+            ),
+            React.createElement(
+              "div",
+              { className: "col" },
+              React.createElement("input", { type: "text", className: "form-control", name: "time", placeholder: "Time" })
+            ),
+            React.createElement(
+              "div",
+              { className: "col" },
+              React.createElement("input", { type: "text", className: "form-control", name: "orderFrom", placeholder: "Ordered From" })
+            ),
+            React.createElement(
+              "div",
+              { className: "col" },
+              React.createElement("input", { type: "text", className: "form-control", name: "orderItem", placeholder: "Order" })
+            ),
+            React.createElement(
+              "div",
+              { className: "col" },
+              React.createElement("input", { type: "text", className: "form-control", name: "driver", placeholder: "Driver" })
+            ),
+            React.createElement(
+              "div",
+              { className: "col" },
+              React.createElement("input", { type: "text", className: "form-control", name: "review", placeholder: "Review" })
+            ),
+            React.createElement("br", null),
+            React.createElement("br", null)
+          ),
           React.createElement(
             "button",
             { className: "btn btn-outline-dark" },
             "Add"
-          )
+          ),
+          React.createElement("br", null)
         )
       );
     }
@@ -254,6 +285,7 @@ var ReviewList = function (_React$Component2) {
           null,
           "Reviews"
         ),
+        React.createElement("br", null),
         React.createElement(ReviewTable, { reviews: this.state.reviews }),
         React.createElement("hr", null),
         React.createElement(

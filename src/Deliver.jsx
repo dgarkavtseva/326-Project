@@ -66,7 +66,7 @@ class OrderAdd extends React.Component {
                         </div>
                     </div>
                     <br></br>
-                    <button className="btn btn-outline-dark">Add</button>
+                    <button className="btn btn-outline-dark">Submit</button>
                 </form>
             </div>
         );
@@ -145,7 +145,9 @@ class OrderPage extends React.Component {
                 <OrderAdd createOrder={this.createOrder} />
                 <hr />
                 <center>
+                <div className="col-md-8">
                     <OrderTable orders={this.state.orders} />
+                </div>
                 </center>
             </div>
         );
