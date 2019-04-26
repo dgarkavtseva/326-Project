@@ -202,12 +202,25 @@ var OrderAdd = function (_React$Component) {
         React.createElement(
           "form",
           { name: "orderAdd", onSubmit: this.handleSubmit },
-          React.createElement("input", { type: "text", name: "itemID", placeholder: "Item Number" }),
-          React.createElement("input", { type: "text", name: "address", placeholder: "Your Address" }),
+          React.createElement(
+            "div",
+            { className: "form-row" },
+            React.createElement(
+              "div",
+              { className: "col" },
+              React.createElement("input", { type: "text", className: "form-control", name: "itemID", placeholder: "Item Number" })
+            ),
+            React.createElement(
+              "div",
+              { className: "col" },
+              React.createElement("input", { type: "text", className: "form-control", name: "address", placeholder: "Your Address" })
+            )
+          ),
+          React.createElement("br", null),
           React.createElement(
             "button",
             { className: "btn btn-outline-dark" },
-            "Add"
+            "Order!"
           )
         )
       );

@@ -95,9 +95,17 @@ class OrderAdd extends React.Component {
     return (
       <div>
         <form name="orderAdd" onSubmit={this.handleSubmit}>
-          <input type="text" name="itemID" placeholder="Item Number" />
-          <input type="text" name="address" placeholder="Your Address" />
-          <button className="btn btn-outline-dark" >Add</button>
+        <div className="form-row">
+    <div className="col">
+          <input type="text" className="form-control" name="itemID" placeholder="Item Number" />
+          </div>
+    <div className="col">
+          <input type="text" className="form-control" name="address" placeholder="Your Address" />
+          </div>
+          </div>
+          <br></br>
+          <button className="btn btn-outline-dark" >Order!</button>
+          
         </form>
       </div>
     );
