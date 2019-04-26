@@ -11,366 +11,373 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var contentNode = document.getElementById("contents");
 
 var FoodRow = function FoodRow(props) {
-  return React.createElement(
-    "tr",
-    null,
-    React.createElement(
-      "td",
-      null,
-      props.food.order
-    ),
-    React.createElement(
-      "td",
-      null,
-      props.food.food
-    ),
-    React.createElement(
-      "td",
-      null,
-      props.food.diningHall
-    )
-  );
+    return React.createElement(
+        "tr",
+        null,
+        React.createElement(
+            "td",
+            null,
+            props.food.order
+        ),
+        React.createElement(
+            "td",
+            null,
+            props.food.food
+        ),
+        React.createElement(
+            "td",
+            null,
+            props.food.diningHall
+        )
+    );
 };
 
 var OrderRow = function OrderRow(props) {
-  return React.createElement(
-    "tr",
-    null,
-    React.createElement(
-      "td",
-      null,
-      props.order.orderID
-    ),
-    React.createElement(
-      "td",
-      null,
-      props.order.buyer
-    ),
-    React.createElement(
-      "td",
-      null,
-      props.order.itemID
-    ),
-    React.createElement(
-      "td",
-      null,
-      props.order.address
-    ),
-    React.createElement(
-      "td",
-      null,
-      props.order.driver
-    ),
-    React.createElement(
-      "td",
-      null,
-      props.order.status
-    )
-  );
+    return React.createElement(
+        "tr",
+        null,
+        React.createElement(
+            "td",
+            null,
+            props.order.orderID
+        ),
+        React.createElement(
+            "td",
+            null,
+            props.order.buyer
+        ),
+        React.createElement(
+            "td",
+            null,
+            props.order.itemID
+        ),
+        React.createElement(
+            "td",
+            null,
+            props.order.address
+        ),
+        React.createElement(
+            "td",
+            null,
+            props.order.driver
+        ),
+        React.createElement(
+            "td",
+            null,
+            props.order.status
+        )
+    );
 };
 
 function FoodTable(props) {
-  var foodRows = props.foods.map(function (food) {
-    return React.createElement(FoodRow, { key: food._id, food: food });
-  });
-  return React.createElement(
-    "table",
-    { className: "table table-hover table-striped table-light" },
-    React.createElement(
-      "thead",
-      { className: "thead-dark" },
-      React.createElement(
-        "tr",
-        null,
+    var foodRows = props.foods.map(function (food) {
+        return React.createElement(FoodRow, { key: food._id, food: food });
+    });
+    return React.createElement(
+        "table",
+        { className: "table table-hover table-striped table-light" },
         React.createElement(
-          "th",
-          { scope: "col" },
-          "Order Number"
+            "thead",
+            { className: "thead-dark" },
+            React.createElement(
+                "tr",
+                null,
+                React.createElement(
+                    "th",
+                    { scope: "col" },
+                    "Order Number"
+                ),
+                React.createElement(
+                    "th",
+                    { scope: "col" },
+                    "Food"
+                ),
+                React.createElement(
+                    "th",
+                    { scope: "col" },
+                    "Dining Hall"
+                )
+            )
         ),
         React.createElement(
-          "th",
-          { scope: "col" },
-          "Food"
-        ),
-        React.createElement(
-          "th",
-          { scope: "col" },
-          "Dining Hall"
+            "tbody",
+            null,
+            foodRows
         )
-      )
-    ),
-    React.createElement(
-      "tbody",
-      null,
-      foodRows
-    )
-  );
+    );
 }
 
 function OrderTable(props) {
-  var orderRows = props.orders.map(function (order) {
-    return React.createElement(OrderRow, { key: order._id, order: order });
-  });
-  return React.createElement(
-    "table",
-    { className: "table table-hover table-striped table-light" },
-    React.createElement(
-      "thead",
-      { className: "thead-dark" },
-      React.createElement(
-        "tr",
-        null,
+    var orderRows = props.orders.map(function (order) {
+        return React.createElement(OrderRow, { key: order._id, order: order });
+    });
+    return React.createElement(
+        "table",
+        { className: "table table-hover table-striped table-light" },
         React.createElement(
-          "th",
-          null,
-          "Order ID"
+            "thead",
+            { className: "thead-dark" },
+            React.createElement(
+                "tr",
+                null,
+                React.createElement(
+                    "th",
+                    null,
+                    "Order ID"
+                ),
+                React.createElement(
+                    "th",
+                    null,
+                    "Buyer"
+                ),
+                React.createElement(
+                    "th",
+                    null,
+                    "Item ID"
+                ),
+                React.createElement(
+                    "th",
+                    null,
+                    "Address"
+                ),
+                React.createElement(
+                    "th",
+                    null,
+                    "Driver"
+                ),
+                React.createElement(
+                    "th",
+                    null,
+                    "Status"
+                )
+            )
         ),
         React.createElement(
-          "th",
-          null,
-          "Buyer"
-        ),
-        React.createElement(
-          "th",
-          null,
-          "Item ID"
-        ),
-        React.createElement(
-          "th",
-          null,
-          "Address"
-        ),
-        React.createElement(
-          "th",
-          null,
-          "Driver"
-        ),
-        React.createElement(
-          "th",
-          null,
-          "Status"
+            "tbody",
+            null,
+            orderRows
         )
-      )
-    ),
-    React.createElement(
-      "tbody",
-      null,
-      orderRows
-    )
-  );
+    );
 }
 
 var OrderAdd = function (_React$Component) {
-  _inherits(OrderAdd, _React$Component);
+    _inherits(OrderAdd, _React$Component);
 
-  function OrderAdd() {
-    _classCallCheck(this, OrderAdd);
+    function OrderAdd() {
+        _classCallCheck(this, OrderAdd);
 
-    var _this = _possibleConstructorReturn(this, (OrderAdd.__proto__ || Object.getPrototypeOf(OrderAdd)).call(this));
+        var _this = _possibleConstructorReturn(this, (OrderAdd.__proto__ || Object.getPrototypeOf(OrderAdd)).call(this));
 
-    _this.state = { currOrderID: 100 };
-    _this.handleSubmit = _this.handleSubmit.bind(_this);
+        _this.state = { currOrderID: 100 };
+        _this.handleSubmit = _this.handleSubmit.bind(_this);
 
-    return _this;
-  }
-
-  _createClass(OrderAdd, [{
-    key: "handleSubmit",
-    value: function handleSubmit(event) {
-      event.preventDefault();
-      var form = document.forms.orderAdd;
-      //check that all fields are filled out
-
-      if (form.itemID.value != "" && form.address.value != "") {
-        this.props.createOrder({
-          itemID: form.itemID.value,
-          orderID: this.state.currOrderID.toString(),
-          address: form.address.value,
-          status: 'Pending'
-        });
-        this.state.currOrderID++;
-        form.itemID.value = '';
-        form.address.value = '';
-      }
+        return _this;
     }
-  }, {
-    key: "render",
-    value: function render() {
-      return React.createElement(
-        "div",
-        null,
-        React.createElement(
-          "form",
-          { name: "orderAdd", onSubmit: this.handleSubmit },
-          React.createElement(
-            "div",
-            { className: "form-row" },
-            React.createElement(
-              "div",
-              { className: "col" },
-              React.createElement("input", { type: "text", className: "form-control", name: "itemID", placeholder: "Item Number" })
-            ),
-            React.createElement(
-              "div",
-              { className: "col" },
-              React.createElement("input", { type: "text", className: "form-control", name: "address", placeholder: "Your Address" })
-            )
-          ),
-          React.createElement("br", null),
-          React.createElement(
-            "button",
-            { className: "btn btn-outline-dark" },
-            "Order!"
-          )
-        )
-      );
-    }
-  }]);
 
-  return OrderAdd;
+    _createClass(OrderAdd, [{
+        key: "handleSubmit",
+        value: function handleSubmit(event) {
+            event.preventDefault();
+            var form = document.forms.orderAdd;
+            //check that all fields are filled out
+
+            if (form.itemID.value != "" && form.address.value != "") {
+                this.props.createOrder({
+                    itemID: form.itemID.value,
+                    orderID: this.state.currOrderID.toString(),
+                    address: form.address.value,
+                    status: 'Pending',
+                    buyer: form.buyerName.value
+                });
+                this.state.currOrderID++;
+                form.itemID.value = '';
+                form.address.value = '';
+                form.buyerName.value = '';
+            }
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "div",
+                null,
+                React.createElement(
+                    "form",
+                    { name: "orderAdd", onSubmit: this.handleSubmit },
+                    React.createElement(
+                        "div",
+                        { className: "form-row" },
+                        React.createElement(
+                            "div",
+                            { className: "col" },
+                            React.createElement("input", { type: "text", className: "form-control", name: "itemID", placeholder: "Item Number" })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "col" },
+                            React.createElement("input", { type: "text", className: "form-control", name: "buyerName", placeholder: "Your Name" })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "col" },
+                            React.createElement("input", { type: "text", className: "form-control", name: "address", placeholder: "Your Address" })
+                        )
+                    ),
+                    React.createElement("br", null),
+                    React.createElement(
+                        "button",
+                        { className: "btn btn-outline-dark" },
+                        "Order!"
+                    )
+                )
+            );
+        }
+    }]);
+
+    return OrderAdd;
 }(React.Component);
 
 var OrderPage = function (_React$Component2) {
-  _inherits(OrderPage, _React$Component2);
+    _inherits(OrderPage, _React$Component2);
 
-  function OrderPage() {
-    _classCallCheck(this, OrderPage);
+    function OrderPage() {
+        _classCallCheck(this, OrderPage);
 
-    var _this2 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
+        var _this2 = _possibleConstructorReturn(this, (OrderPage.__proto__ || Object.getPrototypeOf(OrderPage)).call(this));
 
-    _this2.state = { foods: [], orders: [] };
-    _this2.createOrder = _this2.createOrder.bind(_this2);
-    return _this2;
-  }
-
-  _createClass(OrderPage, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.loadData();
-      this.loadPlacedOrders();
+        _this2.state = { foods: [], orders: [] };
+        _this2.createOrder = _this2.createOrder.bind(_this2);
+        return _this2;
     }
-  }, {
-    key: "loadData",
-    value: function loadData() {
-      var _this3 = this;
 
-      fetch('/api/menuDB').then(function (response) {
-        if (response.ok) {
-          response.json().then(function (data) {
-            _this3.state = { foods: data, orders: _this3.state.orders };
-            _this3.setState({ foods: data });
-          });
-        } else {
-          response.json().then(function (error) {
-            alert("Failed to fetch issues:" + error.message);
-          });
+    _createClass(OrderPage, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            this.loadData();
+            this.loadPlacedOrders();
         }
-      }).catch(function (err) {
-        alert("Error in fetching data from server:", err);
-      });
-    }
-  }, {
-    key: "loadPlacedOrders",
-    value: function loadPlacedOrders() {
-      var _this4 = this;
+    }, {
+        key: "loadData",
+        value: function loadData() {
+            var _this3 = this;
 
-      fetch('/api/ordersDB').then(function (response) {
-        if (response.ok) {
-          response.json().then(function (data) {
-            _this4.state = { foods: _this4.state.foods, orders: data }; //potential error
-            _this4.setState({ orders: data });
-          });
-        } else {
-          response.json().then(function (error) {
-            alert("Failed to fetch issues:" + error.message);
-          });
+            fetch('/api/menuDB').then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (data) {
+                        _this3.state = { foods: data, orders: _this3.state.orders };
+                        _this3.setState({ foods: data });
+                    });
+                } else {
+                    response.json().then(function (error) {
+                        alert("Failed to fetch issues:" + error.message);
+                    });
+                }
+            }).catch(function (err) {
+                alert("Error in fetching data from server:", err);
+            });
         }
-      }).catch(function (err) {
-        alert("Error in fetching data from server:", err);
-      });
-    }
-  }, {
-    key: "createOrder",
-    value: function createOrder(newOrder) {
-      var _this5 = this;
+    }, {
+        key: "loadPlacedOrders",
+        value: function loadPlacedOrders() {
+            var _this4 = this;
 
-      fetch('/api/ordersDB', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newOrder)
-      }).then(function (res) {
-        if (res.ok) {
-          var existingOrders = _this5.state.orders.slice();
-          currLength = existingOrders.length;
-          // console.log(existingOrders.length);
-          res.json().then(function (updatedOrder) {
-            var newOrder = _this5.state.orders.concat(updatedOrder);
-            _this5.setState({ orders: newOrder });
-          });
-        } else {
-          res.json().then(function (error) {
-            alert('Failed to add review: ' + error.message);
-          });
+            fetch('/api/ordersDB').then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (data) {
+                        _this4.state = { foods: _this4.state.foods, orders: data }; //potential error
+                        _this4.setState({ orders: data });
+                    });
+                } else {
+                    response.json().then(function (error) {
+                        alert("Failed to fetch issues:" + error.message);
+                    });
+                }
+            }).catch(function (err) {
+                alert("Error in fetching data from server:", err);
+            });
         }
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return React.createElement(
-        "div",
-        null,
-        React.createElement(
-          "h1",
-          null,
-          "Menu"
-        ),
-        React.createElement(
-          "h2",
-          null,
-          "These are the available options for grab and go today!"
-        ),
-        React.createElement(
-          "center",
-          null,
-          React.createElement(
-            "div",
-            { className: "col-md-10" },
-            React.createElement(FoodTable, { foods: this.state.foods })
-          )
-        ),
-        React.createElement("hr", null),
-        React.createElement(
-          "h1",
-          null,
-          "Place an Order!"
-        ),
-        React.createElement(
-          "h2",
-          null,
-          "Fill out all fields in the form below."
-        ),
-        React.createElement(OrderAdd, { createOrder: this.createOrder }),
-        React.createElement("hr", null),
-        React.createElement(
-          "h3",
-          null,
-          "Here are your current orders:"
-        ),
-        React.createElement(
-          "center",
-          null,
-          React.createElement(
-            "div",
-            { className: "col-md-10" },
-            React.createElement(OrderTable, { orders: this.state.orders })
-          )
-        )
-      );
-    }
-  }]);
+    }, {
+        key: "createOrder",
+        value: function createOrder(newOrder) {
+            var _this5 = this;
 
-  return OrderPage;
+            fetch('/api/ordersDB', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newOrder)
+            }).then(function (res) {
+                if (res.ok) {
+                    var existingOrders = _this5.state.orders.slice();
+                    currLength = existingOrders.length;
+                    // console.log(existingOrders.length);
+                    res.json().then(function (updatedOrder) {
+                        var newOrder = _this5.state.orders.concat(updatedOrder);
+                        _this5.setState({ orders: newOrder });
+                    });
+                } else {
+                    res.json().then(function (error) {
+                        alert('Failed to add review: ' + error.message);
+                    });
+                }
+            });
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "div",
+                null,
+                React.createElement(
+                    "h1",
+                    null,
+                    "Menu"
+                ),
+                React.createElement(
+                    "h2",
+                    null,
+                    "These are the available options for grab and go today!"
+                ),
+                React.createElement(
+                    "center",
+                    null,
+                    React.createElement(
+                        "div",
+                        { className: "col-md-10" },
+                        React.createElement(FoodTable, { foods: this.state.foods })
+                    )
+                ),
+                React.createElement("hr", null),
+                React.createElement(
+                    "h1",
+                    null,
+                    "Place an Order!"
+                ),
+                React.createElement(
+                    "h2",
+                    null,
+                    "Fill out all fields in the form below."
+                ),
+                React.createElement(OrderAdd, { createOrder: this.createOrder }),
+                React.createElement("hr", null),
+                React.createElement(
+                    "h3",
+                    null,
+                    "Here are your current orders:"
+                ),
+                React.createElement(
+                    "center",
+                    null,
+                    React.createElement(
+                        "div",
+                        { className: "col-md-10" },
+                        React.createElement(OrderTable, { orders: this.state.orders })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return OrderPage;
 }(React.Component);
 
 ReactDOM.render(React.createElement(OrderPage, null), contentNode);
@@ -379,52 +386,52 @@ ReactDOM.render(React.createElement(OrderPage, null), contentNode);
 var existingLength = -1;
 var currLength = -1;
 function refresh() {
-  console.log("inf");
-  fetch('/api/OrdersDB').then(function (response) {
-    if (response.ok) {
-      response.json().then(function (data) {
-        currLength = data.length;
-      });
-    } else {
-      response.json().then(function (error) {
-        alert("Failed to fetch issues:" + error.message);
-      });
-    }
-  }).catch(function (err) {});
+    console.log("inf");
+    fetch('/api/OrdersDB').then(function (response) {
+        if (response.ok) {
+            response.json().then(function (data) {
+                currLength = data.length;
+            });
+        } else {
+            response.json().then(function (error) {
+                alert("Failed to fetch issues:" + error.message);
+            });
+        }
+    }).catch(function (err) {});
 
-  if (existingLength === -1) {
-    existingLength = currLength; //prevents notification on load
-  }
-  if (currLength != existingLength) {
-    existingLength = currLength;
-    sendNotification();
-  }
-  setTimeout(refresh, 500);
+    if (existingLength === -1) {
+        existingLength = currLength; //prevents notification on load
+    }
+    if (currLength != existingLength) {
+        existingLength = currLength;
+        sendNotification();
+    }
+    setTimeout(refresh, 500);
 }
 setTimeout(refresh, 4000);
 
 function sendNotification() {
-  var mobile = false;
-  if (typeof window.orientation !== "undefined" || navigator.userAgent.indexOf('IEMobile') !== -1) {
-    //mobile detectoin strategy found here: https://coderwall.com/p/i817wa/one-line-function-to-detect-mobile-devices-with-javascript
-    alert("A new order has been placed!");
-  } else {
-    var notificationContent = {
-      title: 'Dine Online',
-      message: 'A new order has been placed!',
-      icon: 'truck.png'
-    };
-    var sendNotification = function sendNotification() {
-      var notification = new Notification('Dine Online', {
-        icon: 'truck.png',
-        body: 'A new order has been placed!'
-      });
-    };
-    if (window.Notification) {
-      if (Notification.permission === 'default') {
-        Notification.requestPermission();
-      }
-      sendNotification();
+    var mobile = false;
+    if (typeof window.orientation !== "undefined" || navigator.userAgent.indexOf('IEMobile') !== -1) {
+        //mobile detectoin strategy found here: https://coderwall.com/p/i817wa/one-line-function-to-detect-mobile-devices-with-javascript
+        alert("A new order has been placed!");
+    } else {
+        var notificationContent = {
+            title: 'Dine Online',
+            message: 'A new order has been placed!',
+            icon: 'truck.png'
+        };
+        var sendNotification = function sendNotification() {
+            var notification = new Notification('Dine Online', {
+                icon: 'truck.png',
+                body: 'A new order has been placed!'
+            });
+        };
+        if (window.Notification) {
+            if (Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+            sendNotification();
+        }
     }
-  }
 } ////end notifications
