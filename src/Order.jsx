@@ -27,12 +27,13 @@ function FoodTable(props){
       <FoodRow key={food._id} food={food} />
     ));
     return (
-      <table className="bordered-table">
-        <thead>
+      <table className="table table-hover table-striped table-light">
+        <thead className="thead-dark">
           <tr>
-            <th>Order Number</th>
-            <th>Food</th>
-            <th>Dining Hall</th>
+            
+            <th scope="col">Order Number</th>
+            <th scope="col">Food</th>
+            <th scope="col">Dining Hall</th>
           </tr>
         </thead>
         <tbody>{foodRows}</tbody>
@@ -45,8 +46,8 @@ function FoodTable(props){
       <OrderRow key={order._id} order={order} />
     ));
     return (
-      <table className="bordered-table">
-        <thead>
+      <table className="table table-hover table-striped table-light">
+        <thead className="thead-dark">
         <tr>
                     <th>Order ID</th>
                     <th>Buyer</th>
@@ -96,7 +97,7 @@ class OrderAdd extends React.Component {
         <form name="orderAdd" onSubmit={this.handleSubmit}>
           <input type="text" name="itemID" placeholder="Item Number" />
           <input type="text" name="address" placeholder="Your Address" />
-          <button>Add</button>
+          <button className="btn btn-outline-dark" >Add</button>
         </form>
       </div>
     );
@@ -187,7 +188,9 @@ class OrderPage extends React.Component {
         <h1>Menu</h1>
         <h2>These are the available options for grab and go today!</h2>
         <center>
+        <div className="col-md-10">
         <FoodTable foods={this.state.foods} />
+        </div>
         </center>
         <hr />
         <h1>Place an Order!</h1>
@@ -196,7 +199,9 @@ class OrderPage extends React.Component {
         <hr />
         <h3>Here are your current orders:</h3>
         <center>
+        <div className="col-md-10">
         <OrderTable orders={this.state.orders} />
+        </div>
         </center>
       </div>
     );

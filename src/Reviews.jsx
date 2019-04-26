@@ -76,7 +76,7 @@ class ReviewAdd extends React.Component {
           <input type="text" name="orderItem" placeholder="Order" />
           <input type="text" name="driver" placeholder="Driver" />
           <input type="text" name="review" placeholder="Review" />
-          <button>Add</button>
+          <button className="btn btn-outline-dark">Add</button>
         </form>
       </div>
     );

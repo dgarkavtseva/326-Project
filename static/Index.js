@@ -75,7 +75,7 @@ var UserForm = function (_React$Component) {
                 _defineProperty({ name: "addUserForm", onSubmit: this.handleSubmit, id: "emailForm" }, "id", "emailForm"),
                 React.createElement(
                     "div",
-                    { className: "forms" },
+                    { className: "form-group" },
                     React.createElement(
                         "h4",
                         null,
@@ -86,12 +86,17 @@ var UserForm = function (_React$Component) {
                         null,
                         "You must fill out all fields in the form."
                     ),
-                    React.createElement("input", { type: "text", name: "fname", placeholder: "First Name", value: this.state.text }),
-                    React.createElement("br", null),
-                    React.createElement("input", { type: "text", name: "lname", placeholder: "Last Name", value: this.state.text }),
-                    React.createElement("br", null),
-                    React.createElement("input", { type: "text", name: "email", placeholder: "Email", value: this.state.text }),
-                    React.createElement("br", null),
+                    React.createElement("input", { type: "text", className: "form-control", name: "fname", placeholder: "First Name", value: this.state.text })
+                ),
+                React.createElement(
+                    "div",
+                    { className: "form-group" },
+                    React.createElement("input", { type: "text", className: "form-control", name: "lname", placeholder: "Last Name", value: this.state.text })
+                ),
+                React.createElement(
+                    "div",
+                    { className: "form-group" },
+                    React.createElement("input", { type: "text", className: "form-control", name: "email", placeholder: "Email", value: this.state.text }),
                     this.state.submitted ? React.createElement(
                         "p",
                         null,
@@ -99,7 +104,7 @@ var UserForm = function (_React$Component) {
                     ) : React.createElement("div", null),
                     React.createElement(
                         "button",
-                        { className: "btn btn-outline-secondary" },
+                        { className: "btn btn-outline-dark btn-lg" },
                         "Submit"
                     )
                 )

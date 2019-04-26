@@ -165,7 +165,7 @@ var ReviewAdd = function (_React$Component) {
           React.createElement("input", { type: "text", name: "review", placeholder: "Review" }),
           React.createElement(
             "button",
-            null,
+            { className: "btn btn-outline-dark" },
             "Add"
           )
         )

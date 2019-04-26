@@ -75,26 +75,26 @@ function FoodTable(props) {
   });
   return React.createElement(
     "table",
-    { className: "bordered-table" },
+    { className: "table table-hover table-striped table-light" },
     React.createElement(
       "thead",
-      null,
+      { className: "thead-dark" },
       React.createElement(
         "tr",
         null,
         React.createElement(
           "th",
-          null,
+          { scope: "col" },
           "Order Number"
         ),
         React.createElement(
           "th",
-          null,
+          { scope: "col" },
           "Food"
         ),
         React.createElement(
           "th",
-          null,
+          { scope: "col" },
           "Dining Hall"
         )
       )
@@ -113,10 +113,10 @@ function OrderTable(props) {
   });
   return React.createElement(
     "table",
-    { className: "bordered-table" },
+    { className: "table table-hover table-striped table-light" },
     React.createElement(
       "thead",
-      null,
+      { className: "thead-dark" },
       React.createElement(
         "tr",
         null,
@@ -206,7 +206,7 @@ var OrderAdd = function (_React$Component) {
           React.createElement("input", { type: "text", name: "address", placeholder: "Your Address" }),
           React.createElement(
             "button",
-            null,
+            { className: "btn btn-outline-dark" },
             "Add"
           )
         )
@@ -320,7 +320,11 @@ var OrderPage = function (_React$Component2) {
         React.createElement(
           "center",
           null,
-          React.createElement(FoodTable, { foods: this.state.foods })
+          React.createElement(
+            "div",
+            { className: "col-md-10" },
+            React.createElement(FoodTable, { foods: this.state.foods })
+          )
         ),
         React.createElement("hr", null),
         React.createElement(
@@ -343,7 +347,11 @@ var OrderPage = function (_React$Component2) {
         React.createElement(
           "center",
           null,
-          React.createElement(OrderTable, { orders: this.state.orders })
+          React.createElement(
+            "div",
+            { className: "col-md-10" },
+            React.createElement(OrderTable, { orders: this.state.orders })
+          )
         )
       );
     }

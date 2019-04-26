@@ -140,7 +140,7 @@ var OrderAdd = function (_React$Component) {
           React.createElement("input", { type: "text", name: "driver", placeholder: "Your Name" }),
           React.createElement(
             "button",
-            null,
+            { className: "btn btn-outline-dark" },
             "Add"
           )
         )

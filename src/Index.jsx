@@ -52,17 +52,20 @@ class UserForm extends React.Component {
     render() {
         return (
                 <form name="addUserForm" onSubmit={this.handleSubmit} id = "emailForm" id="emailForm">
-                    <div className="forms">
+                    <div className="form-group">
                         <h4>Sign up for our email list!</h4>
                         <h5>You must fill out all fields in the form.</h5>
-                        <input type="text" name="fname" placeholder="First Name" value={this.state.text} />
-                        <br></br>
-                        <input type="text" name="lname" placeholder="Last Name" value={this.state.text} />
-                        <br></br>
-                        <input type="text" name="email" placeholder="Email" value={this.state.text} />
-                        <br></br>
+                        <input type="text" className="form-control" name="fname" placeholder="First Name" value={this.state.text} />
+                    </div>
+                    <div className="form-group">
+                        <input type="text" className="form-control" name="lname" placeholder="Last Name" value={this.state.text} />
+                        
+                    </div>
+                    <div className="form-group">
+                        <input type="text" className="form-control" name="email" placeholder="Email" value={this.state.text} />
+                        
                         {this.state.submitted ? <p>Thanks!</p> : <div></div>}
-                        <button className="btn btn-outline-secondary">Submit</button>                        
+                        <button className="btn btn-outline-dark btn-lg">Submit</button>                        
                     </div>
                 </form>
         );
