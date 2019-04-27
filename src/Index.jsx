@@ -65,7 +65,9 @@ class UserForm extends React.Component {
                         <input type="text" className="form-control" name="email" placeholder="Email" value={this.state.text} />
                         
                         {this.state.submitted ? <p>Thanks!</p> : <div></div>}
-                        <button className="btn btn-outline-dark btn-lg">Submit</button>                        
+                                         
+                        <button className="btn btn-outline-dark btn-lg">Submit</button>    
+                        
                     </div>
                 </form>
         );
