@@ -1,7 +1,5 @@
 # Dine Online
 
-Rename the above with the name of your application.
-
 # Overview
 
 The purpose of our application is to serve as a platform to allow UMass students to order grab and go to be delivered by other students that are looking to make money. The idea is based off of Uber Eats, but designed to be a more personalized platform for UMass students only, specific to UMass dining locations. 

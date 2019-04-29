@@ -76,7 +76,6 @@ class OrderAdd extends React.Component {
         event.preventDefault();
         let form = document.forms.orderAdd;
         //check that all fields are filled out
-
         if (form.itemID.value != "" && form.address.value != "") {
             this.props.createOrder({
                 itemID: form.itemID.value,
@@ -179,7 +178,6 @@ class OrderPage extends React.Component {
                 if (res.ok) {
                     let existingOrders = this.state.orders.slice();
                     currLength = existingOrders.length;
-                    // console.log(existingOrders.length);
                     res.json()
                         .then(updatedOrder => {
                             const newOrder = this.state.orders.concat(updatedOrder);
@@ -253,8 +251,6 @@ function refresh() {
     setTimeout(refresh, 500);
 }
 setTimeout(refresh, 4000);
-
-
 
 
 

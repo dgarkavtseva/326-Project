@@ -145,9 +145,9 @@ class OrderPage extends React.Component {
                 <OrderAdd createOrder={this.createOrder} />
                 <hr />
                 <center>
-                <div className="col-md-8">
-                    <OrderTable orders={this.state.orders} />
-                </div>
+                    <div className="col-md-8">
+                        <OrderTable orders={this.state.orders} />
+                    </div>
                 </center>
             </div>
         );
@@ -160,7 +160,6 @@ ReactDOM.render(<OrderPage />, contentNode);
 let existingLength = -1;
 let currLength = -1;
 function refresh() {
-    //console.log("inf");
     fetch('/api/OrdersDB').then(response => {
         if (response.ok) {
             response.json().then(data => {

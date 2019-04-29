@@ -104,18 +104,6 @@ app.post('/api/ordersDB', (req, res) => {
 });
 
 app.put('/api/ordersDB', (req, res) => {
-    /*const newOrders = req.body;
-    let query = { orderID: newOrders.orderID, status: "Pending" };
-    let newValues = { $set: { driver: newOrders.driver, status: "Accepted" }};
-    //console.log(newValues);
-    ordersDB.collection("orders").updateOne(query, newValues, {}).then(newOrders => {
-        res.json(newOrders);
-    }).catch(error => {
-        console.log(error);
-        res.status(500).json({ message: `Internal Server Error: ${error}` });
-        });*/
-
-
     const newOrders = req.body;
     let query = { orderID: newOrders.orderID, status: "Pending" };
     let newValues = { $set: { driver: newOrders.driver, status: "Accepted" } };
@@ -143,16 +131,6 @@ MongoClient.connect('mongodb://localhost', { useNewUrlParser: true }).then(conne
 }).catch(error => {
   console.log('ERROR:', error);
 });
-
-
-
-
-
-
-
-
-
-
 
 
 

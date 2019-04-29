@@ -271,7 +271,6 @@ ReactDOM.render(React.createElement(OrderPage, null), contentNode);
 var existingLength = -1;
 var currLength = -1;
 function refresh() {
-    //console.log("inf");
     fetch('/api/OrdersDB').then(function (response) {
         if (response.ok) {
             response.json().then(function (data) {

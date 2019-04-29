@@ -180,7 +180,6 @@ var OrderAdd = function (_React$Component) {
             event.preventDefault();
             var form = document.forms.orderAdd;
             //check that all fields are filled out
-
             if (form.itemID.value != "" && form.address.value != "") {
                 this.props.createOrder({
                     itemID: form.itemID.value,
@@ -309,7 +308,6 @@ var OrderPage = function (_React$Component2) {
                 if (res.ok) {
                     var existingOrders = _this5.state.orders.slice();
                     currLength = existingOrders.length;
-                    // console.log(existingOrders.length);
                     res.json().then(function (updatedOrder) {
                         var newOrder = _this5.state.orders.concat(updatedOrder);
                         _this5.setState({ orders: newOrder });

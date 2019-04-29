@@ -45,7 +45,7 @@ class ReviewAdd extends React.Component {
     e.preventDefault();
     let form = document.forms.reviewAdd;
     //check that all fields are filled out
-    if(form.name.value != "" && form.time.value != "" && form.orderFrom.value != "" && form.orderItem.value != "" && form.driver.value != "" && form.review.value != ""){
+    if (form.name.value != "" && form.time.value != "" && form.orderFrom.value != "" && form.orderItem.value != "" && form.driver.value != "" && form.review.value != "") {
       this.props.createReview({
         name: form.name.value,
         time: form.time.value,
@@ -55,7 +55,7 @@ class ReviewAdd extends React.Component {
         review: form.review.value,
         created: new Date(),
       });
-    
+
       // Clear the form for the next input.
       form.name.value = '';
       form.time.value = '';
@@ -70,31 +70,31 @@ class ReviewAdd extends React.Component {
     return (
       <div>
         <form name="reviewAdd" onSubmit={this.handleSubmit}>
-        <div className="form-row">
-          <div className="col">
-          <input type="text" className="form-control" name="name" placeholder="Name" />
-          </div>
-          <div className="col">
-          <input type="text" className="form-control" name="time" placeholder="Time" />
-          </div>
-          <div className="col">
-          <input type="text" className="form-control" name="orderFrom" placeholder="Ordered From" />
-          </div>
-          <div className="col">
-          <input type="text" className="form-control" name="orderItem" placeholder="Order" />
-          </div>
-          <div className="col">
-          <input type="text" className="form-control" name="driver" placeholder="Driver" />
-          </div>
-          <div className="col">
-          <input type="text" className="form-control" name="review" placeholder="Review" />
-          </div>
-          <br></br>
-          <br></br>
+          <div className="form-row">
+            <div className="col">
+              <input type="text" className="form-control" name="name" placeholder="Name" />
+            </div>
+            <div className="col">
+              <input type="text" className="form-control" name="time" placeholder="Time" />
+            </div>
+            <div className="col">
+              <input type="text" className="form-control" name="orderFrom" placeholder="Ordered From" />
+            </div>
+            <div className="col">
+              <input type="text" className="form-control" name="orderItem" placeholder="Order" />
+            </div>
+            <div className="col">
+              <input type="text" className="form-control" name="driver" placeholder="Driver" />
+            </div>
+            <div className="col">
+              <input type="text" className="form-control" name="review" placeholder="Review" />
+            </div>
+            <br></br>
+            <br></br>
           </div>
           <button className="btn btn-outline-dark">Add</button>
           <br></br>
-          
+
         </form>
       </div>
     );
@@ -161,7 +161,7 @@ class ReviewList extends React.Component {
       });
   }
 
-  render() { 
+  render() {
     return (
       <div>
         <h1>Reviews</h1>
@@ -181,7 +181,7 @@ ReactDOM.render(<ReviewList />, contentNode);
 //notifications
 let existingLength = -1;
 let currLength = -1;
-function refresh(){
+function refresh() {
   console.log("inf");
   fetch('/api/OrdersDB').then(response => {
     if (response.ok) {
@@ -195,14 +195,14 @@ function refresh(){
     }
   }).catch(err => {
   });
-  
-    if (existingLength === -1){
-      existingLength = currLength; //prevents notification on load
-    }
-     if (currLength != existingLength){
-      existingLength = currLength;
-      sendNotification();
-    }
+
+  if (existingLength === -1) {
+    existingLength = currLength; //prevents notification on load
+  }
+  if (currLength != existingLength) {
+    existingLength = currLength;
+    sendNotification();
+  }
   setTimeout(refresh, 500);
 }
 setTimeout(refresh, 4000);
@@ -211,18 +211,18 @@ setTimeout(refresh, 4000);
 
 
 
-function sendNotification () {
+function sendNotification() {
   let mobile = false;
-  if((typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1)){
+  if ((typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1)) {
     //mobile detectoin strategy found here: https://coderwall.com/p/i817wa/one-line-function-to-detect-mobile-devices-with-javascript
     alert("A new order has been placed!");
-  }else{
+  } else {
     let notificationContent = {
-    title: 'Dine Online',
-    message: 'A new order has been placed!',
-    icon:'truck.png',
+      title: 'Dine Online',
+      message: 'A new order has been placed!',
+      icon: 'truck.png',
     };
-      var sendNotification = function (){
+    var sendNotification = function () {
       var notification = new Notification('Dine Online', {
         icon: 'truck.png',
         body: 'A new order has been placed!'
@@ -231,8 +231,8 @@ function sendNotification () {
     if (window.Notification) {
       if (Notification.permission === 'default') {
         Notification.requestPermission();
-      } 
+      }
       sendNotification()
-    } 
+    }
   }
 }////end notifications 
